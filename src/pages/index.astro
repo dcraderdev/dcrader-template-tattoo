@@ -39,7 +39,7 @@ const variants = [
     <ul style="list-style:none; padding:3rem 2rem; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem; max-width:1200px;" aria-label="Template variants">
       {variants.map(v => (
         <li>
-          <a class="card" href={`/${v.slug}`} aria-label={`${v.label}: ${v.name}`}>
+          <a class="card" href={`${import.meta.env.BASE_URL}${v.slug}`} aria-label={`${v.label}: ${v.name}`}>
             <div style={`background:${v.bg}; padding:2rem; min-height:150px; display:flex; flex-direction:column; justify-content:flex-end;`}>
               <p style={`font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:${v.accent}; margin:0 0 0.4rem;`}>{v.label}</p>
               <h2 style={`font-size:1.35rem; font-weight:900; color:${v.text}; margin:0; font-family:Georgia,serif; line-height:1.25;`}>{v.name}</h2>
