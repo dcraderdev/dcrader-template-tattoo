@@ -1,17 +1,60 @@
 ---
+import '../styles/global.css';
 
+const variants = [
+  { slug: 'v1-traditional-american', name: 'Iron & Rose Tattoo', label: 'V1 — Traditional Americana', description: 'Deep red · cream · bold flash · Sailor Jerry lineage', bg: '#8B0000', text: '#FFF5DC', accent: '#D4A017' },
+  { slug: 'v2-fine-line-minimal', name: 'Linework Studio', label: 'V2 — Fine-Line Minimal', description: 'White · black · single-needle precision · botanical illustration', bg: '#111111', text: '#FAFAFA', accent: '#888888' },
+  { slug: 'v3-japanese-irezumi', name: '龍墨 Ryūboku Tattoo', label: 'V3 — Japanese Irezumi', description: 'Black · gold · dragon & koi · centuries of tradition', bg: '#0A0A0A', text: '#C9A85C', accent: '#C41230' },
+  { slug: 'v4-black-grey-realism', name: 'Shadow Collective', label: 'V4 — Black & Grey Realism', description: 'Pure grayscale · hyperrealism · portrait & wildlife', bg: '#000000', text: '#F5F5F5', accent: '#888888' },
+  { slug: 'v5-modern-color-studio', name: 'Spectrum Tattoo Co.', label: 'V5 — Modern Color Studio', description: 'Rainbow · cream · vibrant · neotraditional · watercolor', bg: '#FFFEF7', text: '#1A1A2E', accent: '#7C3AED' },
+];
 ---
-
+<!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tattoo Studio Templates — dcrader</title>
+  <meta name="description" content="Five production-ready tattoo studio landing page variants built with Astro and Tailwind." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
+  <style>
+    body { background:#0f0f0f; color:#f5f5f5; font-family:system-ui,sans-serif; margin:0; min-height:100vh; }
+    .card { display:block; border-radius:12px; overflow:hidden; text-decoration:none; border:1px solid #333; transition:transform 0.2s,box-shadow 0.2s; }
+    .card:hover { transform:translateY(-4px); box-shadow:0 20px 40px rgba(0,0,0,0.5); }
+    .card:focus-visible { outline:3px solid #D4A017; outline-offset:4px; }
+  </style>
+</head>
+<body>
+  <header style="padding:3rem 2rem 2rem; text-align:center; border-bottom:1px solid #222;">
+    <p style="font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:#555; margin:0 0 0.75rem;">dcrader templates</p>
+    <h1 style="font-size:clamp(2rem,5vw,3rem); font-weight:900; margin:0 0 1rem; background:linear-gradient(135deg,#D4A017 0%,#EC4899 50%,#7C3AED 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; font-family:Georgia,serif;">
+      Tattoo Studio Templates
+    </h1>
+    <p style="color:#999; max-width:520px; margin:0 auto; line-height:1.6;">Five fully-designed landing pages for tattoo parlors, piercing studios, and permanent makeup. Astro 6 + Tailwind 4 + Vercel.</p>
+  </header>
+  <main>
+    <ul style="list-style:none; padding:3rem 2rem; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem; max-width:1200px;" aria-label="Template variants">
+      {variants.map(v => (
+        <li>
+          <a class="card" href={`/${v.slug}`} aria-label={`${v.label}: ${v.name}`}>
+            <div style={`background:${v.bg}; padding:2rem; min-height:150px; display:flex; flex-direction:column; justify-content:flex-end;`}>
+              <p style={`font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:${v.accent}; margin:0 0 0.4rem;`}>{v.label}</p>
+              <h2 style={`font-size:1.35rem; font-weight:900; color:${v.text}; margin:0; font-family:Georgia,serif; line-height:1.25;`}>{v.name}</h2>
+            </div>
+            <div style="background:#181818; padding:1.25rem 2rem;">
+              <p style="color:#aaa; font-size:0.85rem; margin:0 0 0.75rem; line-height:1.5;">{v.description}</p>
+              <span style={`font-size:0.75rem; font-weight:600; color:${v.accent}; letter-spacing:0.08em; text-transform:uppercase;`} aria-hidden="true">View template →</span>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </main>
+  <footer style="text-align:center; padding:2rem; border-top:1px solid #1a1a1a; color:#444; font-size:0.8rem;">
+    <p style="margin:0;">Built by <a href="https://github.com/dcraderdev" style="color:#555; text-decoration:none;">dcraderdev</a> · Astro 6 + Tailwind 4 · Vercel</p>
+  </footer>
+</body>
 </html>

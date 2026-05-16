@@ -1,0 +1,481 @@
+---
+import { studio } from '../../data/v1';
+import '../../styles/global.css';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{studio.name} — Traditional American Tattoo, {studio.city}</title>
+  <meta name="description" content={studio.description} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --red: #8B0000;
+      --red-light: #A00000;
+      --cream: #FFF5DC;
+      --cream-dark: #F5E8C0;
+      --gold: #D4A017;
+      --gold-dark: #B8880E;
+      --dark: #1A0A00;
+      --dark-mid: #2C1400;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { background: var(--cream); color: var(--dark); font-family: 'Lato', system-ui, sans-serif; }
+
+    /* Nav */
+    .nav { background: var(--dark); border-bottom: 3px solid var(--gold); position: sticky; top: 0; z-index: 100; }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; min-height: 64px; flex-wrap: wrap; gap: 0.5rem; }
+    .nav-logo { color: var(--cream); font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; letter-spacing: 0.03em; text-decoration: none; }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 0; list-style: none; flex-wrap: wrap; }
+    .nav-links a { color: var(--cream); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; padding: 0.5rem 0.9rem; display: block; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--gold); }
+    .nav-cta { background: var(--gold); color: var(--dark) !important; border-radius: 2px; padding: 0.5rem 1.1rem !important; }
+    .nav-cta:hover, .nav-cta:focus-visible { background: var(--gold-dark); color: var(--dark) !important; }
+
+    /* Hero */
+    .hero { position: relative; min-height: 92vh; display: flex; align-items: flex-end; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background-image: linear-gradient(to bottom, rgba(26,10,0,0.55) 0%, rgba(26,10,0,0.3) 40%, rgba(26,10,0,0.85) 100%), url('https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=1920&q=85&auto=format&fit=crop'); background-size: cover; background-position: center; }
+    .hero-content { position: relative; max-width: 1200px; margin: 0 auto; padding: 4rem 1.5rem; width: 100%; }
+    .hero-badge { display: inline-block; border: 2px solid var(--gold); color: var(--gold); font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; padding: 0.35rem 1rem; margin-bottom: 1.25rem; font-family: 'Lato', sans-serif; font-weight: 700; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 900; color: var(--cream); line-height: 1.05; margin-bottom: 0.75rem; text-shadow: 0 2px 12px rgba(0,0,0,0.4); }
+    .hero-tagline { font-size: clamp(0.95rem, 2vw, 1.2rem); color: var(--cream-dark); max-width: 520px; line-height: 1.6; margin-bottom: 2rem; font-weight: 400; }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary { background: var(--red); color: var(--cream); padding: 0.9rem 2rem; font-family: 'Lato', sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; border: 2px solid var(--red); transition: all 0.2s; }
+    .btn-primary:hover, .btn-primary:focus-visible { background: var(--red-light); }
+    .btn-outline { background: transparent; color: var(--cream); padding: 0.9rem 2rem; font-family: 'Lato', sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; border: 2px solid var(--cream); transition: all 0.2s; }
+    .btn-outline:hover, .btn-outline:focus-visible { background: var(--cream); color: var(--dark); }
+    .hero-meta { position: absolute; right: 1.5rem; bottom: 4rem; display: flex; flex-direction: column; gap: 0.4rem; text-align: right; }
+    .hero-meta p { color: var(--cream-dark); font-size: 0.78rem; letter-spacing: 0.05em; }
+    .hero-meta strong { color: var(--gold); }
+
+    /* Sections */
+    .section { padding: 5rem 1.5rem; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-label { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--red); font-weight: 700; margin-bottom: 0.6rem; display: block; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--dark); line-height: 1.1; margin-bottom: 0.5rem; }
+    .gold-rule { width: 60px; height: 3px; background: var(--gold); margin: 1rem 0 2.5rem; }
+    .divider { display: flex; align-items: center; gap: 1rem; color: var(--gold); margin: 3rem 0; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--gold); opacity: 0.4; }
+    .star { font-size: 0.9rem; }
+
+    /* Artists */
+    .artists-bg { background: var(--dark); }
+    .artists-bg .section-title { color: var(--cream); }
+    .artists-bg .section-label { color: var(--gold); }
+    .artist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1px; background: var(--gold); border: 1px solid var(--gold); }
+    .artist-card { background: var(--dark-mid); padding: 0; overflow: hidden; }
+    .artist-img { width: 100%; height: 280px; object-fit: cover; display: block; filter: sepia(20%) contrast(1.05); }
+    .artist-info { padding: 1.5rem; }
+    .artist-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--cream); margin-bottom: 0.25rem; }
+    .artist-specialty { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; font-weight: 700; }
+    .artist-bio { font-size: 0.88rem; color: #c8b89a; line-height: 1.65; margin-bottom: 1rem; }
+    .artist-handle { font-size: 0.78rem; color: var(--gold); opacity: 0.8; }
+    .style-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.75rem; }
+    .style-tag { background: rgba(212,160,23,0.15); color: var(--gold); border: 1px solid rgba(212,160,23,0.3); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.5rem; }
+    .years-badge { display: inline-block; background: var(--red); color: var(--cream); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.6rem; font-weight: 700; margin-top: 0.5rem; }
+
+    /* Gallery */
+    .gallery-bg { background: var(--cream-dark); }
+    .masonry-grid { columns: 2; column-gap: 8px; }
+    @media (min-width: 640px) { .masonry-grid { columns: 3; } }
+    @media (min-width: 1024px) { .masonry-grid { columns: 4; } }
+    .masonry-item { break-inside: avoid; margin-bottom: 8px; position: relative; overflow: hidden; display: block; }
+    .masonry-item img { width: 100%; display: block; transition: transform 0.4s; }
+    .masonry-item:hover img { transform: scale(1.04); }
+    .masonry-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,10,0,0.8) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s; display: flex; align-items: flex-end; padding: 0.75rem; }
+    .masonry-item:hover .masonry-overlay { opacity: 1; }
+    .masonry-caption { color: var(--cream); font-size: 0.7rem; letter-spacing: 0.08em; }
+
+    /* Aftercare */
+    .aftercare-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .aftercare-card { border: 1px solid rgba(212,160,23,0.3); padding: 1.5rem; background: rgba(255,245,220,0.5); }
+    .aftercare-num { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; color: var(--gold); opacity: 0.35; line-height: 1; margin-bottom: 0.5rem; }
+    .aftercare-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.5rem; }
+    .aftercare-body { font-size: 0.88rem; color: #4a3010; line-height: 1.65; }
+
+    /* Booking */
+    .booking-bg { background: var(--red); }
+    .booking-bg .section-title { color: var(--cream); }
+    .booking-bg .section-label { color: var(--gold); }
+    .booking-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
+    @media (min-width: 768px) { .booking-grid { grid-template-columns: 1fr 1fr; } }
+    .booking-info { color: var(--cream-dark); }
+    .booking-info p { line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; }
+    .booking-price-box { border: 1px solid rgba(212,160,23,0.4); padding: 1.25rem 1.5rem; margin-top: 1.5rem; }
+    .booking-price-box p { margin: 0.3rem 0; font-size: 0.88rem; color: #c8b89a; }
+    .booking-price-box strong { color: var(--gold); }
+    .booking-form { display: grid; gap: 1rem; }
+    label { display: block; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 0.35rem; }
+    input, select, textarea { width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(212,160,23,0.4); color: var(--cream); padding: 0.7rem 0.9rem; font-family: 'Lato', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
+    input:focus, select:focus, textarea:focus { border-color: var(--gold); }
+    input::placeholder, textarea::placeholder { color: rgba(255,245,220,0.35); }
+    select option { background: var(--dark-mid); color: var(--cream); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .btn-submit { background: var(--gold); color: var(--dark); padding: 0.9rem 2rem; font-family: 'Lato', sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; border: none; cursor: pointer; transition: background 0.2s; width: 100%; margin-top: 0.5rem; }
+    .btn-submit:hover, .btn-submit:focus-visible { background: var(--gold-dark); }
+
+    /* FAQ */
+    .faq-list { margin-top: 2rem; display: grid; gap: 0; border: 1px solid rgba(139,0,0,0.2); }
+    details { border-bottom: 1px solid rgba(139,0,0,0.15); }
+    details:last-child { border-bottom: none; }
+    summary { padding: 1.25rem 1.5rem; cursor: pointer; font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--dark); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: '+'; font-family: 'Lato', sans-serif; font-size: 1.4rem; font-weight: 300; color: var(--red); flex-shrink: 0; transition: transform 0.2s; }
+    details[open] summary::after { transform: rotate(45deg); }
+    summary:hover { background: rgba(139,0,0,0.04); }
+    .faq-answer { padding: 0 1.5rem 1.25rem; font-size: 0.9rem; color: #4a3010; line-height: 1.7; }
+
+    /* Hours & Location */
+    .location-bg { background: var(--dark); }
+    .location-bg .section-title { color: var(--cream); }
+    .location-bg .section-label { color: var(--gold); }
+    .location-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
+    @media (min-width: 768px) { .location-grid { grid-template-columns: 1fr 1fr; } }
+    .hours-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
+    .hours-table tr { border-bottom: 1px solid rgba(212,160,23,0.15); }
+    .hours-table td { padding: 0.65rem 0; font-size: 0.88rem; color: #c8b89a; }
+    .hours-table td:first-child { color: var(--cream); font-weight: 700; letter-spacing: 0.05em; }
+    .hours-table .closed { color: #6a5040; font-style: italic; }
+    .contact-list { margin-top: 1.5rem; display: grid; gap: 0.85rem; }
+    .contact-item { display: flex; gap: 0.75rem; align-items: flex-start; }
+    .contact-icon { color: var(--gold); font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .contact-text { font-size: 0.9rem; color: #c8b89a; line-height: 1.5; }
+    .contact-text a { color: var(--gold); text-decoration: none; }
+
+    /* Instagram */
+    .ig-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 2rem; }
+    @media (min-width: 640px) { .ig-grid { grid-template-columns: repeat(6, 1fr); gap: 4px; } }
+    .ig-post { aspect-ratio: 1; overflow: hidden; position: relative; }
+    .ig-post img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; filter: sepia(15%); }
+    .ig-post a:hover img { transform: scale(1.06); }
+    .ig-post a { display: block; height: 100%; }
+    .ig-post a:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+    .ig-follow { text-align: center; margin-top: 2rem; }
+    .ig-follow a { color: var(--gold); font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; text-decoration: none; border: 2px solid var(--gold); padding: 0.7rem 2rem; display: inline-block; transition: all 0.2s; }
+    .ig-follow a:hover, .ig-follow a:focus-visible { background: var(--gold); color: var(--dark); }
+
+    /* Footer */
+    footer { background: #0D0500; border-top: 3px solid var(--gold); padding: 2.5rem 1.5rem; text-align: center; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: var(--cream); margin-bottom: 0.5rem; }
+    .footer-logo span { color: var(--gold); }
+    .footer-tagline { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: #6a5040; margin-bottom: 1.25rem; }
+    .footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.25rem; }
+    .footer-links a { color: #8a6040; font-size: 0.78rem; text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-copy { font-size: 0.75rem; color: #3a2010; }
+    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } .hero-meta { display: none; } }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/v1-traditional-american" class="nav-logo" aria-label="{studio.name} home">
+      Iron <span>&</span> Rose
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#artists">Artists</a></li>
+      <li><a href="#aftercare">Aftercare</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#location">Location</a></li>
+      <li><a href="#booking" class="nav-cta">Book Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section id="hero" aria-label="Hero — Iron &amp; Rose Tattoo">
+  <div class="hero">
+    <div class="hero-bg" role="img" aria-label={studio.heroAlt}></div>
+    <div class="hero-content">
+      <div class="hero-badge" aria-hidden="true">★ Est. 2004 · San Diego, CA ★</div>
+      <h1>{studio.name}</h1>
+      <p class="hero-tagline">{studio.tagline}</p>
+      <div class="hero-actions">
+        <a href="#booking" class="btn-primary">Book a Session</a>
+        <a href="#portfolio" class="btn-outline">View Portfolio</a>
+      </div>
+    </div>
+    <div class="hero-meta" aria-hidden="true">
+      <p>Walk-ins <strong>Welcome</strong></p>
+      <p>Shop Min <strong>${studio.minimumCharge}</strong></p>
+      <p>{studio.phone}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Artists -->
+<section id="artists" class="section artists-bg" aria-labelledby="artists-heading">
+  <div class="section-inner">
+    <span class="section-label">Our Artists</span>
+    <h2 class="section-title" id="artists-heading">The Hands Behind the Work</h2>
+    <div class="gold-rule" aria-hidden="true"></div>
+    <div class="artist-grid" role="list">
+      {studio.artists.map(artist => (
+        <article class="artist-card" role="listitem" aria-label={`Artist: ${artist.name}`}>
+          <img
+            src={artist.image}
+            alt={`Portrait of ${artist.name}, ${artist.specialty} tattoo artist`}
+            class="artist-img"
+            loading="lazy"
+            width="400"
+            height="280"
+          />
+          <div class="artist-info">
+            <h3 class="artist-name">{artist.name}</h3>
+            <p class="artist-specialty">{artist.specialty}</p>
+            <p class="artist-bio">{artist.bio}</p>
+            <p class="artist-handle" aria-label={`Instagram handle: ${artist.handle}`}>{artist.handle}</p>
+            <div class="style-tags" aria-label={`Styles: ${artist.styles.join(', ')}`}>
+              {artist.styles.map(s => <span class="style-tag" aria-hidden="true">{s}</span>)}
+            </div>
+            <p class="years-badge">{artist.yearsExp} years exp.</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Portfolio Gallery -->
+<section id="portfolio" class="section gallery-bg" aria-labelledby="gallery-heading">
+  <div class="section-inner">
+    <span class="section-label">Portfolio</span>
+    <h2 class="section-title" id="gallery-heading">The Flash & The Classics</h2>
+    <div class="gold-rule" aria-hidden="true"></div>
+    <div class="masonry-grid" role="list" aria-label="Tattoo portfolio gallery">
+      {studio.gallery.map(item => (
+        <figure class="masonry-item" role="listitem">
+          <img
+            src={item.image}
+            alt={item.alt}
+            loading="lazy"
+            width="600"
+            height={item.size === 'tall' ? '800' : '500'}
+          />
+          <div class="masonry-overlay" aria-hidden="true">
+            <p class="masonry-caption">{item.artist} · {item.style}</p>
+          </div>
+          <figcaption class="sr-only">{item.alt} — by {item.artist}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Aftercare -->
+<section id="aftercare" class="section" aria-labelledby="aftercare-heading">
+  <div class="section-inner">
+    <span class="section-label">Tattoo Aftercare</span>
+    <h2 class="section-title" id="aftercare-heading">Protect Your Investment</h2>
+    <div class="gold-rule" aria-hidden="true"></div>
+    <p style="max-width:600px; color:#4a3010; line-height:1.7; margin-bottom:0.5rem; font-size:0.95rem;">A great tattoo requires great aftercare. Follow these steps and your piece will heal clean and last a lifetime.</p>
+    <div class="aftercare-grid" role="list">
+      {studio.aftercare.map(step => (
+        <div class="aftercare-card" role="listitem">
+          <div class="aftercare-num" aria-hidden="true">0{step.step}</div>
+          <h3 class="aftercare-title">{step.title}</h3>
+          <p class="aftercare-body">{step.body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Booking -->
+<section id="booking" class="section booking-bg" aria-labelledby="booking-heading">
+  <div class="section-inner">
+    <div class="booking-grid">
+      <div class="booking-info">
+        <span class="section-label">Book a Session</span>
+        <h2 class="section-title" id="booking-heading">Let's Make Something Permanent</h2>
+        <div class="gold-rule" aria-hidden="true"></div>
+        <p>Ready to get tattooed? Fill out the form and we'll be in touch within 48 hours to confirm your appointment and artist match.</p>
+        <p>A non-refundable ${studio.depositAmount} deposit secures your session and is applied to your final cost. All deposits are processed after consultation confirmation.</p>
+        <div class="booking-price-box">
+          <p><strong>Shop Minimum</strong> — ${studio.minimumCharge}</p>
+          <p><strong>Hourly Rate</strong> — ${studio.hourlyRate}/hr</p>
+          <p><strong>Booking Deposit</strong> — ${studio.depositAmount} (applied to total)</p>
+          <p><strong>Walk-ins</strong> — Welcome Tue–Sun</p>
+        </div>
+      </div>
+      <div>
+        <form class="booking-form" action="#" method="post" aria-label="Tattoo booking deposit form" novalidate>
+          <input type="hidden" name="form-name" value="tattoo-booking-v1" />
+          <div>
+            <label for="b-name">Full Name <span aria-label="required">*</span></label>
+            <input type="text" id="b-name" name="name" placeholder="Your full name" required autocomplete="name" />
+          </div>
+          <div class="form-row">
+            <div>
+              <label for="b-email">Email <span aria-label="required">*</span></label>
+              <input type="email" id="b-email" name="email" placeholder="you@email.com" required autocomplete="email" />
+            </div>
+            <div>
+              <label for="b-phone">Phone</label>
+              <input type="tel" id="b-phone" name="phone" placeholder="(619) 555-0000" autocomplete="tel" />
+            </div>
+          </div>
+          <div>
+            <label for="b-artist">Preferred Artist</label>
+            <select id="b-artist" name="artist">
+              <option value="">Any available artist</option>
+              {studio.artists.map(a => <option value={a.name}>{a.name} — {a.specialty}</option>)}
+            </select>
+          </div>
+          <div class="form-row">
+            <div>
+              <label for="b-size">Approximate Size</label>
+              <select id="b-size" name="size">
+                <option value="">Select size</option>
+                <option value="small">Small (coin-sized)</option>
+                <option value="medium">Medium (hand-sized)</option>
+                <option value="large">Large (half sleeve)</option>
+                <option value="xlarge">Full sleeve / back</option>
+              </select>
+            </div>
+            <div>
+              <label for="b-placement">Placement</label>
+              <input type="text" id="b-placement" name="placement" placeholder="e.g. forearm, ribs" />
+            </div>
+          </div>
+          <div>
+            <label for="b-desc">Describe Your Tattoo Idea <span aria-label="required">*</span></label>
+            <textarea id="b-desc" name="description" placeholder="Tell us what you want — style, imagery, inspiration..." rows="4" required></textarea>
+          </div>
+          <div>
+            <label for="b-dates">Preferred Date Range</label>
+            <input type="text" id="b-dates" name="dates" placeholder="e.g. Any weekend in July" />
+          </div>
+          <button type="submit" class="btn-submit">
+            Request Booking + ${studio.depositAmount} Deposit
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="section" aria-labelledby="faq-heading">
+  <div class="section-inner" style="max-width:800px;">
+    <span class="section-label">Frequently Asked</span>
+    <h2 class="section-title" id="faq-heading">Questions & Answers</h2>
+    <div class="gold-rule" aria-hidden="true"></div>
+    <div class="faq-list">
+      {studio.faqs.map((faq, i) => (
+        <details>
+          <summary>{faq.question}</summary>
+          <div class="faq-answer" id={`faq-answer-${i}`}>
+            <p>{faq.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Location & Hours -->
+<section id="location" class="section location-bg" aria-labelledby="location-heading">
+  <div class="section-inner">
+    <div class="location-grid">
+      <div>
+        <span class="section-label">Find Us</span>
+        <h2 class="section-title" id="location-heading">Studio Location</h2>
+        <div class="gold-rule" aria-hidden="true"></div>
+        <div class="contact-list">
+          <div class="contact-item">
+            <span class="contact-icon" aria-hidden="true">📍</span>
+            <div class="contact-text">
+              <p>{studio.address}</p>
+              <p>{studio.city}</p>
+              <a href={studio.mapUrl} target="_blank" rel="noopener noreferrer" style="font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; margin-top:0.4rem; display:inline-block;">Get Directions →</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon" aria-hidden="true">📞</span>
+            <div class="contact-text"><a href={`tel:${studio.phone}`}>{studio.phone}</a></div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon" aria-hidden="true">✉️</span>
+            <div class="contact-text"><a href={`mailto:${studio.email}`}>{studio.email}</a></div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon" aria-hidden="true">📸</span>
+            <div class="contact-text"><a href={`https://instagram.com/${studio.instagram.replace('@','')}`} target="_blank" rel="noopener noreferrer">{studio.instagram}</a></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="section-label" style="display:block; margin-bottom:0.5rem;">Hours</span>
+        <table class="hours-table" aria-label="Studio hours">
+          <tbody>
+            {studio.hours.map(h => (
+              <tr>
+                <td>{h.day}</td>
+                <td class={h.open === 'Closed' ? 'closed' : ''}>
+                  {h.open === 'Closed' ? 'Closed' : `${h.open} – ${h.close}`}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Instagram -->
+<section id="instagram" class="section" aria-labelledby="ig-heading">
+  <div class="section-inner">
+    <span class="section-label">Instagram</span>
+    <h2 class="section-title" id="ig-heading">Follow the Work</h2>
+    <div class="gold-rule" aria-hidden="true"></div>
+    <div class="ig-grid" role="list" aria-label="Instagram posts from {studio.instagram}">
+      {studio.igPosts.map(post => (
+        <div class="ig-post" role="listitem">
+          <a href={post.link} aria-label={`Instagram post: ${post.alt}`} target="_blank" rel="noopener noreferrer">
+            <img src={post.image} alt={post.alt} loading="lazy" width="300" height="300" />
+          </a>
+        </div>
+      ))}
+    </div>
+    <div class="ig-follow">
+      <a href={`https://instagram.com/${studio.instagram.replace('@','')}`} target="_blank" rel="noopener noreferrer">
+        Follow {studio.instagram} on Instagram
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <p class="footer-logo">Iron <span>&</span> Rose</p>
+    <p class="footer-tagline">Bold Lines. Timeless Art. American Classic.</p>
+    <nav aria-label="Footer navigation">
+      <ul class="footer-links" role="list">
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#artists">Artists</a></li>
+        <li><a href="#booking">Book</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#location">Location</a></li>
+      </ul>
+    </nav>
+    <p class="footer-copy">&copy; 2024 {studio.name} · {studio.address}, {studio.city} · {studio.phone}</p>
+  </div>
+</footer>
+
+<style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}</style>
+</body>
+</html>
