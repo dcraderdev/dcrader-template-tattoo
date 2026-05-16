@@ -5,393 +5,376 @@ import '../../styles/global.css';
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{studio.name} — Japanese Irezumi, {studio.city}</title>
-  <meta name="description" content={studio.description} />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>{studio.name} — Japanese Irezumi · {studio.city}</title>
+  <meta name="description" content={studio.description}/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet"/>
   <style>
-    :root {
-      --bg: #0A0A0A;
-      --surface: #141414;
-      --surface2: #1C1C1C;
-      --gold: #C9A85C;
-      --gold-light: #E2C97E;
-      --gold-dark: #A88840;
-      --red: #C41230;
-      --cream: #F0E8D0;
-      --gray: #8A8070;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--cream); font-family: 'Noto Serif', Georgia, serif; }
+    :root{--bg:#060606;--surf:#0E0E0E;--surf2:#161616;--gold:#B8974A;--gold2:#D4AE68;--red:#9B1324;--cream:#EAD8B4;--gray:#6A6050;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--cream);font-family:'Cormorant',Georgia,serif;}
 
-    /* Decorative wave border */
-    .wave-border { width: 100%; height: 40px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 40'%3E%3Cpath d='M0,20 C150,0 300,40 450,20 C600,0 750,40 900,20 C1050,0 1200,40 1200,20 L1200,40 L0,40 Z' fill='%23C9A85C' opacity='0.15'/%3E%3C/svg%3E") repeat-x center; }
+    /* NAV */
+    nav{background:rgba(6,6,6,0.95);border-bottom:1px solid rgba(184,151,74,0.15);position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);}
+    .nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;min-height:70px;}
+    .nav-logo{text-decoration:none;display:flex;align-items:baseline;gap:0.75rem;}
+    .nav-jp{font-family:'Noto Serif JP',serif;font-size:1.3rem;font-weight:400;color:var(--gold);}
+    .nav-en{font-family:'Cormorant',serif;font-size:0.75rem;font-weight:300;letter-spacing:0.3em;text-transform:uppercase;color:rgba(234,216,180,0.5);}
+    .nav-links{display:flex;list-style:none;gap:0;align-items:center;}
+    nav a{font-family:'Cormorant',serif;font-size:0.85rem;letter-spacing:0.1em;color:var(--gray);text-decoration:none;padding:0.4rem 0.85rem;display:block;transition:color 0.2s;}
+    nav a:hover,nav a:focus-visible{color:var(--gold);}
+    .nav-book-btn{background:var(--red)!important;color:var(--cream)!important;font-family:'Noto Serif JP',serif!important;font-size:0.75rem!important;letter-spacing:0.08em!important;}
 
-    /* Nav */
-    .nav { background: var(--bg); border-bottom: 1px solid rgba(201,168,92,0.2); position: sticky; top: 0; z-index: 100; }
-    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; min-height: 68px; flex-wrap: wrap; gap: 0.5rem; }
-    .nav-logo { display: flex; flex-direction: column; text-decoration: none; }
-    .nav-logo-jp { font-size: 0.85rem; color: var(--gold); letter-spacing: 0.3em; font-family: 'Noto Serif', serif; }
-    .nav-logo-en { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--cream); letter-spacing: 0.08em; }
-    .nav-links { display: flex; gap: 0; list-style: none; flex-wrap: wrap; }
-    .nav-links a { color: var(--gray); text-decoration: none; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; font-family: 'Noto Serif', serif; padding: 0.5rem 0.85rem; display: block; transition: color 0.2s; }
-    .nav-links a:hover, .nav-links a:focus-visible { color: var(--gold); }
-    .nav-cta { background: var(--red) !important; color: var(--cream) !important; }
-    .nav-cta:hover, .nav-cta:focus-visible { color: var(--cream) !important; opacity: 0.85; }
+    /* HERO — full-bleed with Japanese vertical text element */
+    .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;}
+    .hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1566738928-9462c47c5673?w=1920&q=85&auto=format&fit=crop') center/cover;filter:brightness(0.35) saturate(0.7);}
+    .hero-fade{position:absolute;inset:0;background:linear-gradient(to right,rgba(6,6,6,0.92) 45%,rgba(6,6,6,0.2) 100%);}
+    .hero-vertical{position:absolute;right:2rem;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-family:'Noto Serif JP',serif;font-size:0.8rem;font-weight:300;letter-spacing:0.3em;color:rgba(184,151,74,0.25);user-select:none;}
+    .hero-content{position:relative;max-width:1200px;margin:0 auto;padding:4rem 2rem;width:100%;}
+    .hero-tag{font-family:'Noto Serif JP',serif;font-size:0.7rem;letter-spacing:0.2em;color:rgba(184,151,74,0.6);margin-bottom:2rem;display:block;}
+    .hero-h1{font-family:'Noto Serif JP',serif;font-size:clamp(3.5rem,7vw,6.5rem);font-weight:700;color:var(--cream);line-height:1;margin-bottom:0.5rem;}
+    .hero-h1-en{font-family:'Cormorant',serif;font-style:italic;font-size:clamp(1.5rem,3vw,2.5rem);font-weight:300;color:var(--gold);display:block;margin-top:0.75rem;letter-spacing:0.05em;}
+    .hero-stroke{display:block;width:80px;height:3px;background:linear-gradient(to right,var(--red),var(--gold));margin:2rem 0;}
+    .hero-desc{font-family:'Cormorant',serif;font-style:italic;font-size:clamp(1rem,1.8vw,1.3rem);color:rgba(234,216,180,0.7);max-width:500px;line-height:1.75;margin-bottom:3rem;}
+    .hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;}
+    .btn-red{background:var(--red);color:var(--cream);font-family:'Noto Serif JP',serif;font-size:0.8rem;letter-spacing:0.1em;text-decoration:none;padding:0.9rem 2rem;border:1px solid var(--red);transition:background 0.2s;}
+    .btn-red:hover,.btn-red:focus-visible{background:#7A0F1C;}
+    .btn-gold{background:transparent;color:var(--gold);font-family:'Cormorant',serif;font-style:italic;font-size:1rem;letter-spacing:0.05em;text-decoration:none;padding:0.9rem 2rem;border:1px solid rgba(184,151,74,0.4);transition:all 0.2s;}
+    .btn-gold:hover,.btn-gold:focus-visible{border-color:var(--gold);background:rgba(184,151,74,0.08);}
 
-    /* Hero */
-    .hero { position: relative; min-height: 95vh; display: flex; align-items: center; overflow: hidden; }
-    .hero-bg { position: absolute; inset: 0; background-image: linear-gradient(to right, rgba(10,10,10,0.95) 40%, rgba(10,10,10,0.5) 100%), url('https://images.unsplash.com/photo-1566738928-9462c47c5673?w=1920&q=85&auto=format&fit=crop'); background-size: cover; background-position: center; }
-    .hero-content { position: relative; max-width: 1200px; margin: 0 auto; padding: 4rem 1.5rem; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
-    @media (max-width: 768px) { .hero-content { grid-template-columns: 1fr; } }
-    .hero-text {}
-    .hero-jp { font-family: 'Playfair Display', serif; font-size: clamp(4rem, 10vw, 8rem); font-weight: 900; color: rgba(201,168,92,0.12); line-height: 1; letter-spacing: -0.02em; position: absolute; top: 2rem; right: 1.5rem; pointer-events: none; user-select: none; }
-    .hero-badge { display: inline-block; border: 1px solid var(--gold); color: var(--gold); font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; padding: 0.3rem 0.9rem; margin-bottom: 1.5rem; font-family: 'Noto Serif', serif; }
-    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 900; color: var(--cream); line-height: 1.08; margin-bottom: 0.5rem; }
-    .hero h1 em { display: block; font-style: italic; color: var(--gold); font-size: 0.7em; font-weight: 700; margin-top: 0.25rem; }
-    .hero-rule { width: 60px; height: 2px; background: linear-gradient(to right, var(--red), var(--gold)); margin: 1.25rem 0; }
-    .hero-tagline { font-size: 0.95rem; color: #a09070; line-height: 1.75; max-width: 460px; margin-bottom: 2.5rem; }
-    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .btn-primary { background: var(--red); color: var(--cream); padding: 0.9rem 2rem; font-family: 'Noto Serif', serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border: 1px solid var(--red); transition: all 0.2s; }
-    .btn-primary:hover, .btn-primary:focus-visible { background: #a00e28; }
-    .btn-outline { background: transparent; color: var(--gold); padding: 0.9rem 2rem; font-family: 'Noto Serif', serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border: 1px solid var(--gold); transition: all 0.2s; }
-    .btn-outline:hover, .btn-outline:focus-visible { background: rgba(201,168,92,0.1); }
-    .hero-panel { background: rgba(20,20,20,0.85); border: 1px solid rgba(201,168,92,0.2); padding: 2rem; backdrop-filter: blur(4px); }
-    .hero-panel h2 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--gold); margin-bottom: 1rem; letter-spacing: 0.05em; }
-    .hero-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .hero-stat { text-align: center; padding: 1rem; border: 1px solid rgba(201,168,92,0.15); }
-    .hero-stat .val { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--cream); display: block; }
-    .hero-stat .lbl { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray); margin-top: 0.25rem; }
+    /* TRADITION STATEMENT — full-width interstitial */
+    .tradition{background:var(--red);padding:3.5rem 2rem;text-align:center;}
+    .tradition blockquote{font-family:'Cormorant',serif;font-style:italic;font-size:clamp(1.2rem,2.5vw,2rem);color:var(--cream);max-width:800px;margin:0 auto;line-height:1.6;}
+    .tradition cite{display:block;margin-top:1rem;font-family:'Noto Serif JP',serif;font-size:0.7rem;letter-spacing:0.25em;color:rgba(234,216,180,0.6);font-style:normal;}
 
-    /* Section */
-    .section { padding: 5rem 1.5rem; }
-    .section-inner { max-width: 1200px; margin: 0 auto; }
-    .section-label { font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--red); font-weight: 600; margin-bottom: 0.6rem; display: block; font-family: 'Noto Serif', serif; }
-    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 900; color: var(--cream); line-height: 1.1; margin-bottom: 0.5rem; }
-    .gold-rule { width: 50px; height: 2px; background: linear-gradient(to right, var(--red), var(--gold)); margin: 1rem 0 2.5rem; }
+    /* SECTIONS */
+    .section{padding:6rem 2rem;}
+    .section-inner{max-width:1200px;margin:0 auto;}
+    .eyebrow{font-family:'Noto Serif JP',serif;font-size:0.65rem;letter-spacing:0.3em;color:var(--red);margin-bottom:0.5rem;display:block;}
+    .section-h{font-family:'Cormorant',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:600;color:var(--cream);line-height:1.05;}
+    .section-h-jp{font-family:'Noto Serif JP',serif;font-size:0.9rem;font-weight:300;color:rgba(184,151,74,0.5);letter-spacing:0.15em;display:block;margin-bottom:0.25rem;}
+    .gold-stroke{width:50px;height:2px;background:linear-gradient(to right,var(--red),var(--gold));margin:1.25rem 0 2.5rem;}
 
-    /* Artists */
-    .artists-bg { background: var(--surface); }
-    .artist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1px; background: rgba(201,168,92,0.2); border: 1px solid rgba(201,168,92,0.2); }
-    .artist-card { background: var(--surface2); overflow: hidden; }
-    .artist-img { width: 100%; height: 300px; object-fit: cover; display: block; filter: sepia(15%) contrast(1.1); }
-    .artist-info { padding: 1.5rem; border-top: 2px solid var(--red); }
-    .artist-name { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--cream); margin-bottom: 0.3rem; }
-    .artist-specialty { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; font-family: 'Noto Serif', serif; font-weight: 600; }
-    .artist-bio { font-size: 0.86rem; color: var(--gray); line-height: 1.7; margin-bottom: 0.75rem; }
-    .artist-handle { font-size: 0.75rem; color: rgba(201,168,92,0.6); }
-    .style-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.75rem; }
-    .style-tag { background: rgba(196,18,48,0.15); color: var(--red); border: 1px solid rgba(196,18,48,0.3); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.5rem; font-family: 'Noto Serif', serif; }
-    .years-note { display: inline-block; background: rgba(201,168,92,0.1); color: var(--gold); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.6rem; margin-top: 0.5rem; border: 1px solid rgba(201,168,92,0.2); }
+    /* ARTISTS — full-width vertical panels */
+    .artist-bg{background:var(--surf);}
+    .artist-panels{display:grid;gap:1px;background:rgba(184,151,74,0.1);}
+    .artist-panel{display:grid;grid-template-columns:380px 1fr;min-height:400px;background:var(--bg);}
+    .artist-panel:nth-child(even){grid-template-columns:1fr 380px;}
+    .artist-panel:nth-child(even) .artist-panel-photo{order:2;}
+    .artist-panel:nth-child(even) .artist-panel-info{order:1;}
+    .artist-panel-photo{overflow:hidden;position:relative;}
+    .artist-panel-photo img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;filter:sepia(15%) contrast(1.1);transition:filter 0.5s;}
+    .artist-panel:hover .artist-panel-photo img{filter:sepia(0%) contrast(1.1);}
+    .artist-panel-info{padding:3rem;display:flex;flex-direction:column;justify-content:center;position:relative;}
+    .artist-panel-num{font-family:'Noto Serif JP',serif;font-size:3.5rem;font-weight:700;color:rgba(184,151,74,0.06);position:absolute;top:2rem;right:2rem;line-height:1;}
+    .artist-panel-h{font-family:'Cormorant',serif;font-size:1.8rem;font-weight:600;color:var(--cream);margin-bottom:0.25rem;}
+    .artist-panel-spec{font-family:'Noto Serif JP',serif;font-size:0.65rem;letter-spacing:0.2em;color:var(--gold);margin-bottom:1.25rem;}
+    .artist-panel-bio{font-family:'Cormorant',serif;font-style:italic;font-size:1rem;color:var(--gray);line-height:1.8;margin-bottom:1.25rem;}
+    .artist-panel-handle{font-size:0.8rem;color:rgba(184,151,74,0.5);}
+    .artist-tags{display:flex;gap:0.4rem;flex-wrap:wrap;margin-top:0.75rem;}
+    .tag{background:rgba(155,19,36,0.15);color:var(--red);border:1px solid rgba(155,19,36,0.25);font-family:'Noto Serif JP',serif;font-size:0.6rem;letter-spacing:0.08em;padding:0.2rem 0.5rem;}
+    .years{display:inline-block;background:rgba(184,151,74,0.1);border:1px solid rgba(184,151,74,0.2);color:var(--gold);font-family:'Noto Serif JP',serif;font-size:0.62rem;letter-spacing:0.1em;padding:0.2rem 0.6rem;margin-top:0.5rem;}
+    @media(max-width:768px){.artist-panel{grid-template-columns:1fr;min-height:auto;}.artist-panel:nth-child(even){grid-template-columns:1fr;}.artist-panel-photo{height:280px;}.artist-panel:nth-child(even) .artist-panel-photo{order:1;}.artist-panel:nth-child(even) .artist-panel-info{order:2;}}
 
-    /* Gallery */
-    .gallery-bg { background: var(--bg); }
-    .masonry-grid { columns: 2; column-gap: 6px; }
-    @media (min-width: 640px) { .masonry-grid { columns: 3; } }
-    @media (min-width: 1024px) { .masonry-grid { columns: 4; } }
-    .masonry-item { break-inside: avoid; margin-bottom: 6px; overflow: hidden; position: relative; }
-    .masonry-item img { width: 100%; display: block; transition: transform 0.5s; filter: sepia(10%) contrast(1.1); }
-    .masonry-item:hover img { transform: scale(1.04); }
-    .masonry-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 55%); opacity: 0; transition: opacity 0.3s; display: flex; align-items: flex-end; padding: 0.75rem; }
-    .masonry-item:hover .masonry-overlay { opacity: 1; }
-    .masonry-cap { color: var(--gold); font-size: 0.7rem; letter-spacing: 0.1em; font-family: 'Noto Serif', serif; }
+    /* GALLERY — vertical full-width sequence */
+    .gallery-bg{background:var(--bg);}
+    .vertical-gallery{display:grid;gap:3px;margin-top:2rem;}
+    .vg-item{position:relative;overflow:hidden;}
+    .vg-item img{width:100%;display:block;aspect-ratio:16/7;object-fit:cover;object-position:center;filter:sepia(10%) contrast(1.1);transition:filter 0.5s,transform 0.6s;}
+    .vg-item:hover img{filter:sepia(0%) contrast(1.15);transform:scale(1.02);}
+    .vg-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(6,6,6,0.75) 0%,transparent 55%);display:flex;align-items:flex-end;padding:2rem;}
+    .vg-caption{color:var(--cream);}
+    .vg-caption-style{font-family:'Noto Serif JP',serif;font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);margin-bottom:0.25rem;}
+    .vg-caption-desc{font-family:'Cormorant',serif;font-style:italic;font-size:1.1rem;color:var(--cream);}
+    .vg-caption-artist{font-family:'Cormorant',serif;font-size:0.8rem;color:var(--gray);}
 
-    /* Aftercare */
-    .aftercare-bg { background: var(--surface); }
-    .aftercare-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1px; background: rgba(201,168,92,0.15); border: 1px solid rgba(201,168,92,0.15); margin-top: 2.5rem; }
-    .aftercare-card { background: var(--bg); padding: 2rem; }
-    .aftercare-num { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; color: rgba(201,168,92,0.15); line-height: 1; margin-bottom: 0.75rem; }
-    .aftercare-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--gold); margin-bottom: 0.5rem; }
-    .aftercare-body { font-size: 0.85rem; color: var(--gray); line-height: 1.75; }
+    /* AFTERCARE */
+    .ac-bg{background:var(--surf);}
+    .ac-scroll{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(184,151,74,0.1);margin-top:2rem;}
+    @media(max-width:640px){.ac-scroll{grid-template-columns:1fr;}}
+    .ac-card{background:var(--bg);padding:2.5rem;}
+    .ac-num-jp{font-family:'Noto Serif JP',serif;font-size:2.5rem;font-weight:700;color:rgba(184,151,74,0.12);line-height:1;margin-bottom:0.75rem;}
+    .ac-title{font-family:'Cormorant',serif;font-size:1.15rem;font-weight:600;color:var(--gold);margin-bottom:0.6rem;}
+    .ac-body{font-family:'Cormorant',serif;font-style:italic;font-size:0.95rem;color:var(--gray);line-height:1.8;}
 
-    /* Booking */
-    .booking-bg { background: linear-gradient(135deg, var(--surface) 0%, var(--bg) 100%); border-top: 1px solid rgba(201,168,92,0.2); border-bottom: 1px solid rgba(201,168,92,0.2); }
-    .booking-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
-    @media (min-width: 768px) { .booking-grid { grid-template-columns: 1fr 1fr; } }
-    .booking-info p { font-size: 0.9rem; color: var(--gray); line-height: 1.8; margin-bottom: 1rem; }
-    .booking-price-box { border: 1px solid rgba(201,168,92,0.2); padding: 1.25rem 1.5rem; margin-top: 1.5rem; background: rgba(201,168,92,0.04); }
-    .booking-price-box p { margin: 0.4rem 0; font-size: 0.85rem; color: var(--gray); }
-    .booking-price-box strong { color: var(--gold); }
-    .booking-form { display: grid; gap: 1.25rem; }
-    label { display: block; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 0.35rem; font-family: 'Noto Serif', serif; }
-    input, select, textarea { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,92,0.25); color: var(--cream); padding: 0.7rem 0.9rem; font-family: 'Noto Serif', serif; font-size: 0.88rem; outline: none; transition: border-color 0.2s; }
-    input:focus, select:focus, textarea:focus { border-color: var(--gold); }
-    input::placeholder, textarea::placeholder { color: rgba(240,232,208,0.25); }
-    select option { background: var(--surface); color: var(--cream); }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .btn-submit { background: var(--red); color: var(--cream); padding: 0.9rem 2rem; font-family: 'Noto Serif', serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; border: none; cursor: pointer; transition: background 0.2s; width: 100%; margin-top: 0.5rem; }
-    .btn-submit:hover, .btn-submit:focus-visible { background: #a00e28; }
+    /* BOOKING */
+    .bk-bg{background:linear-gradient(135deg,var(--surf2) 0%,var(--bg) 100%);border-top:1px solid rgba(184,151,74,0.15);}
+    .bk-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;}
+    @media(max-width:768px){.bk-grid{grid-template-columns:1fr;}}
+    .bk-info p{font-family:'Cormorant',serif;font-style:italic;font-size:1rem;color:var(--gray);line-height:1.8;margin-bottom:1rem;}
+    .price-box{border:1px solid rgba(184,151,74,0.15);background:rgba(184,151,74,0.04);padding:1.5rem;margin-top:1.5rem;}
+    .price-row{display:flex;justify-content:space-between;font-family:'Cormorant',serif;font-size:0.95rem;color:var(--gray);padding:0.45rem 0;border-bottom:1px solid rgba(184,151,74,0.08);}
+    .price-row:last-child{border-bottom:none;}
+    .price-row strong{color:var(--gold);}
+    .bk-form{display:grid;gap:1.25rem;}
+    .fl{display:block;font-family:'Noto Serif JP',serif;font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);margin-bottom:0.3rem;}
+    .fi{width:100%;background:rgba(255,255,255,0.03);border:1px solid rgba(184,151,74,0.2);color:var(--cream);padding:0.7rem 0.9rem;font-family:'Cormorant',serif;font-size:0.95rem;outline:none;transition:border-color 0.2s;}
+    .fi:focus{border-color:var(--gold);}
+    .fi::placeholder{color:rgba(234,216,180,0.2);}
+    .fi option{background:var(--surf);}
+    .fr{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+    .fs{background:var(--red);color:var(--cream);font-family:'Noto Serif JP',serif;font-size:0.78rem;letter-spacing:0.1em;border:none;cursor:pointer;padding:0.9rem 2rem;width:100%;transition:background 0.2s;}
+    .fs:hover,.fs:focus-visible{background:#7A0F1C;}
 
     /* FAQ */
-    .faq-list { margin-top: 2rem; border: 1px solid rgba(201,168,92,0.15); }
-    details { border-bottom: 1px solid rgba(201,168,92,0.1); }
-    details:last-child { border-bottom: none; }
-    summary { padding: 1.25rem 1.5rem; cursor: pointer; font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--cream); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-    summary::-webkit-details-marker { display: none; }
-    summary::after { content: '龍'; font-size: 0.9rem; color: var(--gold); opacity: 0.5; flex-shrink: 0; transition: transform 0.3s; }
-    details[open] summary::after { transform: rotate(180deg); }
-    summary:hover { background: rgba(201,168,92,0.04); }
-    .faq-answer { padding: 0 1.5rem 1.25rem; font-size: 0.87rem; color: var(--gray); line-height: 1.8; }
+    .faq-outer{border:1px solid rgba(184,151,74,0.12);margin-top:2rem;}
+    details{border-bottom:1px solid rgba(184,151,74,0.08);}
+    details:last-child{border-bottom:none;}
+    summary{padding:1.25rem 1.5rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;list-style:none;font-family:'Cormorant',serif;font-size:1.05rem;font-weight:600;color:var(--cream);}
+    summary::-webkit-details-marker{display:none;}
+    summary::after{content:'鯉';font-family:'Noto Serif JP',serif;font-size:0.8rem;color:rgba(184,151,74,0.35);flex-shrink:0;transition:transform 0.3s;}
+    details[open] summary::after{transform:rotate(360deg);color:var(--gold);}
+    summary:hover{background:rgba(184,151,74,0.03);}
+    .faq-ans{padding:0 1.5rem 1.25rem;font-family:'Cormorant',serif;font-style:italic;font-size:0.95rem;color:var(--gray);line-height:1.8;}
 
-    /* Location */
-    .location-bg { background: var(--surface); }
-    .location-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
-    @media (min-width: 768px) { .location-grid { grid-template-columns: 1fr 1fr; } }
-    .hours-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
-    .hours-table tr { border-bottom: 1px solid rgba(201,168,92,0.1); }
-    .hours-table td { padding: 0.65rem 0; font-size: 0.85rem; color: var(--gray); }
-    .hours-table td:first-child { color: var(--cream); font-weight: 600; letter-spacing: 0.04em; }
-    .hours-table .closed { color: #3a3020; font-style: italic; }
-    .contact-list { margin-top: 1.5rem; display: grid; gap: 1rem; }
-    .contact-item { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.88rem; color: var(--gray); }
-    .contact-icon { color: var(--gold); font-size: 0.9rem; flex-shrink: 0; }
-    .contact-item a { color: var(--gold); text-decoration: none; }
+    /* LOCATION */
+    .loc-bg{background:var(--surf);}
+    .loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
+    @media(max-width:700px){.loc-grid{grid-template-columns:1fr;}}
+    .hours-tbl{width:100%;border-collapse:collapse;margin-top:1.5rem;}
+    .hours-tbl tr{border-bottom:1px solid rgba(184,151,74,0.1);}
+    .hours-tbl td{padding:0.65rem 0;font-family:'Cormorant',serif;font-size:1rem;color:var(--gray);}
+    .hours-tbl td:first-child{color:var(--cream);font-family:'Noto Serif JP',serif;font-size:0.85rem;}
+    .hours-tbl .closed{color:#2a2010;font-style:italic;}
+    .c-stack{margin-top:1.5rem;display:grid;gap:0.9rem;}
+    .c-row{display:flex;gap:0.75rem;font-family:'Cormorant',serif;font-size:1rem;color:var(--gray);}
+    .c-row a{color:var(--gold);text-decoration:none;}
 
     /* IG */
-    .ig-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 2rem; }
-    @media (min-width: 640px) { .ig-grid { grid-template-columns: repeat(6, 1fr); } }
-    .ig-post { aspect-ratio: 1; overflow: hidden; position: relative; }
-    .ig-post img { width: 100%; height: 100%; object-fit: cover; display: block; filter: sepia(20%) contrast(1.1); transition: transform 0.4s; }
-    .ig-post a:hover img { transform: scale(1.08); }
-    .ig-post a { display: block; height: 100%; }
-    .ig-post a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-    .ig-follow { text-align: center; margin-top: 2rem; }
-    .ig-follow a { color: var(--gold); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; border: 1px solid rgba(201,168,92,0.4); padding: 0.75rem 2rem; display: inline-block; transition: all 0.2s; font-family: 'Noto Serif', serif; }
-    .ig-follow a:hover, .ig-follow a:focus-visible { background: rgba(201,168,92,0.1); }
+    .ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:2rem;}
+    @media(min-width:640px){.ig-grid{grid-template-columns:repeat(6,1fr);}}
+    .ig-cell{aspect-ratio:1;overflow:hidden;}
+    .ig-cell img{width:100%;height:100%;object-fit:cover;display:block;filter:sepia(15%) contrast(1.05);transition:transform 0.4s,filter 0.3s;}
+    .ig-cell a:hover img{transform:scale(1.07);filter:sepia(0%);}
+    .ig-cell a{display:block;height:100%;}
+    .ig-cell a:focus-visible{outline:1px solid var(--gold);outline-offset:2px;}
+    .ig-cta{text-align:center;margin-top:2rem;}
+    .ig-cta a{font-family:'Cormorant',serif;font-style:italic;font-size:1rem;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(184,151,74,0.3);padding-bottom:2px;}
 
-    /* Footer */
-    footer { background: #050505; border-top: 2px solid var(--red); padding: 3rem 1.5rem; text-align: center; }
-    .footer-jp { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--gold); margin-bottom: 0.25rem; }
-    .footer-en { font-family: 'Playfair Display', serif; font-size: 0.9rem; font-weight: 700; color: var(--cream); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.5rem; }
-    .footer-tagline { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray); margin-bottom: 1.5rem; }
-    .footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.25rem; list-style: none; }
-    .footer-links a { color: var(--gray); font-size: 0.68rem; text-decoration: none; letter-spacing: 0.12em; text-transform: uppercase; font-family: 'Noto Serif', serif; }
-    .footer-links a:hover { color: var(--gold); }
-    .footer-copy { font-size: 0.72rem; color: #3a3020; }
-    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
-    .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0 }
+    /* FOOTER */
+    footer{background:#030303;border-top:1px solid var(--red);padding:3.5rem 2rem;text-align:center;}
+    .foot-jp{font-family:'Noto Serif JP',serif;font-size:2rem;font-weight:700;color:var(--gold);margin-bottom:0.25rem;}
+    .foot-en{font-family:'Cormorant',serif;font-style:italic;font-size:1rem;color:rgba(234,216,180,0.4);letter-spacing:0.15em;margin-bottom:0.75rem;}
+    .foot-quote{font-family:'Cormorant',serif;font-style:italic;font-size:0.9rem;color:rgba(184,151,74,0.3);max-width:500px;margin:0 auto 1.5rem;}
+    .foot-nav{display:flex;justify-content:center;gap:0;list-style:none;flex-wrap:wrap;margin-bottom:1.25rem;}
+    .foot-nav a{font-family:'Cormorant',serif;font-size:0.85rem;color:rgba(184,151,74,0.25);text-decoration:none;padding:0.3rem 0.9rem;transition:color 0.2s;}
+    .foot-nav a:hover{color:var(--gold);}
+    .foot-copy{font-family:'Noto Serif JP',serif;font-size:0.62rem;color:#1a1008;letter-spacing:0.1em;}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @media(max-width:480px){.fr{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
 
-<nav class="nav" aria-label="Main navigation">
+<nav aria-label="Main navigation">
   <div class="nav-inner">
-    <a href="/v3-japanese-irezumi" class="nav-logo" aria-label="Ryūboku Tattoo home">
-      <span class="nav-logo-jp">龍墨</span>
-      <span class="nav-logo-en">Ryūboku Tattoo</span>
+    <a class="nav-logo" href="/dcrader-template-tattoo/v3-japanese-irezumi" aria-label="Ryūboku Tattoo home">
+      <span class="nav-jp">龍墨</span>
+      <span class="nav-en">Ryūboku Tattoo</span>
     </a>
     <ul class="nav-links" role="list">
-      <li><a href="#portfolio">Portfolio</a></li>
       <li><a href="#artists">Artists</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
       <li><a href="#aftercare">Aftercare</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#location">Location</a></li>
-      <li><a href="#booking" class="nav-cta">Book</a></li>
+      <li><a href="#booking" class="nav-book-btn">予約</a></li>
     </ul>
   </div>
 </nav>
 
-<section id="hero" aria-label="Hero — Ryūboku Tattoo">
+<!-- HERO -->
+<section id="hero" aria-label="Hero">
   <div class="hero">
     <div class="hero-bg" role="img" aria-label={studio.heroAlt}></div>
+    <div class="hero-fade" aria-hidden="true"></div>
+    <p class="hero-vertical" aria-hidden="true">伝統的刺青　龍墨　サンディエゴ</p>
     <div class="hero-content">
-      <div class="hero-text">
-        <div class="hero-badge" aria-hidden="true">伝統的刺青 · Traditional Irezumi · {studio.city}</div>
-        <h1>龍墨<em>Ryūboku Tattoo</em></h1>
-        <div class="hero-rule" aria-hidden="true"></div>
-        <p class="hero-tagline">{studio.tagline}<br/><br/>{studio.description.split('.')[0]}.</p>
-        <div class="hero-actions">
-          <a href="#booking" class="btn-primary">Begin Your Journey</a>
-          <a href="#portfolio" class="btn-outline">View the Work</a>
-        </div>
-      </div>
-      <div class="hero-panel">
-        <h2>Studio at a Glance</h2>
-        <div class="hero-stat-grid" aria-label="Studio statistics">
-          <div class="hero-stat"><span class="val">3</span><span class="lbl">Horishi</span></div>
-          <div class="hero-stat"><span class="val">${studio.minimumCharge}</span><span class="lbl">Minimum</span></div>
-          <div class="hero-stat"><span class="val">${studio.depositAmount}</span><span class="lbl">Deposit</span></div>
-          <div class="hero-stat"><span class="val">100+</span><span class="lbl">Sleeves Completed</span></div>
-        </div>
+      <span class="hero-tag">伝統的刺青 · Traditional Irezumi · San Diego, CA</span>
+      <h1 class="hero-h1">龍墨<em class="hero-h1-en">Ryūboku Tattoo</em></h1>
+      <span class="hero-stroke" aria-hidden="true"></span>
+      <p class="hero-desc">{studio.tagline}<br/><br/>Where the tradition of five-year apprenticeship meets living skin.</p>
+      <div class="hero-ctas">
+        <a href="#booking" class="btn-red">Begin Your Journey</a>
+        <a href="#portfolio" class="btn-gold">View the Work</a>
       </div>
     </div>
   </div>
 </section>
 
-<section id="artists" class="section artists-bg" aria-labelledby="artists-heading">
+<!-- TRADITION INTERSTITIAL -->
+<div class="tradition" role="note">
+  <blockquote>
+    "A true horishi does not pick up the needle until they have spent five years watching, cleaning, and learning. The art lives in that patience."
+    <cite>— Studio Philosophy, Ryūboku Tattoo</cite>
+  </blockquote>
+</div>
+
+<!-- ARTISTS -->
+<section id="artists" class="section artist-bg" aria-labelledby="artists-h">
   <div class="section-inner">
-    <span class="section-label">Our Horishi</span>
-    <h2 class="section-title" id="artists-heading">The Masters of the Form</h2>
-    <div class="gold-rule" aria-hidden="true"></div>
-    <div class="artist-grid" role="list">
-      {studio.artists.map(artist => (
-        <article class="artist-card" role="listitem" aria-label={`Artist: ${artist.name}`}>
-          <img src={artist.image} alt={`Portrait of ${artist.name}, ${artist.specialty}`} class="artist-img" loading="lazy" width="400" height="300" />
-          <div class="artist-info">
-            <h3 class="artist-name">{artist.name}</h3>
-            <p class="artist-specialty">{artist.specialty}</p>
-            <p class="artist-bio">{artist.bio}</p>
-            <p class="artist-handle">{artist.handle}</p>
-            <div class="style-tags" aria-label={`Styles: ${artist.styles.join(', ')}`}>
-              {artist.styles.map(s => <span class="style-tag">{s}</span>)}
-            </div>
-            <p class="years-note">{artist.yearsExp} years</p>
+    <span class="eyebrow">彫師 — Our Horishi</span>
+    <span class="section-h-jp">師匠の技</span>
+    <h2 class="section-h" id="artists-h">Masters of the Form</h2>
+    <div class="gold-stroke" aria-hidden="true"></div>
+  </div>
+  <div class="artist-panels" role="list">
+    {studio.artists.map((a, i) => (
+      <article class="artist-panel" role="listitem" aria-label={`Artist: ${a.name}`}>
+        <div class="artist-panel-photo">
+          <img src={a.image} alt={`Portrait of ${a.name}`} loading="lazy" width="380" height="400"/>
+        </div>
+        <div class="artist-panel-info">
+          <div class="artist-panel-num" aria-hidden="true">{i+1}</div>
+          <h3 class="artist-panel-h">{a.name}</h3>
+          <p class="artist-panel-spec">{a.specialty}</p>
+          <p class="artist-panel-bio">{a.bio}</p>
+          <p class="artist-panel-handle">{a.handle}</p>
+          <div class="artist-tags" aria-label={`Styles: ${a.styles.join(', ')}`}>
+            {a.styles.map(s => <span class="tag">{s}</span>)}
           </div>
-        </article>
-      ))}
-    </div>
+          <p class="years">{a.yearsExp} 年 / {a.yearsExp} Years</p>
+        </div>
+      </article>
+    ))}
   </div>
 </section>
 
-<section id="portfolio" class="section gallery-bg" aria-labelledby="gallery-heading">
+<!-- GALLERY — vertical sequence -->
+<section id="portfolio" class="section gallery-bg" aria-labelledby="gallery-h">
   <div class="section-inner">
-    <span class="section-label">Portfolio</span>
-    <h2 class="section-title" id="gallery-heading">Works in the Traditional Form</h2>
-    <div class="gold-rule" aria-hidden="true"></div>
-    <div class="masonry-grid" role="list" aria-label="Tattoo portfolio">
-      {studio.gallery.map(item => (
-        <figure class="masonry-item" role="listitem">
-          <img src={item.image} alt={item.alt} loading="lazy" width="600" height="500" />
-          <div class="masonry-overlay" aria-hidden="true">
-            <p class="masonry-cap">{item.artist} · {item.style}</p>
-          </div>
-          <figcaption class="sr-only">{item.alt} — {item.artist}</figcaption>
-        </figure>
-      ))}
-    </div>
+    <span class="eyebrow">作品集 — Portfolio</span>
+    <span class="section-h-jp">伝統の形</span>
+    <h2 class="section-h" id="gallery-h">Works in the Traditional Form</h2>
+    <div class="gold-stroke" aria-hidden="true"></div>
+  </div>
+  <div class="vertical-gallery" role="list" aria-label="Portfolio gallery">
+    {studio.gallery.slice(0,6).map(item => (
+      <figure class="vg-item" role="listitem">
+        <img src={item.image} alt={item.alt} loading="lazy" width="1200" height="525"/>
+        <div class="vg-overlay" aria-hidden="true">
+          <figcaption class="vg-caption">
+            <p class="vg-caption-style">{item.style}</p>
+            <p class="vg-caption-desc">{item.alt.split('–')[0].trim()}</p>
+            <p class="vg-caption-artist">— {item.artist}</p>
+          </figcaption>
+        </div>
+      </figure>
+    ))}
   </div>
 </section>
 
-<section id="aftercare" class="section aftercare-bg" aria-labelledby="aftercare-heading">
+<!-- AFTERCARE -->
+<section id="aftercare" class="section ac-bg" aria-labelledby="aftercare-h">
   <div class="section-inner">
-    <span class="section-label">Aftercare</span>
-    <h2 class="section-title" id="aftercare-heading">Honoring the Work</h2>
-    <div class="gold-rule" aria-hidden="true"></div>
-    <p style="color:var(--gray); max-width:580px; line-height:1.8; font-size:0.9rem; margin-bottom:0.5rem;">Large-scale irezumi is a living commitment. Treat each session's healing with the same reverence as the art itself.</p>
-    <div class="aftercare-grid" role="list">
+    <span class="eyebrow">アフターケア — Aftercare</span>
+    <span class="section-h-jp">作品を守る</span>
+    <h2 class="section-h" id="aftercare-h">Honoring the Work</h2>
+    <div class="gold-stroke" aria-hidden="true"></div>
+    <p style="font-family:'Cormorant',serif;font-style:italic;font-size:1rem;color:var(--gray);max-width:560px;line-height:1.8;margin-bottom:0.5rem;">Each healing session is as important as the session itself. Irezumi demands respect at every stage.</p>
+    <div class="ac-scroll" role="list">
       {studio.aftercare.map(step => (
-        <div class="aftercare-card" role="listitem">
-          <div class="aftercare-num" aria-hidden="true">0{step.step}</div>
-          <h3 class="aftercare-title">{step.title}</h3>
-          <p class="aftercare-body">{step.body}</p>
+        <div class="ac-card" role="listitem">
+          <div class="ac-num-jp" aria-hidden="true">0{step.step}</div>
+          <h3 class="ac-title">{step.title}</h3>
+          <p class="ac-body">{step.body}</p>
         </div>
       ))}
     </div>
   </div>
 </section>
 
-<section id="booking" class="section booking-bg" aria-labelledby="booking-heading">
+<!-- BOOKING -->
+<section id="booking" class="section bk-bg" aria-labelledby="booking-h">
   <div class="section-inner">
-    <div class="booking-grid">
-      <div class="booking-info">
-        <span class="section-label">Begin Your Irezumi Journey</span>
-        <h2 class="section-title" id="booking-heading">Request a Consultation</h2>
-        <div class="gold-rule" aria-hidden="true"></div>
-        <p>Irezumi is a commitment. Before we tattoo, we consult. Fill out this form and your chosen horishi will respond personally within 72 hours to discuss your vision, placement, and timeline.</p>
-        <p>A ${studio.depositAmount} deposit holds your consultation slot and is credited to your first session.</p>
-        <div class="booking-price-box">
-          <p><strong>Shop Minimum</strong> — ${studio.minimumCharge}</p>
-          <p><strong>Hourly Rate</strong> — ${studio.hourlyRate}/hr</p>
-          <p><strong>Booking Deposit</strong> — ${studio.depositAmount}</p>
-          <p><strong>Full Suits</strong> — Custom quote after consultation</p>
+    <div class="bk-grid">
+      <div class="bk-info">
+        <span class="eyebrow">予約 — Begin</span>
+        <span class="section-h-jp">旅を始める</span>
+        <h2 class="section-h" id="booking-h">Request a Consultation</h2>
+        <div class="gold-stroke" aria-hidden="true"></div>
+        <p>Irezumi is a conversation between artist and skin that can last years. Before we begin, we speak. Describe your vision below and your horishi will respond within 72 hours.</p>
+        <p>A ${studio.depositAmount} deposit reserves your consultation and is applied toward your first session.</p>
+        <div class="price-box">
+          <div class="price-row"><span>Shop Minimum</span><strong>${studio.minimumCharge}</strong></div>
+          <div class="price-row"><span>Hourly Rate</span><strong>${studio.hourlyRate}/hr</strong></div>
+          <div class="price-row"><span>Booking Deposit</span><strong>${studio.depositAmount}</strong></div>
+          <div class="price-row"><span>Full Suits</span><strong>Custom quote</strong></div>
         </div>
       </div>
-      <form class="booking-form" action="#" method="post" aria-label="Booking request form" novalidate>
-        <div>
-          <label for="b-name">Full Name <span aria-label="required">*</span></label>
-          <input type="text" id="b-name" name="name" placeholder="Your full name" required autocomplete="name" />
+      <form class="bk-form" action="#" method="post" aria-label="Booking request form" novalidate>
+        <div><label class="fl" for="bn">Full Name *</label><input class="fi" type="text" id="bn" name="name" placeholder="Your name" required autocomplete="name"/></div>
+        <div class="fr">
+          <div><label class="fl" for="be">Email *</label><input class="fi" type="email" id="be" name="email" placeholder="you@email.com" required/></div>
+          <div><label class="fl" for="bp">Phone</label><input class="fi" type="tel" id="bp" name="phone" placeholder="Optional"/></div>
         </div>
-        <div class="form-row">
-          <div>
-            <label for="b-email">Email <span aria-label="required">*</span></label>
-            <input type="email" id="b-email" name="email" placeholder="you@email.com" required autocomplete="email" />
-          </div>
-          <div>
-            <label for="b-phone">Phone</label>
-            <input type="tel" id="b-phone" name="phone" placeholder="Optional" autocomplete="tel" />
-          </div>
-        </div>
-        <div>
-          <label for="b-artist">Preferred Artist</label>
-          <select id="b-artist" name="artist">
+        <div><label class="fl" for="ba">Preferred Horishi</label>
+          <select class="fi" id="ba" name="artist">
             <option value="">No preference</option>
             {studio.artists.map(a => <option value={a.name}>{a.name}</option>)}
           </select>
         </div>
-        <div>
-          <label for="b-scope">Project Scope</label>
-          <select id="b-scope" name="scope">
-            <option value="">Select</option>
-            <option value="small">Single piece (standalone)</option>
-            <option value="sleeve">Half or full sleeve</option>
-            <option value="back">Back piece</option>
-            <option value="suit">Full body suit</option>
-            <option value="touch">Touch-up / continuation</option>
+        <div><label class="fl" for="bsc">Project Scope</label>
+          <select class="fi" id="bsc" name="scope">
+            <option>Single piece</option><option>Half sleeve</option><option>Full sleeve</option><option>Back piece</option><option>Full body suit</option>
           </select>
         </div>
-        <div class="form-row">
-          <div>
-            <label for="b-placement">Placement</label>
-            <input type="text" id="b-placement" name="placement" placeholder="e.g. full sleeve, back" />
-          </div>
-          <div>
-            <label for="b-dates">Availability</label>
-            <input type="text" id="b-dates" name="dates" placeholder="e.g. Monthly sessions" />
-          </div>
+        <div class="fr">
+          <div><label class="fl" for="bpl">Placement</label><input class="fi" type="text" id="bpl" name="placement" placeholder="e.g. full sleeve"/></div>
+          <div><label class="fl" for="bdt">Availability</label><input class="fi" type="text" id="bdt" name="dates" placeholder="e.g. monthly sessions"/></div>
         </div>
-        <div>
-          <label for="b-desc">Describe Your Vision <span aria-label="required">*</span></label>
-          <textarea id="b-desc" name="description" placeholder="Motifs, themes, scale, color vs. black/grey, existing work to incorporate..." rows="5" required></textarea>
-        </div>
-        <button type="submit" class="btn-submit">Request Consultation + ${studio.depositAmount} Deposit</button>
+        <div><label class="fl" for="bd">Describe your vision *</label><textarea class="fi" id="bd" name="description" rows="5" placeholder="Motifs, themes, scale, color or black/grey, existing work to consider..." required></textarea></div>
+        <button class="fs" type="submit">Request Consultation + ${studio.depositAmount} Deposit</button>
       </form>
     </div>
   </div>
 </section>
 
-<section id="faq" class="section" aria-labelledby="faq-heading">
+<!-- FAQ -->
+<section id="faq" class="section" aria-labelledby="faq-h">
   <div class="section-inner" style="max-width:800px;">
-    <span class="section-label">Frequently Asked</span>
-    <h2 class="section-title" id="faq-heading">Questions &amp; Answers</h2>
-    <div class="gold-rule" aria-hidden="true"></div>
-    <div class="faq-list">
-      {studio.faqs.map(faq => (
+    <span class="eyebrow">よくある質問 — FAQ</span>
+    <h2 class="section-h" id="faq-h">Questions &amp; Answers</h2>
+    <div class="gold-stroke" aria-hidden="true"></div>
+    <div class="faq-outer">
+      {studio.faqs.map(f => (
         <details>
-          <summary>{faq.question}</summary>
-          <div class="faq-answer"><p>{faq.answer}</p></div>
+          <summary>{f.question}</summary>
+          <div class="faq-ans"><p>{f.answer}</p></div>
         </details>
       ))}
     </div>
   </div>
 </section>
 
-<section id="location" class="section location-bg" aria-labelledby="location-heading">
+<!-- LOCATION -->
+<section id="location" class="section loc-bg" aria-labelledby="loc-h">
   <div class="section-inner">
-    <div class="location-grid">
+    <div class="loc-grid">
       <div>
-        <span class="section-label">Find the Studio</span>
-        <h2 class="section-title" id="location-heading">Location &amp; Contact</h2>
-        <div class="gold-rule" aria-hidden="true"></div>
-        <div class="contact-list">
-          <div class="contact-item"><span class="contact-icon" aria-hidden="true">📍</span><div><p>{studio.address}</p><p>{studio.city}</p><a href={studio.mapUrl} target="_blank" rel="noopener noreferrer" style="font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; margin-top:0.3rem; display:inline-block;">Get Directions</a></div></div>
-          <div class="contact-item"><span class="contact-icon" aria-hidden="true">📞</span><a href={`tel:${studio.phone}`}>{studio.phone}</a></div>
-          <div class="contact-item"><span class="contact-icon" aria-hidden="true">✉️</span><a href={`mailto:${studio.email}`}>{studio.email}</a></div>
-          <div class="contact-item"><span class="contact-icon" aria-hidden="true">📸</span><a href={`https://instagram.com/${studio.instagram.replace('@','')}`} target="_blank" rel="noopener noreferrer">{studio.instagram}</a></div>
+        <span class="eyebrow">場所 — Location</span>
+        <h2 class="section-h" id="loc-h">Find the Studio</h2>
+        <div class="gold-stroke" aria-hidden="true"></div>
+        <div class="c-stack">
+          <div class="c-row"><span aria-hidden="true">龍</span><div><p>{studio.address}</p><p>{studio.city}</p><a href={studio.mapUrl} target="_blank" rel="noopener noreferrer" style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;margin-top:0.3rem;display:inline-block;">Directions</a></div></div>
+          <div class="c-row"><span aria-hidden="true">電</span><a href={`tel:${studio.phone}`}>{studio.phone}</a></div>
+          <div class="c-row"><span aria-hidden="true">✉</span><a href={`mailto:${studio.email}`}>{studio.email}</a></div>
+          <div class="c-row"><span aria-hidden="true">📸</span><a href={`https://instagram.com/${studio.instagram.replace('@','')}`} target="_blank" rel="noopener noreferrer">{studio.instagram}</a></div>
         </div>
       </div>
       <div>
-        <span class="section-label" style="display:block; margin-bottom:0.5rem;">Studio Hours</span>
-        <table class="hours-table" aria-label="Studio hours">
+        <span class="eyebrow" style="display:block;margin-bottom:0.5rem;">営業時間 — Hours</span>
+        <table class="hours-tbl" aria-label="Studio hours">
           <tbody>
             {studio.hours.map(h => (
               <tr>
                 <td>{h.day}</td>
-                <td class={h.open === 'Closed' ? 'closed' : ''}>{h.open === 'Closed' ? 'Closed' : `${h.open} – ${h.close}`}</td>
+                <td class={h.open==='Closed'?'closed':''}>{h.open==='Closed'?'定休日':` ${h.open} – ${h.close}`}</td>
               </tr>
             ))}
           </tbody>
@@ -401,42 +384,40 @@ import '../../styles/global.css';
   </div>
 </section>
 
-<section id="instagram" class="section" aria-labelledby="ig-heading">
+<!-- INSTAGRAM -->
+<section id="instagram" class="section" aria-labelledby="ig-h">
   <div class="section-inner">
-    <span class="section-label">Instagram</span>
-    <h2 class="section-title" id="ig-heading">Follow the Journey</h2>
-    <div class="gold-rule" aria-hidden="true"></div>
+    <span class="eyebrow">Instagram</span>
+    <h2 class="section-h" id="ig-h">Follow the Journey</h2>
+    <div class="gold-stroke" aria-hidden="true"></div>
     <div class="ig-grid" role="list" aria-label="Instagram posts">
-      {studio.igPosts.map(post => (
-        <div class="ig-post" role="listitem">
-          <a href={post.link} aria-label={`Instagram: ${post.alt}`} target="_blank" rel="noopener noreferrer">
-            <img src={post.image} alt={post.alt} loading="lazy" width="300" height="300" />
+      {studio.igPosts.map(p => (
+        <div class="ig-cell" role="listitem">
+          <a href={p.link} aria-label={`Instagram: ${p.alt}`} target="_blank" rel="noopener noreferrer">
+            <img src={p.image} alt={p.alt} loading="lazy" width="300" height="300"/>
           </a>
         </div>
       ))}
     </div>
-    <div class="ig-follow">
-      <a href={`https://instagram.com/${studio.instagram.replace('@','')}`} target="_blank" rel="noopener noreferrer">{studio.instagram}</a>
-    </div>
+    <div class="ig-cta"><a href={`https://instagram.com/${studio.instagram.replace('@','')}`} target="_blank" rel="noopener noreferrer">{studio.instagram}</a></div>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-  <p class="footer-jp">龍墨</p>
-  <p class="footer-en">Ryūboku Tattoo</p>
-  <p class="footer-tagline">伝統的刺青 · Where the Old Masters Speak Through Modern Skin</p>
+  <p class="foot-jp">龍墨</p>
+  <p class="foot-en">Ryūboku Tattoo</p>
+  <p class="foot-quote">"The needle follows five years of watching. The ink follows a lifetime of understanding."</p>
   <nav aria-label="Footer navigation">
-    <ul class="footer-links" role="list">
-      <li><a href="#portfolio">Portfolio</a></li>
+    <ul class="foot-nav" role="list">
       <li><a href="#artists">Artists</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
       <li><a href="#booking">Book</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#location">Location</a></li>
     </ul>
   </nav>
-  <p class="footer-copy">&copy; 2024 Ryūboku Tattoo · {studio.address}, {studio.city}</p>
+  <p class="foot-copy">&copy; 2024 Ryūboku Tattoo · {studio.address}, {studio.city}</p>
 </footer>
-
-<style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}</style>
 </body>
 </html>

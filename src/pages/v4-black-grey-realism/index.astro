@@ -1,417 +1,893 @@
 ---
 import { studio } from '../../data/v4';
-import '../../styles/global.css';
+const base = import.meta.env.BASE_URL;
+
+function pad(n: number) { return n.toString().padStart(2, '0'); }
 ---
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{studio.name} — Black &amp; Grey Realism, {studio.city}</title>
+  <title>{studio.name} — {studio.tagline}</title>
   <meta name="description" content={studio.description} />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href={`${base}styles/global.css`} />
   <style>
     :root {
       --black: #000000;
       --near-black: #0A0A0A;
-      --surface: #111111;
-      --surface2: #1A1A1A;
-      --mid: #333333;
-      --gray: #777777;
-      --light: #AAAAAA;
-      --white: #F5F5F5;
-      --pure-white: #FFFFFF;
+      --dark: #111111;
+      --mid-dark: #1C1C1C;
+      --gray-80: #333333;
+      --gray-60: #666666;
+      --gray-40: #999999;
+      --gray-20: #CCCCCC;
+      --gray-10: #E8E8E8;
+      --white: #FFFFFF;
+      --mono: 'IBM Plex Mono', monospace;
+      --sans: 'Inter', sans-serif;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--black); color: var(--white); font-family: 'Inter', system-ui, sans-serif; font-weight: 300; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; background: var(--black); color: var(--white); }
+    body { font-family: var(--sans); background: var(--black); color: var(--white); }
 
-    /* Nav */
-    .nav { background: var(--black); border-bottom: 1px solid var(--mid); position: sticky; top: 0; z-index: 100; }
-    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; min-height: 60px; }
-    .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.35rem; letter-spacing: 0.18em; color: var(--white); text-decoration: none; }
-    .nav-links { display: flex; gap: 0; list-style: none; flex-wrap: wrap; }
-    .nav-links a { color: var(--gray); text-decoration: none; font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; padding: 0.5rem 0.8rem; display: block; transition: color 0.2s; }
-    .nav-links a:hover, .nav-links a:focus-visible { color: var(--white); }
-    .nav-cta { background: var(--white) !important; color: var(--black) !important; padding: 0.4rem 1.1rem !important; font-weight: 600 !important; }
-    .nav-cta:hover, .nav-cta:focus-visible { opacity: 0.85; }
+    /* NAV */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--black);
+      border-bottom: 1px solid var(--gray-80);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 56px;
+    }
+    .nav-logo {
+      font-family: var(--mono); font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--white);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--gray-40); font-weight: 300; }
+    .nav-spec {
+      font-family: var(--mono); font-size: 0.65rem; color: var(--gray-40);
+      letter-spacing: 0.05em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--mono); font-size: 0.65rem; color: var(--gray-40);
+      text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-book {
+      font-family: var(--mono); font-size: 0.65rem; font-weight: 600;
+      color: var(--black); background: var(--white);
+      border: none; padding: 0.5rem 1.25rem; cursor: pointer;
+      letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+    }
 
-    /* Hero */
-    .hero { position: relative; min-height: 100vh; display: flex; align-items: flex-end; overflow: hidden; }
-    .hero-bg { position: absolute; inset: 0; background-image: linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.3) 100%), url('https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=1920&q=85&auto=format&fit=crop'); background-size: cover; background-position: center top; filter: grayscale(100%) contrast(1.2); }
-    .hero-content { position: relative; width: 100%; padding: 0 1.5rem 4rem; }
-    .hero-inner { max-width: 1200px; margin: 0 auto; }
-    .hero-eyebrow { font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gray); font-weight: 500; margin-bottom: 1rem; display: block; }
-    .hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(4rem, 12vw, 10rem); color: var(--white); line-height: 0.9; letter-spacing: 0.04em; margin-bottom: 1.5rem; text-shadow: 0 0 60px rgba(255,255,255,0.05); }
-    .hero h1 em { display: block; font-style: normal; color: var(--gray); font-size: 0.45em; letter-spacing: 0.08em; }
-    .hero-tagline { font-size: 0.9rem; color: var(--gray); max-width: 500px; line-height: 1.75; margin-bottom: 2.5rem; font-weight: 300; }
-    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
-    .btn-primary { background: var(--white); color: var(--black); padding: 0.9rem 2.5rem; font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; }
-    .btn-primary:hover, .btn-primary:focus-visible { opacity: 0.85; }
-    .btn-ghost { background: transparent; color: var(--white); padding: 0.9rem 2rem; font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; border: 1px solid var(--mid); transition: border-color 0.2s; }
-    .btn-ghost:hover, .btn-ghost:focus-visible { border-color: var(--white); }
-    .hero-scroll { display: flex; gap: 3rem; margin-top: 3rem; border-top: 1px solid var(--mid); padding-top: 2rem; }
-    .hero-stat { }
-    .hero-stat .val { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--white); display: block; letter-spacing: 0.05em; }
-    .hero-stat .lbl { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray); }
+    /* HERO */
+    .hero {
+      padding-top: 56px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+    }
+    .hero-image-panel {
+      position: relative; overflow: hidden;
+    }
+    .hero-image-panel img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: grayscale(100%) contrast(1.1);
+      display: block;
+    }
+    .hero-scan-line {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.03) 2px,
+        rgba(0,0,0,0.03) 4px
+      );
+      pointer-events: none;
+    }
+    .hero-image-label {
+      position: absolute; bottom: 1.5rem; left: 1.5rem;
+      font-family: var(--mono); font-size: 0.6rem; color: var(--gray-40);
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .hero-info-panel {
+      padding: 4rem 3rem;
+      display: flex; flex-direction: column; justify-content: center;
+      border-left: 1px solid var(--gray-80);
+    }
+    .hero-spec-tag {
+      font-family: var(--mono); font-size: 0.6rem; color: var(--gray-40);
+      letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 2rem;
+    }
+    .hero-spec-tag::before { content: '// '; }
+    .hero-h1 {
+      font-family: var(--mono); font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 600; line-height: 1.05;
+      letter-spacing: -0.02em; margin-bottom: 2rem;
+      color: var(--white);
+    }
+    .hero-h1 .dim { color: var(--gray-60); font-weight: 300; }
+    .hero-desc {
+      font-family: var(--sans); font-size: 0.95rem; font-weight: 300;
+      color: var(--gray-20); line-height: 1.7; margin-bottom: 3rem;
+      max-width: 38ch;
+    }
+    .hero-metrics {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--gray-80); margin-bottom: 2.5rem;
+    }
+    .hero-metric {
+      padding: 1.25rem 1rem; border-right: 1px solid var(--gray-80);
+    }
+    .hero-metric:last-child { border-right: none; }
+    .metric-val {
+      font-family: var(--mono); font-size: 1.5rem; font-weight: 600;
+      color: var(--white); display: block;
+    }
+    .metric-label {
+      font-family: var(--mono); font-size: 0.6rem; color: var(--gray-40);
+      letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.25rem;
+    }
+    .hero-ctas { display: flex; gap: 1rem; }
+    .btn-primary {
+      font-family: var(--mono); font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      background: var(--white); color: var(--black);
+      border: none; padding: 0.875rem 2rem; cursor: pointer; text-decoration: none;
+      display: inline-block;
+    }
+    .btn-secondary {
+      font-family: var(--mono); font-size: 0.7rem; font-weight: 400;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      background: transparent; color: var(--gray-40);
+      border: 1px solid var(--gray-80); padding: 0.875rem 2rem;
+      cursor: pointer; text-decoration: none; display: inline-block;
+    }
+    .btn-secondary:hover { color: var(--white); border-color: var(--white); }
 
-    /* Section */
-    .section { padding: 6rem 1.5rem; }
-    .section-inner { max-width: 1200px; margin: 0 auto; }
-    .section-label { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gray); font-weight: 500; margin-bottom: 0.5rem; display: block; }
-    .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4.5rem); color: var(--white); line-height: 0.95; letter-spacing: 0.04em; margin-bottom: 0.75rem; }
-    .white-rule { width: 40px; height: 1px; background: var(--mid); margin: 1.25rem 0 3rem; }
+    /* SECTION HEADER */
+    .section-header {
+      display: flex; align-items: baseline; gap: 1.5rem;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid var(--gray-80); padding-bottom: 1rem;
+    }
+    .section-index {
+      font-family: var(--mono); font-size: 0.65rem; color: var(--gray-60);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-family: var(--mono); font-size: 1.1rem; font-weight: 500;
+      letter-spacing: 0.05em; color: var(--white);
+    }
+    .section-subtitle {
+      font-family: var(--mono); font-size: 0.65rem; color: var(--gray-60);
+      letter-spacing: 0.05em; margin-left: auto;
+    }
 
-    /* Artists */
-    .artists-bg { background: var(--surface); }
-    .artist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1px; background: var(--mid); }
-    .artist-card { background: var(--near-black); overflow: hidden; }
-    .artist-img { width: 100%; height: 320px; object-fit: cover; object-position: top; display: block; filter: grayscale(100%) contrast(1.15); }
-    .artist-info { padding: 2rem; }
-    .artist-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; color: var(--white); letter-spacing: 0.06em; margin-bottom: 0.25rem; }
-    .artist-specialty { font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gray); margin-bottom: 1rem; font-weight: 500; }
-    .artist-bio { font-size: 0.85rem; color: var(--light); line-height: 1.7; margin-bottom: 0.75rem; font-weight: 300; }
-    .artist-handle { font-size: 0.75rem; color: var(--mid); }
-    .style-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.75rem; }
-    .style-tag { border: 1px solid var(--mid); color: var(--gray); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.55rem; font-weight: 500; }
-    .years-badge { display: inline-block; background: var(--mid); color: var(--white); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.2rem 0.6rem; margin-top: 0.5rem; font-weight: 600; }
+    /* PROCESS */
+    .process-section { padding: 5rem 0; border-bottom: 1px solid var(--gray-80); }
+    .process-grid {
+      display: grid; grid-template-columns: 280px 1fr; gap: 0;
+    }
+    .process-sidebar {
+      border-right: 1px solid var(--gray-80); padding-right: 3rem;
+    }
+    .process-label {
+      font-family: var(--mono); font-size: 0.6rem; color: var(--gray-40);
+      letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.5rem;
+    }
+    .process-label::before { content: '/* '; }
+    .process-label::after { content: ' */'; }
+    .process-body { padding-left: 3rem; }
+    .process-steps { display: flex; flex-direction: column; gap: 0; }
+    .process-step {
+      display: grid; grid-template-columns: 120px 1fr;
+      border-bottom: 1px solid var(--gray-80);
+      padding: 1.5rem 0;
+    }
+    .step-key {
+      font-family: var(--mono); font-size: 0.65rem; color: var(--gray-40);
+      letter-spacing: 0.05em;
+    }
+    .step-val {
+      font-family: var(--sans); font-size: 0.9rem; color: var(--white);
+      font-weight: 300;
+    }
+    .step-val strong { font-weight: 500; color: var(--gray-20); }
 
-    /* Gallery */
-    .gallery-bg { background: var(--near-black); }
-    .masonry-grid { columns: 2; column-gap: 4px; }
-    @media (min-width: 640px) { .masonry-grid { columns: 3; } }
-    @media (min-width: 1024px) { .masonry-grid { columns: 4; } }
-    .masonry-item { break-inside: avoid; margin-bottom: 4px; overflow: hidden; position: relative; }
-    .masonry-item img { width: 100%; display: block; filter: grayscale(100%) contrast(1.1); transition: transform 0.5s, filter 0.4s; }
-    .masonry-item:hover img { transform: scale(1.03); filter: grayscale(80%) contrast(1.15); }
-    .masonry-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%); opacity: 0; transition: opacity 0.3s; display: flex; align-items: flex-end; padding: 0.75rem; }
-    .masonry-item:hover .masonry-overlay { opacity: 1; }
-    .masonry-cap { color: var(--light); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; }
+    /* GALLERY */
+    .gallery-section { padding: 5rem 0; border-bottom: 1px solid var(--gray-80); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+    .gallery-item {
+      position: relative; overflow: hidden;
+      background: var(--mid-dark); cursor: pointer;
+    }
+    .gallery-item img {
+      width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block;
+      filter: grayscale(100%) contrast(1.15) brightness(0.95);
+      transition: filter 0.4s, transform 0.4s;
+    }
+    .gallery-item:hover img { filter: grayscale(100%) contrast(1.3) brightness(1.05); transform: scale(1.03); }
+    .gallery-item.wide { grid-column: span 2; }
+    .gallery-item.wide img { aspect-ratio: 3/2; }
+    .gallery-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.9));
+      padding: 2rem 1rem 1rem;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .gallery-item:hover .gallery-caption { opacity: 1; }
+    .gallery-caption-artist {
+      font-family: var(--mono); font-size: 0.6rem; color: var(--gray-40);
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .gallery-caption-style {
+      font-family: var(--mono); font-size: 0.75rem; color: var(--white);
+      font-weight: 500;
+    }
+    .gallery-item-num {
+      position: absolute; top: 0.75rem; right: 0.75rem;
+      font-family: var(--mono); font-size: 0.55rem; color: rgba(255,255,255,0.4);
+      letter-spacing: 0.05em;
+    }
 
-    /* Aftercare */
-    .aftercare-bg { background: var(--surface); }
-    .aftercare-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1px; background: var(--mid); margin-top: 3rem; }
-    .aftercare-card { background: var(--near-black); padding: 2rem; }
-    .aftercare-num { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; color: var(--mid); line-height: 1; margin-bottom: 0.75rem; }
-    .aftercare-title { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white); font-weight: 600; margin-bottom: 0.65rem; }
-    .aftercare-body { font-size: 0.83rem; color: var(--gray); line-height: 1.75; font-weight: 300; }
+    /* ARTISTS */
+    .artists-section { padding: 5rem 0; border-bottom: 1px solid var(--gray-80); }
+    .artists-list { display: flex; flex-direction: column; gap: 0; }
+    .artist-row {
+      display: grid; grid-template-columns: 80px 220px 1fr 180px;
+      align-items: start;
+      border-bottom: 1px solid var(--gray-80); padding: 2.5rem 0;
+      gap: 2rem;
+    }
+    .artist-index {
+      font-family: var(--mono); font-size: 0.65rem; color: var(--gray-60);
+      padding-top: 0.25rem;
+    }
+    .artist-photo {
+      width: 100%; aspect-ratio: 1; object-fit: cover;
+      filter: grayscale(100%) contrast(1.2); display: block;
+    }
+    .artist-info {}
+    .artist-name {
+      font-family: var(--mono); font-size: 1.25rem; font-weight: 600;
+      color: var(--white); margin-bottom: 0.25rem;
+    }
+    .artist-handle {
+      font-family: var(--mono); font-size: 0.65rem; color: var(--gray-40);
+      margin-bottom: 0.75rem; display: block;
+    }
+    .artist-specialty {
+      font-family: var(--sans); font-size: 0.8rem; color: var(--gray-20);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem;
+    }
+    .artist-bio {
+      font-family: var(--sans); font-size: 0.85rem; color: var(--gray-40);
+      line-height: 1.7; font-weight: 300;
+    }
+    .artist-specs {
+      display: flex; flex-direction: column; gap: 0.75rem;
+    }
+    .spec-row {
+      display: flex; justify-content: space-between;
+      padding-bottom: 0.75rem; border-bottom: 1px solid var(--gray-80);
+    }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-key {
+      font-family: var(--mono); font-size: 0.6rem; color: var(--gray-60);
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .spec-val {
+      font-family: var(--mono); font-size: 0.7rem; color: var(--white);
+      font-weight: 500;
+    }
 
-    /* Booking */
-    .booking-bg { background: var(--black); border-top: 1px solid var(--mid); border-bottom: 1px solid var(--mid); }
-    .booking-grid { display: grid; grid-template-columns: 1fr; gap: 4rem; }
-    @media (min-width: 768px) { .booking-grid { grid-template-columns: 1fr 1fr; } }
-    .booking-info p { font-size: 0.88rem; color: var(--gray); line-height: 1.8; margin-bottom: 1rem; font-weight: 300; }
-    .booking-price-box { border: 1px solid var(--mid); padding: 1.5rem; margin-top: 1.5rem; display: grid; gap: 0.5rem; }
-    .booking-price-box p { font-size: 0.82rem; color: var(--gray); margin: 0; }
-    .booking-price-box strong { color: var(--white); font-weight: 500; }
-    .booking-form { display: grid; gap: 1.5rem; }
-    label { display: block; font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--mid); font-weight: 600; margin-bottom: 0.3rem; }
-    input, select, textarea { width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--mid); color: var(--white); padding: 0.6rem 0; font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 300; outline: none; transition: border-color 0.2s; }
-    input:focus, select:focus, textarea:focus { border-color: var(--white); }
-    input::placeholder, textarea::placeholder { color: var(--mid); }
-    select option { background: var(--surface); }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    .btn-submit { background: var(--white); color: var(--black); padding: 0.9rem 2rem; font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; border: none; cursor: pointer; transition: opacity 0.2s; width: 100%; margin-top: 0.5rem; }
-    .btn-submit:hover, .btn-submit:focus-visible { opacity: 0.85; }
+    /* TECHNICAL */
+    .technical-section { padding: 5rem 0; border-bottom: 1px solid var(--gray-80); }
+    .technical-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .tech-block {
+      border: 1px solid var(--gray-80); padding: 2rem;
+      display: flex; flex-direction: column;
+    }
+    .tech-block-label {
+      font-family: var(--mono); font-size: 0.6rem; color: var(--gray-40);
+      letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.5rem;
+    }
+    .tech-block-title {
+      font-family: var(--mono); font-size: 1rem; font-weight: 600;
+      color: var(--white); margin-bottom: 1rem;
+    }
+    .tech-block-body {
+      font-family: var(--sans); font-size: 0.85rem; color: var(--gray-40);
+      line-height: 1.7; font-weight: 300; flex: 1;
+    }
+    .tech-block-footer {
+      margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--gray-80);
+      font-family: var(--mono); font-size: 0.6rem; color: var(--gray-60);
+    }
+
+    /* AFTERCARE */
+    .aftercare-section { padding: 5rem 0; border-bottom: 1px solid var(--gray-80); }
+    .aftercare-list { display: flex; flex-direction: column; gap: 0; }
+    .aftercare-item {
+      display: grid; grid-template-columns: 80px 200px 1fr;
+      align-items: start; gap: 2rem;
+      border-bottom: 1px solid var(--gray-80); padding: 2rem 0;
+    }
+    .aftercare-num {
+      font-family: var(--mono); font-size: 3rem; font-weight: 600;
+      color: var(--gray-80); line-height: 1;
+    }
+    .aftercare-title {
+      font-family: var(--mono); font-size: 0.8rem; font-weight: 500;
+      color: var(--white); text-transform: uppercase; letter-spacing: 0.05em;
+      padding-top: 0.5rem;
+    }
+    .aftercare-body {
+      font-family: var(--sans); font-size: 0.9rem; color: var(--gray-40);
+      line-height: 1.7; font-weight: 300; padding-top: 0.25rem;
+    }
+
+    /* BOOKING */
+    .booking-section { padding: 5rem 0; border-bottom: 1px solid var(--gray-80); }
+    .booking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+    .booking-info {}
+    .booking-intro {
+      font-family: var(--mono); font-size: 0.65rem; color: var(--gray-40);
+      letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.5rem;
+    }
+    .booking-statement {
+      font-family: var(--mono); font-size: 1.4rem; font-weight: 300;
+      color: var(--white); line-height: 1.4; margin-bottom: 2rem;
+    }
+    .booking-details { display: flex; flex-direction: column; gap: 0; }
+    .booking-detail {
+      display: flex; justify-content: space-between;
+      padding: 1rem 0; border-bottom: 1px solid var(--gray-80);
+    }
+    .detail-key {
+      font-family: var(--mono); font-size: 0.65rem; color: var(--gray-60);
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .detail-val {
+      font-family: var(--mono); font-size: 0.75rem; color: var(--white);
+    }
+    .booking-form { display: flex; flex-direction: column; gap: 0; }
+    .form-row {
+      display: flex; flex-direction: column;
+      border-bottom: 1px solid var(--gray-80); padding: 1rem 0;
+    }
+    .form-label {
+      font-family: var(--mono); font-size: 0.55rem; color: var(--gray-60);
+      letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .form-input {
+      font-family: var(--mono); font-size: 0.85rem; color: var(--white);
+      background: transparent; border: none; outline: none;
+      padding: 0.25rem 0; width: 100%;
+    }
+    .form-input::placeholder { color: var(--gray-80); }
+    .form-input:focus { border-bottom: 1px solid var(--white); margin-bottom: -1px; }
+    .form-select {
+      font-family: var(--mono); font-size: 0.85rem; color: var(--white);
+      background: transparent; border: none; outline: none;
+      padding: 0.25rem 0; width: 100%; appearance: none;
+      cursor: pointer;
+    }
+    .form-select option { background: var(--dark); }
+    textarea.form-input { resize: none; min-height: 80px; }
+    .form-submit {
+      margin-top: 2rem;
+      font-family: var(--mono); font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      background: var(--white); color: var(--black);
+      border: none; padding: 1rem 2rem; cursor: pointer; width: 100%;
+    }
 
     /* FAQ */
-    .faq-bg { background: var(--surface); }
-    .faq-list { margin-top: 2rem; }
-    details { border-bottom: 1px solid var(--mid); }
-    summary { padding: 1.25rem 0; cursor: pointer; font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; color: var(--white); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; letter-spacing: 0.06em; }
-    summary::-webkit-details-marker { display: none; }
-    summary::after { content: '+'; font-family: 'Inter', sans-serif; font-size: 1.5rem; font-weight: 200; color: var(--mid); flex-shrink: 0; transition: transform 0.2s; }
-    details[open] summary::after { transform: rotate(45deg); color: var(--white); }
-    .faq-answer { padding: 0 0 1.25rem; font-size: 0.85rem; color: var(--gray); line-height: 1.8; font-weight: 300; }
+    .faq-section { padding: 5rem 0; border-bottom: 1px solid var(--gray-80); }
+    .faq-list { display: flex; flex-direction: column; gap: 0; }
+    .faq-item {
+      border-bottom: 1px solid var(--gray-80);
+    }
+    .faq-item summary {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 0; cursor: pointer; list-style: none;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-q {
+      font-family: var(--mono); font-size: 0.85rem; font-weight: 500;
+      color: var(--white); max-width: 60ch;
+    }
+    .faq-toggle {
+      font-family: var(--mono); font-size: 1rem; color: var(--gray-40);
+      width: 24px; text-align: center; transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    .faq-item[open] .faq-toggle { transform: rotate(45deg); color: var(--white); }
+    .faq-answer {
+      font-family: var(--sans); font-size: 0.9rem; color: var(--gray-40);
+      line-height: 1.7; font-weight: 300;
+      padding: 0 0 1.5rem;
+      max-width: 70ch;
+    }
 
-    /* Location */
-    .location-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
-    @media (min-width: 768px) { .location-grid { grid-template-columns: 1fr 1fr; } }
-    .hours-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
-    .hours-table tr { border-bottom: 1px solid var(--mid); }
-    .hours-table td { padding: 0.65rem 0; font-size: 0.85rem; color: var(--gray); font-weight: 300; }
-    .hours-table td:first-child { color: var(--white); font-weight: 500; letter-spacing: 0.04em; }
-    .hours-table .closed { color: var(--mid); }
-    .contact-list { margin-top: 1.5rem; display: grid; gap: 1rem; }
-    .contact-item { display: flex; gap: 1rem; font-size: 0.85rem; color: var(--gray); font-weight: 300; }
-    .contact-item a { color: var(--white); text-decoration: none; }
+    /* LOCATION */
+    .location-section { padding: 5rem 0; border-bottom: 1px solid var(--gray-80); }
+    .location-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+    .hours-table { display: flex; flex-direction: column; gap: 0; }
+    .hours-row {
+      display: grid; grid-template-columns: 140px 1fr;
+      padding: 0.75rem 0; border-bottom: 1px solid var(--gray-80);
+    }
+    .hours-day {
+      font-family: var(--mono); font-size: 0.65rem; color: var(--gray-40);
+      letter-spacing: 0.05em;
+    }
+    .hours-time {
+      font-family: var(--mono); font-size: 0.65rem; color: var(--white);
+    }
+    .hours-time.closed { color: var(--gray-60); }
+    .contact-block { display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-item {}
+    .contact-label {
+      font-family: var(--mono); font-size: 0.55rem; color: var(--gray-60);
+      letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.25rem;
+    }
+    .contact-value {
+      font-family: var(--mono); font-size: 0.85rem; color: var(--white);
+      text-decoration: none;
+    }
+    .contact-value:hover { color: var(--gray-20); }
 
-    /* IG */
-    .ig-section { background: var(--near-black); }
-    .ig-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin-top: 2rem; }
-    @media (min-width: 640px) { .ig-grid { grid-template-columns: repeat(6, 1fr); } }
-    .ig-post { aspect-ratio: 1; overflow: hidden; }
-    .ig-post img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(100%) contrast(1.1); transition: transform 0.4s, filter 0.3s; }
-    .ig-post a:hover img { transform: scale(1.05); filter: grayscale(60%); }
-    .ig-post a { display: block; height: 100%; }
-    .ig-post a:focus-visible { outline: 2px solid var(--white); outline-offset: 2px; }
-    .ig-follow { text-align: center; margin-top: 2rem; }
-    .ig-follow a { color: var(--white); font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; text-decoration: none; border: 1px solid var(--mid); padding: 0.8rem 2rem; display: inline-block; transition: border-color 0.2s; font-weight: 500; }
-    .ig-follow a:hover, .ig-follow a:focus-visible { border-color: var(--white); }
+    /* INSTAGRAM */
+    .ig-section { padding: 5rem 0; border-bottom: 1px solid var(--gray-80); }
+    .ig-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px; }
+    .ig-post { display: block; aspect-ratio: 1; overflow: hidden; position: relative; }
+    .ig-post img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: grayscale(100%) contrast(1.1);
+      transition: filter 0.3s, transform 0.3s;
+    }
+    .ig-post:hover img { filter: grayscale(50%) contrast(1.2); transform: scale(1.05); }
+    .ig-post-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .ig-post:hover .ig-post-overlay { opacity: 1; }
+    .ig-handle {
+      font-family: var(--mono); font-size: 0.6rem; color: var(--white);
+      letter-spacing: 0.1em;
+    }
 
-    /* Footer */
-    footer { background: var(--black); border-top: 1px solid var(--mid); padding: 3rem 1.5rem; text-align: center; }
-    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--white); letter-spacing: 0.15em; margin-bottom: 0.25rem; }
-    .footer-tagline { font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--mid); margin-bottom: 1.5rem; font-weight: 500; }
-    .footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; list-style: none; }
-    .footer-links a { color: var(--mid); font-size: 0.62rem; text-decoration: none; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--white); }
-    .footer-copy { font-size: 0.7rem; color: var(--mid); }
-    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
-    .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0 }
+    /* FOOTER */
+    footer {
+      padding: 3rem 2rem; border-top: 1px solid var(--gray-80);
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+      gap: 2rem;
+    }
+    .footer-left {
+      font-family: var(--mono); font-size: 0.6rem; color: var(--gray-60);
+      letter-spacing: 0.05em;
+    }
+    .footer-center {
+      font-family: var(--mono); font-size: 0.7rem; font-weight: 600;
+      color: var(--white); letter-spacing: 0.2em; text-align: center;
+    }
+    .footer-right {
+      font-family: var(--mono); font-size: 0.6rem; color: var(--gray-60);
+      text-align: right;
+    }
+
+    /* CONTAINER */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-image-panel { height: 50vh; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item.wide { grid-column: span 2; }
+      .artist-row { grid-template-columns: 1fr; }
+      .booking-grid { grid-template-columns: 1fr; }
+      .location-grid { grid-template-columns: 1fr; }
+      .ig-grid { grid-template-columns: repeat(3, 1fr); }
+      .technical-grid { grid-template-columns: 1fr; }
+      .process-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
+  <a href="#main" class="sr-only">Skip to main content</a>
 
-<nav class="nav" aria-label="Main navigation">
-  <div class="nav-inner">
-    <a href="/v4-black-grey-realism" class="nav-logo">Shadow Collective</a>
-    <ul class="nav-links" role="list">
-      <li><a href="#portfolio">Portfolio</a></li>
-      <li><a href="#artists">Artists</a></li>
-      <li><a href="#aftercare">Aftercare</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li><a href="#location">Location</a></li>
-      <li><a href="#booking" class="nav-cta">Book</a></li>
-    </ul>
-  </div>
-</nav>
-
-<section id="hero" aria-label="Hero — Shadow Collective">
-  <div class="hero">
-    <div class="hero-bg" role="img" aria-label={studio.heroAlt}></div>
-    <div class="hero-content">
-      <div class="hero-inner">
-        <span class="hero-eyebrow">Black &amp; Grey Realism · San Diego, CA · Est. 2012</span>
-        <h1>Shadow<em>Collective</em></h1>
-        <p class="hero-tagline">{studio.tagline}<br/><br/>Every piece is a study in light, shadow, and photographic fidelity.</p>
-        <div class="hero-actions">
-          <a href="#booking" class="btn-primary">Book a Session</a>
-          <a href="#portfolio" class="btn-ghost">View Portfolio</a>
-        </div>
-        <div class="hero-scroll" aria-label="Studio stats">
-          <div class="hero-stat"><span class="val">3</span><span class="lbl">Realism Artists</span></div>
-          <div class="hero-stat"><span class="val">${studio.minimumCharge}</span><span class="lbl">Minimum</span></div>
-          <div class="hero-stat"><span class="val">${studio.hourlyRate}</span><span class="lbl">Per Hour</span></div>
-          <div class="hero-stat"><span class="val">0</span><span class="lbl">Color Used</span></div>
-        </div>
-      </div>
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href={`${base}`} class="nav-logo">← all<span>variants</span></a>
+    <a href={`${base}v4-black-grey-realism`} class="nav-logo">{studio.name}<span>.ink</span></a>
+    <div style="display:flex;align-items:center;gap:2rem;">
+      <ul class="nav-links" role="list">
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#artists">Artists</a></li>
+        <li><a href="#booking">Book</a></li>
+      </ul>
+      <a href="#booking" class="nav-book">Consult</a>
     </div>
-  </div>
-</section>
-
-<section id="artists" class="section artists-bg" aria-labelledby="artists-heading">
-  <div class="section-inner">
-    <span class="section-label">The Artists</span>
-    <h2 class="section-title" id="artists-heading">Masters of Shadow</h2>
-    <div class="white-rule" aria-hidden="true"></div>
-    <div class="artist-grid" role="list">
-      {studio.artists.map(artist => (
-        <article class="artist-card" role="listitem" aria-label={`Artist: ${artist.name}`}>
-          <img src={artist.image} alt={`Portrait of ${artist.name}`} class="artist-img" loading="lazy" width="400" height="320" />
-          <div class="artist-info">
-            <h3 class="artist-name">{artist.name}</h3>
-            <p class="artist-specialty">{artist.specialty}</p>
-            <p class="artist-bio">{artist.bio}</p>
-            <p class="artist-handle">{artist.handle}</p>
-            <div class="style-tags" aria-label={`Styles: ${artist.styles.join(', ')}`}>
-              {artist.styles.map(s => <span class="style-tag">{s}</span>)}
-            </div>
-            <p class="years-badge">{artist.yearsExp} years</p>
-          </div>
-        </article>
-      ))}
-    </div>
-  </div>
-</section>
-
-<section id="portfolio" class="section gallery-bg" aria-labelledby="gallery-heading">
-  <div class="section-inner">
-    <span class="section-label">Portfolio</span>
-    <h2 class="section-title" id="gallery-heading">The Work</h2>
-    <div class="white-rule" aria-hidden="true"></div>
-    <div class="masonry-grid" role="list" aria-label="Portfolio gallery">
-      {studio.gallery.map(item => (
-        <figure class="masonry-item" role="listitem">
-          <img src={item.image} alt={item.alt} loading="lazy" width="600" height="500" />
-          <div class="masonry-overlay" aria-hidden="true">
-            <p class="masonry-cap">{item.artist} · {item.style}</p>
-          </div>
-          <figcaption class="sr-only">{item.alt} — by {item.artist}</figcaption>
-        </figure>
-      ))}
-    </div>
-  </div>
-</section>
-
-<section id="aftercare" class="section aftercare-bg" aria-labelledby="aftercare-heading">
-  <div class="section-inner">
-    <span class="section-label">Aftercare</span>
-    <h2 class="section-title" id="aftercare-heading">Protect the Investment</h2>
-    <div class="white-rule" aria-hidden="true"></div>
-    <div class="aftercare-grid" role="list">
-      {studio.aftercare.map(step => (
-        <div class="aftercare-card" role="listitem">
-          <div class="aftercare-num" aria-hidden="true">0{step.step}</div>
-          <h3 class="aftercare-title">{step.title}</h3>
-          <p class="aftercare-body">{step.body}</p>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
-
-<section id="booking" class="section booking-bg" aria-labelledby="booking-heading">
-  <div class="section-inner">
-    <div class="booking-grid">
-      <div class="booking-info">
-        <span class="section-label">Book a Session</span>
-        <h2 class="section-title" id="booking-heading">Work With Us</h2>
-        <div class="white-rule" aria-hidden="true"></div>
-        <p>All sessions require a consultation. Submit your reference images and concept below and your artist will respond within 48–72 hours with a quote and availability.</p>
-        <p>A ${studio.depositAmount} deposit secures your date and is applied to the final cost. Realism requires quality references—the better your reference, the better your tattoo.</p>
-        <div class="booking-price-box">
-          <p><strong>Minimum</strong> — ${studio.minimumCharge}</p>
-          <p><strong>Hourly Rate</strong> — ${studio.hourlyRate}/hr</p>
-          <p><strong>Booking Deposit</strong> — ${studio.depositAmount}</p>
-          <p><strong>Walk-ins</strong> — Not accepted</p>
-        </div>
-      </div>
-      <form class="booking-form" action="#" method="post" aria-label="Booking form" novalidate>
-        <div>
-          <label for="b-name">Name <span aria-label="required">*</span></label>
-          <input type="text" id="b-name" name="name" placeholder="Your name" required autocomplete="name" />
-        </div>
-        <div class="form-row">
-          <div>
-            <label for="b-email">Email <span aria-label="required">*</span></label>
-            <input type="email" id="b-email" name="email" placeholder="you@email.com" required autocomplete="email" />
-          </div>
-          <div>
-            <label for="b-phone">Phone</label>
-            <input type="tel" id="b-phone" name="phone" placeholder="Optional" autocomplete="tel" />
-          </div>
-        </div>
-        <div>
-          <label for="b-artist">Artist</label>
-          <select id="b-artist" name="artist">
-            <option value="">No preference</option>
-            {studio.artists.map(a => <option value={a.name}>{a.name}</option>)}
-          </select>
-        </div>
-        <div class="form-row">
-          <div>
-            <label for="b-size">Size</label>
-            <select id="b-size" name="size">
-              <option value="">—</option>
-              <option value="sm">Small (under hand)</option>
-              <option value="md">Medium (hand-sized)</option>
-              <option value="lg">Large (half sleeve)</option>
-              <option value="xl">Full sleeve / back</option>
-            </select>
-          </div>
-          <div>
-            <label for="b-placement">Placement</label>
-            <input type="text" id="b-placement" name="placement" placeholder="e.g. upper arm" />
-          </div>
-        </div>
-        <div>
-          <label for="b-desc">Describe Your Concept <span aria-label="required">*</span></label>
-          <textarea id="b-desc" name="description" placeholder="Subject, mood, reference images you can link or describe, existing tattoos nearby..." rows="4" required></textarea>
-        </div>
-        <div>
-          <label for="b-dates">Availability</label>
-          <input type="text" id="b-dates" name="dates" placeholder="e.g. Any Saturday, Fall 2024" />
-        </div>
-        <button type="submit" class="btn-submit">Request Session + ${studio.depositAmount} Deposit</button>
-      </form>
-    </div>
-  </div>
-</section>
-
-<section id="faq" class="section faq-bg" aria-labelledby="faq-heading">
-  <div class="section-inner" style="max-width:760px;">
-    <span class="section-label">FAQ</span>
-    <h2 class="section-title" id="faq-heading">Common Questions</h2>
-    <div class="white-rule" aria-hidden="true"></div>
-    <div class="faq-list">
-      {studio.faqs.map(faq => (
-        <details>
-          <summary>{faq.question}</summary>
-          <div class="faq-answer"><p>{faq.answer}</p></div>
-        </details>
-      ))}
-    </div>
-  </div>
-</section>
-
-<section id="location" class="section" aria-labelledby="location-heading">
-  <div class="section-inner">
-    <div class="location-grid">
-      <div>
-        <span class="section-label">Find Us</span>
-        <h2 class="section-title" id="location-heading">Location</h2>
-        <div class="white-rule" aria-hidden="true"></div>
-        <div class="contact-list">
-          <div class="contact-item"><span aria-hidden="true">—</span><div><p>{studio.address}</p><p>{studio.city}</p><a href={studio.mapUrl} target="_blank" rel="noopener noreferrer" style="font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; margin-top:0.3rem; display:inline-block; font-weight:500;">Directions</a></div></div>
-          <div class="contact-item"><span aria-hidden="true">—</span><a href={`tel:${studio.phone}`}>{studio.phone}</a></div>
-          <div class="contact-item"><span aria-hidden="true">—</span><a href={`mailto:${studio.email}`}>{studio.email}</a></div>
-          <div class="contact-item"><span aria-hidden="true">—</span><a href={`https://instagram.com/${studio.instagram.replace('@','')}`} target="_blank" rel="noopener noreferrer">{studio.instagram}</a></div>
-        </div>
-      </div>
-      <div>
-        <span class="section-label" style="display:block; margin-bottom:0.5rem;">Hours</span>
-        <table class="hours-table" aria-label="Studio hours">
-          <tbody>
-            {studio.hours.map(h => (
-              <tr>
-                <td>{h.day}</td>
-                <td class={h.open === 'Closed' ? 'closed' : ''}>{h.open === 'Closed' ? 'Closed' : `${h.open} – ${h.close}`}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="instagram" class="section ig-section" aria-labelledby="ig-heading">
-  <div class="section-inner">
-    <span class="section-label">Instagram</span>
-    <h2 class="section-title" id="ig-heading">{studio.instagram}</h2>
-    <div class="white-rule" aria-hidden="true"></div>
-    <div class="ig-grid" role="list" aria-label="Instagram posts">
-      {studio.igPosts.map(post => (
-        <div class="ig-post" role="listitem">
-          <a href={post.link} aria-label={`Instagram: ${post.alt}`} target="_blank" rel="noopener noreferrer">
-            <img src={post.image} alt={post.alt} loading="lazy" width="300" height="300" />
-          </a>
-        </div>
-      ))}
-    </div>
-    <div class="ig-follow">
-      <a href={`https://instagram.com/${studio.instagram.replace('@','')}`} target="_blank" rel="noopener noreferrer">Follow on Instagram</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <p class="footer-logo">Shadow Collective</p>
-  <p class="footer-tagline">Hyperrealism · No Color · No Compromise</p>
-  <nav aria-label="Footer navigation">
-    <ul class="footer-links" role="list">
-      <li><a href="#portfolio">Portfolio</a></li>
-      <li><a href="#artists">Artists</a></li>
-      <li><a href="#booking">Book</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li><a href="#location">Location</a></li>
-    </ul>
   </nav>
-  <p class="footer-copy">&copy; 2024 Shadow Collective · {studio.address}, {studio.city}</p>
-</footer>
+
+  <!-- HERO -->
+  <main id="main">
+    <section class="hero" aria-label="Studio hero">
+      <div class="hero-image-panel">
+        <img src={studio.heroImage} alt={studio.heroAlt} loading="eager" />
+        <div class="hero-scan-line" aria-hidden="true"></div>
+        <div class="hero-image-label" aria-hidden="true">IMG_001 // GRAYSCALE // 300DPI</div>
+      </div>
+      <div class="hero-info-panel">
+        <p class="hero-spec-tag">San Diego Black & Grey Realism</p>
+        <h1 class="hero-h1">
+          {studio.name.split(' ').slice(0,1).join(' ')}<br />
+          <span class="dim">{studio.name.split(' ').slice(1).join(' ')}</span>
+        </h1>
+        <p class="hero-desc">{studio.description}</p>
+        <div class="hero-metrics" role="list" aria-label="Studio statistics">
+          <div class="hero-metric" role="listitem">
+            <span class="metric-val">${studio.minimumCharge}</span>
+            <span class="metric-label">Min. charge</span>
+          </div>
+          <div class="hero-metric" role="listitem">
+            <span class="metric-val">${studio.hourlyRate}/hr</span>
+            <span class="metric-label">Day rate</span>
+          </div>
+          <div class="hero-metric" role="listitem">
+            <span class="metric-val">3</span>
+            <span class="metric-label">Specialists</span>
+          </div>
+        </div>
+        <div class="hero-ctas">
+          <a href="#booking" class="btn-primary">Request Consultation</a>
+          <a href="#gallery" class="btn-secondary">View Portfolio</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="process-section" id="process" aria-labelledby="process-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-index">01</span>
+          <h2 class="section-title" id="process-heading">HOW WE WORK</h2>
+          <span class="section-subtitle">PROCESS DOCUMENTATION</span>
+        </div>
+        <div class="process-grid">
+          <div class="process-sidebar">
+            <p class="process-label">Studio protocol</p>
+            <p style="font-family: var(--sans); font-size: 0.85rem; color: var(--gray-40); line-height: 1.8; font-weight: 300;">
+              Realism is not applied art — it's extracted from reference. Every piece begins with high-resolution photography. Every shadow is mapped before the needle touches skin.
+            </p>
+          </div>
+          <div class="process-body">
+            <div class="process-steps">
+              <div class="process-step">
+                <span class="step-key">STEP_01</span>
+                <p class="step-val"><strong>Reference submission</strong><br />High-resolution photo, RAW preferred. We reject pixelated or poorly lit reference — quality in determines quality out.</p>
+              </div>
+              <div class="process-step">
+                <span class="step-key">STEP_02</span>
+                <p class="step-val"><strong>Consultation</strong><br />In-person or video. We discuss placement, sizing, skin tone variables, and expected long-term shift of black and grey ink.</p>
+              </div>
+              <div class="process-step">
+                <span class="step-key">STEP_03</span>
+                <p class="step-val"><strong>Deposit + stencil</strong><br />${studio.depositAmount} secures your slot. Custom stencil is prepared in advance — we do not improvise realism.</p>
+              </div>
+              <div class="process-step">
+                <span class="step-key">STEP_04</span>
+                <p class="step-val"><strong>Execution</strong><br />Session length varies 4–8 hours for major pieces. We build layers: lightest grays first, deepest blacks last.</p>
+              </div>
+              <div class="process-step">
+                <span class="step-key">STEP_05</span>
+                <p class="step-val"><strong>Touchup review</strong><br />Complex realism returns at 4–6 months for shadow deepening and highlight refinement.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery-section" id="gallery" aria-labelledby="gallery-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-index">02</span>
+          <h2 class="section-title" id="gallery-heading">PORTFOLIO</h2>
+          <span class="section-subtitle">{studio.gallery.length} WORKS SHOWN</span>
+        </div>
+      </div>
+      <div class="container">
+        <div class="gallery-grid" role="list" aria-label="Portfolio gallery">
+          {studio.gallery.map((item, i) => (
+            <div class={`gallery-item${item.size === 'tall' ? ' wide' : ''}`} role="listitem">
+              <img src={item.image} alt={item.alt} loading="lazy" />
+              <div class="gallery-item-num" aria-hidden="true">{pad(i+1)}/{pad(studio.gallery.length)}</div>
+              <div class="gallery-caption">
+                <div class="gallery-caption-artist">{item.artist}</div>
+                <div class="gallery-caption-style">{item.style}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ARTISTS -->
+    <section class="artists-section" id="artists" aria-labelledby="artists-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-index">03</span>
+          <h2 class="section-title" id="artists-heading">SPECIALISTS</h2>
+          <span class="section-subtitle">{studio.artists.length} ARTISTS</span>
+        </div>
+        <ul class="artists-list" role="list">
+          {studio.artists.map((artist, i) => (
+            <li class="artist-row" role="listitem">
+              <div class="artist-index" aria-hidden="true">
+                <span>{pad(i+1)}</span><br />
+                <span style="color: var(--gray-80)">of {pad(studio.artists.length)}</span>
+              </div>
+              <img src={artist.image} alt={`Portrait of ${artist.name}`} class="artist-photo" loading="lazy" />
+              <div class="artist-info">
+                <h3 class="artist-name">{artist.name}</h3>
+                <span class="artist-handle">{artist.handle}</span>
+                <p class="artist-specialty">{artist.specialty}</p>
+                <p class="artist-bio">{artist.bio}</p>
+              </div>
+              <div class="artist-specs" role="list" aria-label={`${artist.name} specifications`}>
+                <div class="spec-row" role="listitem">
+                  <span class="spec-key">EXP</span>
+                  <span class="spec-val">{artist.yearsExp} yr</span>
+                </div>
+                {artist.styles.map(s => (
+                  <div class="spec-row" role="listitem">
+                    <span class="spec-key">SPEC</span>
+                    <span class="spec-val">{s}</span>
+                  </div>
+                ))}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNICAL -->
+    <section class="technical-section" aria-labelledby="technical-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-index">04</span>
+          <h2 class="section-title" id="technical-heading">TECHNICAL PARAMETERS</h2>
+          <span class="section-subtitle">REALISM METHODOLOGY</span>
+        </div>
+        <div class="technical-grid">
+          <div class="tech-block">
+            <span class="tech-block-label">NEEDLE_CONFIGURATION</span>
+            <h3 class="tech-block-title">Round liners + magnums</h3>
+            <p class="tech-block-body">Realism demands both — tight round liners for detail work and edges, curved magnums for seamless gradient blending across large gray areas. We don't use tribal or flat techniques.</p>
+            <div class="tech-block-footer">GEAR: Cheyenne Hawk + FK Irons</div>
+          </div>
+          <div class="tech-block">
+            <span class="tech-block-label">INK_SPECTRUM</span>
+            <h3 class="tech-block-title">Black to white, 9 tonal steps</h3>
+            <p class="tech-block-body">We work a strict tonal palette: pure black anchor, seven intermediate washes, distilled water highlights. No color. Color is a different discipline and we don't pretend otherwise.</p>
+            <div class="tech-block-footer">INK: Eternal / Quantum Black Series</div>
+          </div>
+          <div class="tech-block">
+            <span class="tech-block-label">SKIN_VARIABLES</span>
+            <h3 class="tech-block-title">Fitzpatrick scale assessment</h3>
+            <p class="tech-block-body">Realism reads differently across skin tones. We assess Fitzpatrick scale at consultation and adjust tonal compression accordingly. Lighter skin allows wider contrast range; darker skin requires careful highlight management.</p>
+            <div class="tech-block-footer">ASSESSED: at consultation</div>
+          </div>
+          <div class="tech-block">
+            <span class="tech-block-label">LONGEVITY_FACTORS</span>
+            <h3 class="tech-block-title">UV degrades black and grey</h3>
+            <p class="tech-block-body">Black ink grays toward middle tones over time. UV exposure accelerates this dramatically. We design with long-term aging in mind — contrast slightly higher at execution, knowing the 10-year pull toward midtone.</p>
+            <div class="tech-block-footer">EXPECTED SHIFT: 5–10yr horizon</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AFTERCARE -->
+    <section class="aftercare-section" id="aftercare" aria-labelledby="aftercare-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-index">05</span>
+          <h2 class="section-title" id="aftercare-heading">AFTERCARE PROTOCOL</h2>
+          <span class="section-subtitle">REQUIRED READING</span>
+        </div>
+        <ul class="aftercare-list" role="list">
+          {studio.aftercare.map(item => (
+            <li class="aftercare-item" role="listitem">
+              <span class="aftercare-num" aria-hidden="true">{pad(item.step)}</span>
+              <h3 class="aftercare-title">{item.title}</h3>
+              <p class="aftercare-body">{item.body}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- BOOKING -->
+    <section class="booking-section" id="booking" aria-labelledby="booking-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-index">06</span>
+          <h2 class="section-title" id="booking-heading">REQUEST CONSULTATION</h2>
+          <span class="section-subtitle">NO WALK-INS</span>
+        </div>
+        <div class="booking-grid">
+          <div class="booking-info">
+            <p class="booking-intro">Consultation protocol</p>
+            <p class="booking-statement">Every piece is pre-planned. Every reference is reviewed. Every session is confirmed in advance.</p>
+            <div class="booking-details">
+              <div class="booking-detail">
+                <span class="detail-key">Deposit</span>
+                <span class="detail-val">${studio.depositAmount} (applied to total)</span>
+              </div>
+              <div class="booking-detail">
+                <span class="detail-key">Minimum</span>
+                <span class="detail-val">${studio.minimumCharge}</span>
+              </div>
+              <div class="booking-detail">
+                <span class="detail-key">Rate</span>
+                <span class="detail-val">${studio.hourlyRate}/hr</span>
+              </div>
+              <div class="booking-detail">
+                <span class="detail-key">Walk-ins</span>
+                <span class="detail-val">Never accepted</span>
+              </div>
+              <div class="booking-detail">
+                <span class="detail-key">Age requirement</span>
+                <span class="detail-val">18+ with valid ID</span>
+              </div>
+            </div>
+          </div>
+          <form class="booking-form" aria-label="Booking inquiry form" novalidate>
+            <div class="form-row">
+              <label class="form-label" for="name">name</label>
+              <input type="text" id="name" name="name" class="form-input" placeholder="Full name" autocomplete="name" />
+            </div>
+            <div class="form-row">
+              <label class="form-label" for="email">email</label>
+              <input type="email" id="email" name="email" class="form-input" placeholder="your@email.com" autocomplete="email" />
+            </div>
+            <div class="form-row">
+              <label class="form-label" for="artist">preferred artist</label>
+              <select id="artist" name="artist" class="form-select">
+                <option value="">— select —</option>
+                {studio.artists.map(a => <option value={a.name}>{a.name}</option>)}
+              </select>
+            </div>
+            <div class="form-row">
+              <label class="form-label" for="concept">concept + reference description</label>
+              <textarea id="concept" name="concept" class="form-input" placeholder="Describe your subject, sizing, and placement. Attach reference images via email after submitting." rows={4}></textarea>
+            </div>
+            <button type="submit" class="form-submit">Submit Inquiry</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section" id="faq" aria-labelledby="faq-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-index">07</span>
+          <h2 class="section-title" id="faq-heading">COMMON QUERIES</h2>
+        </div>
+        <ul class="faq-list" role="list">
+          {studio.faqs.map(faq => (
+            <li role="listitem">
+              <details class="faq-item">
+                <summary>
+                  <span class="faq-q">{faq.question}</span>
+                  <span class="faq-toggle" aria-hidden="true">+</span>
+                </summary>
+                <p class="faq-answer">{faq.answer}</p>
+              </details>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- INSTAGRAM -->
+    <section class="ig-section" aria-labelledby="ig-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-index">08</span>
+          <h2 class="section-title" id="ig-heading">INSTAGRAM</h2>
+          <span class="section-subtitle">{studio.instagram}</span>
+        </div>
+      </div>
+      <div class="container">
+        <div class="ig-grid" role="list" aria-label="Instagram posts">
+          {studio.igPosts.map(post => (
+            <a href={post.link} class="ig-post" target="_blank" rel="noopener noreferrer" role="listitem" aria-label={post.alt}>
+              <img src={post.image} alt={post.alt} loading="lazy" />
+              <div class="ig-post-overlay"><span class="ig-handle">{studio.instagram}</span></div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- LOCATION -->
+    <section class="location-section" id="location" aria-labelledby="location-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-index">09</span>
+          <h2 class="section-title" id="location-heading">LOCATION + HOURS</h2>
+        </div>
+        <div class="location-grid">
+          <div>
+            <h3 style="font-family: var(--mono); font-size: 0.65rem; color: var(--gray-60); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.5rem;">OPERATING_HOURS</h3>
+            <div class="hours-table" role="list">
+              {studio.hours.map(h => (
+                <div class="hours-row" role="listitem">
+                  <span class="hours-day">{h.day.toUpperCase()}</span>
+                  <span class={`hours-time${h.open === 'Closed' ? ' closed' : ''}`}>
+                    {h.open === 'Closed' ? 'CLOSED' : `${h.open} – ${h.close}`}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div class="contact-block">
+            <h3 style="font-family: var(--mono); font-size: 0.65rem; color: var(--gray-60); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.5rem;">CONTACT_INFO</h3>
+            <div class="contact-item">
+              <div class="contact-label">Address</div>
+              <a href={studio.mapUrl} class="contact-value" target="_blank" rel="noopener noreferrer">{studio.address}<br />{studio.city}</a>
+            </div>
+            <div class="contact-item">
+              <div class="contact-label">Phone</div>
+              <a href={`tel:${studio.phone}`} class="contact-value">{studio.phone}</a>
+            </div>
+            <div class="contact-item">
+              <div class="contact-label">Email</div>
+              <a href={`mailto:${studio.email}`} class="contact-value">{studio.email}</a>
+            </div>
+            <div class="contact-item">
+              <div class="contact-label">Instagram</div>
+              <span class="contact-value">{studio.instagram}</span>
+            </div>
+            <div class="contact-item" style="margin-top: 2rem;">
+              <p style="font-family: var(--mono); font-size: 0.65rem; color: var(--gray-60); line-height: 1.8;">
+                // Realism is never walk-in.<br />
+                // Prepare your reference first.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-left">&copy; {new Date().getFullYear()} {studio.name}. San Diego, CA.</div>
+    <div class="footer-center">{studio.name}</div>
+    <div class="footer-right">{studio.tagline}</div>
+  </footer>
 </body>
 </html>

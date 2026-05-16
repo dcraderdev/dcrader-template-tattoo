@@ -1,245 +1,284 @@
 ---
 import { studio } from '../../data/v1';
 import '../../styles/global.css';
+const romanFAQ = ['I','II','III','IV','V','VI'];
 ---
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{studio.name} — Traditional American Tattoo, {studio.city}</title>
-  <meta name="description" content={studio.description} />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>{studio.name} — Traditional American Tattoo · {studio.city}</title>
+  <meta name="description" content={studio.description}/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet"/>
   <style>
-    :root {
-      --red: #8B0000;
-      --red-light: #A00000;
-      --cream: #FFF5DC;
-      --cream-dark: #F5E8C0;
-      --gold: #D4A017;
-      --gold-dark: #B8880E;
-      --dark: #1A0A00;
-      --dark-mid: #2C1400;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
-    body { background: var(--cream); color: var(--dark); font-family: 'Lato', system-ui, sans-serif; }
+    :root{--red:#7A0000;--red2:#A00000;--cream:#FFF5DC;--cream2:#F5E6C0;--gold:#C8860A;--gold2:#E8A020;--dark:#160500;--ink:#2A1200;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--cream);color:var(--ink);font-family:'EB Garamond',Georgia,serif;}
 
-    /* Nav */
-    .nav { background: var(--dark); border-bottom: 3px solid var(--gold); position: sticky; top: 0; z-index: 100; }
-    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; min-height: 64px; flex-wrap: wrap; gap: 0.5rem; }
-    .nav-logo { color: var(--cream); font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; letter-spacing: 0.03em; text-decoration: none; }
-    .nav-logo span { color: var(--gold); }
-    .nav-links { display: flex; gap: 0; list-style: none; flex-wrap: wrap; }
-    .nav-links a { color: var(--cream); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; padding: 0.5rem 0.9rem; display: block; transition: color 0.2s; }
-    .nav-links a:hover, .nav-links a:focus-visible { color: var(--gold); }
-    .nav-cta { background: var(--gold); color: var(--dark) !important; border-radius: 2px; padding: 0.5rem 1.1rem !important; }
-    .nav-cta:hover, .nav-cta:focus-visible { background: var(--gold-dark); color: var(--dark) !important; }
+    /* ── NAV ── */
+    nav{background:var(--dark);border-bottom:4px solid var(--gold);position:sticky;top:0;z-index:100;}
+    .nav-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 1.5rem;min-height:64px;}
+    .nav-links-left,.nav-links-right{display:flex;gap:0;list-style:none;}
+    .nav-links-right{justify-content:flex-end;}
+    nav a{color:rgba(255,245,220,0.7);text-decoration:none;font-family:'Teko',sans-serif;font-size:1rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;display:block;transition:color 0.2s;}
+    nav a:hover,nav a:focus-visible{color:var(--gold);}
+    .nav-logo-block{text-align:center;text-decoration:none;display:block;}
+    .nav-logo-main{font-family:'Teko',sans-serif;font-size:1.6rem;font-weight:700;letter-spacing:0.08em;color:var(--cream);line-height:1;text-transform:uppercase;}
+    .nav-logo-sub{font-family:'EB Garamond',serif;font-size:0.65rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;}
+    .nav-book{background:var(--red)!important;color:var(--cream)!important;font-weight:600;}
+    .nav-book:hover{background:var(--red2)!important;color:var(--cream)!important;}
 
-    /* Hero */
-    .hero { position: relative; min-height: 92vh; display: flex; align-items: flex-end; overflow: hidden; }
-    .hero-bg { position: absolute; inset: 0; background-image: linear-gradient(to bottom, rgba(26,10,0,0.55) 0%, rgba(26,10,0,0.3) 40%, rgba(26,10,0,0.85) 100%), url('https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=1920&q=85&auto=format&fit=crop'); background-size: cover; background-position: center; }
-    .hero-content { position: relative; max-width: 1200px; margin: 0 auto; padding: 4rem 1.5rem; width: 100%; }
-    .hero-badge { display: inline-block; border: 2px solid var(--gold); color: var(--gold); font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; padding: 0.35rem 1rem; margin-bottom: 1.25rem; font-family: 'Lato', sans-serif; font-weight: 700; }
-    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 900; color: var(--cream); line-height: 1.05; margin-bottom: 0.75rem; text-shadow: 0 2px 12px rgba(0,0,0,0.4); }
-    .hero-tagline { font-size: clamp(0.95rem, 2vw, 1.2rem); color: var(--cream-dark); max-width: 520px; line-height: 1.6; margin-bottom: 2rem; font-weight: 400; }
-    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .btn-primary { background: var(--red); color: var(--cream); padding: 0.9rem 2rem; font-family: 'Lato', sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; border: 2px solid var(--red); transition: all 0.2s; }
-    .btn-primary:hover, .btn-primary:focus-visible { background: var(--red-light); }
-    .btn-outline { background: transparent; color: var(--cream); padding: 0.9rem 2rem; font-family: 'Lato', sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; border: 2px solid var(--cream); transition: all 0.2s; }
-    .btn-outline:hover, .btn-outline:focus-visible { background: var(--cream); color: var(--dark); }
-    .hero-meta { position: absolute; right: 1.5rem; bottom: 4rem; display: flex; flex-direction: column; gap: 0.4rem; text-align: right; }
-    .hero-meta p { color: var(--cream-dark); font-size: 0.78rem; letter-spacing: 0.05em; }
-    .hero-meta strong { color: var(--gold); }
+    /* ── HERO ── */
+    .hero{position:relative;min-height:94vh;display:flex;align-items:center;overflow:hidden;background:var(--dark);}
+    .hero-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=1920&q=85&auto=format&fit=crop') center/cover;filter:sepia(40%) contrast(1.1) brightness(0.55);}
+    .hero-grid-overlay{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(200,134,10,0.07) 60px),repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(200,134,10,0.07) 60px);}
+    .hero-content{position:relative;width:100%;max-width:1200px;margin:0 auto;padding:3rem 1.5rem;display:grid;grid-template-columns:1fr 420px;gap:3rem;align-items:center;}
+    @media(max-width:900px){.hero-content{grid-template-columns:1fr;}}
+    .hero-left{}
+    .hero-est{font-family:'EB Garamond',serif;font-size:0.75rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;}
+    .hero-est::before,.hero-est::after{content:'';flex:0 0 30px;height:1px;background:var(--gold);}
+    .hero-h1{font-family:'Teko',sans-serif;font-size:clamp(4rem,9vw,8rem);font-weight:700;color:var(--cream);line-height:0.92;letter-spacing:0.02em;text-transform:uppercase;text-shadow:3px 3px 0 var(--red);}
+    .hero-amp{color:var(--gold);}
+    .hero-tagline{font-family:'EB Garamond',serif;font-style:italic;font-size:clamp(1rem,2vw,1.35rem);color:var(--cream2);max-width:480px;line-height:1.6;margin:1.5rem 0 2.5rem;}
+    .hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;}
+    .btn-red{background:var(--red);color:var(--cream);font-family:'Teko',sans-serif;font-size:1.05rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;padding:0.7rem 2rem;border:2px solid var(--red);transition:all 0.2s;}
+    .btn-red:hover,.btn-red:focus-visible{background:var(--red2);border-color:var(--red2);}
+    .btn-cream{background:transparent;color:var(--cream);font-family:'Teko',sans-serif;font-size:1.05rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;padding:0.7rem 2rem;border:2px solid rgba(255,245,220,0.5);transition:all 0.2s;}
+    .btn-cream:hover,.btn-cream:focus-visible{border-color:var(--cream);}
+    .hero-panel{background:rgba(22,5,0,0.85);border:2px solid var(--gold);padding:2rem;backdrop-filter:blur(4px);}
+    .hero-panel-title{font-family:'Teko',sans-serif;font-size:1.1rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem;text-align:center;}
+    .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(200,134,10,0.3);border:1px solid rgba(200,134,10,0.3);}
+    .hero-stat{background:var(--dark);padding:1rem;text-align:center;}
+    .stat-val{font-family:'Teko',sans-serif;font-size:2.2rem;font-weight:700;color:var(--cream);display:block;line-height:1;}
+    .stat-lbl{font-family:'EB Garamond',serif;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-top:0.2rem;}
 
-    /* Sections */
-    .section { padding: 5rem 1.5rem; }
-    .section-inner { max-width: 1200px; margin: 0 auto; }
-    .section-label { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--red); font-weight: 700; margin-bottom: 0.6rem; display: block; }
-    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--dark); line-height: 1.1; margin-bottom: 0.5rem; }
-    .gold-rule { width: 60px; height: 3px; background: var(--gold); margin: 1rem 0 2.5rem; }
-    .divider { display: flex; align-items: center; gap: 1rem; color: var(--gold); margin: 3rem 0; }
-    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--gold); opacity: 0.4; }
-    .star { font-size: 0.9rem; }
+    /* ── DIVIDERS ── */
+    .divider{display:flex;align-items:center;justify-content:center;gap:1.25rem;padding:1.5rem 0;color:var(--gold);}
+    .divider-line{flex:1;height:1px;background:var(--gold);opacity:0.3;max-width:200px;}
+    .divider svg{flex-shrink:0;}
 
-    /* Artists */
-    .artists-bg { background: var(--dark); }
-    .artists-bg .section-title { color: var(--cream); }
-    .artists-bg .section-label { color: var(--gold); }
-    .artist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1px; background: var(--gold); border: 1px solid var(--gold); }
-    .artist-card { background: var(--dark-mid); padding: 0; overflow: hidden; }
-    .artist-img { width: 100%; height: 280px; object-fit: cover; display: block; filter: sepia(20%) contrast(1.05); }
-    .artist-info { padding: 1.5rem; }
-    .artist-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--cream); margin-bottom: 0.25rem; }
-    .artist-specialty { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; font-weight: 700; }
-    .artist-bio { font-size: 0.88rem; color: #c8b89a; line-height: 1.65; margin-bottom: 1rem; }
-    .artist-handle { font-size: 0.78rem; color: var(--gold); opacity: 0.8; }
-    .style-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.75rem; }
-    .style-tag { background: rgba(212,160,23,0.15); color: var(--gold); border: 1px solid rgba(212,160,23,0.3); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.5rem; }
-    .years-badge { display: inline-block; background: var(--red); color: var(--cream); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.6rem; font-weight: 700; margin-top: 0.5rem; }
+    /* ── SECTIONS ── */
+    .section{padding:5rem 1.5rem;}
+    .section-inner{max-width:1200px;margin:0 auto;}
+    .eyebrow{font-family:'EB Garamond',serif;font-size:0.72rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--red);margin-bottom:0.5rem;display:block;}
+    .section-h{font-family:'Teko',sans-serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:700;color:var(--dark);line-height:0.95;text-transform:uppercase;}
+    .gold-bar{width:60px;height:4px;background:var(--gold);margin:1rem 0 2.5rem;}
 
-    /* Gallery */
-    .gallery-bg { background: var(--cream-dark); }
-    .masonry-grid { columns: 2; column-gap: 8px; }
-    @media (min-width: 640px) { .masonry-grid { columns: 3; } }
-    @media (min-width: 1024px) { .masonry-grid { columns: 4; } }
-    .masonry-item { break-inside: avoid; margin-bottom: 8px; position: relative; overflow: hidden; display: block; }
-    .masonry-item img { width: 100%; display: block; transition: transform 0.4s; }
-    .masonry-item:hover img { transform: scale(1.04); }
-    .masonry-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,10,0,0.8) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s; display: flex; align-items: flex-end; padding: 0.75rem; }
-    .masonry-item:hover .masonry-overlay { opacity: 1; }
-    .masonry-caption { color: var(--cream); font-size: 0.7rem; letter-spacing: 0.08em; }
+    /* ── ARTISTS ── */
+    .artists-bg{background:var(--dark);}
+    .artists-bg .section-h,.artists-bg .eyebrow ~ .section-h{color:var(--cream);}
+    .artists-bg .eyebrow{color:var(--gold2);}
+    .artist-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:2px solid var(--gold);}
+    @media(max-width:700px){.artist-grid{grid-template-columns:1fr;}}
+    .artist-card{border-right:1px solid rgba(200,134,10,0.3);overflow:hidden;}
+    .artist-card:last-child{border-right:none;}
+    .artist-photo-wrap{position:relative;height:340px;overflow:hidden;}
+    .artist-photo{width:100%;height:100%;object-fit:cover;object-position:top;filter:sepia(25%) contrast(1.1);transition:transform 0.5s,filter 0.4s;}
+    .artist-card:hover .artist-photo{transform:scale(1.04);filter:sepia(5%) contrast(1.1);}
+    .artist-photo-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(22,5,0,0.95) 0%,transparent 60%);}
+    .artist-name-over{position:absolute;bottom:1rem;left:1.25rem;right:1.25rem;}
+    .artist-name-over h3{font-family:'Teko',sans-serif;font-size:1.6rem;font-weight:700;color:var(--cream);letter-spacing:0.05em;text-transform:uppercase;line-height:1;}
+    .artist-name-over p{font-family:'EB Garamond',serif;font-style:italic;font-size:0.85rem;color:var(--gold);}
+    .artist-body{padding:1.25rem;}
+    .artist-bio{font-size:0.9rem;color:#b89060;line-height:1.7;margin-bottom:0.75rem;}
+    .artist-handle{font-size:0.75rem;color:var(--gold);opacity:0.7;}
+    .artist-tags{display:flex;gap:0.4rem;flex-wrap:wrap;margin-top:0.75rem;}
+    .tag{background:rgba(200,134,10,0.12);color:var(--gold);border:1px solid rgba(200,134,10,0.25);font-family:'Teko',sans-serif;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.15rem 0.5rem;}
+    .years{display:inline-block;background:var(--red);color:var(--cream);font-family:'Teko',sans-serif;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.15rem 0.55rem;margin-top:0.5rem;}
 
-    /* Aftercare */
-    .aftercare-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
-    .aftercare-card { border: 1px solid rgba(212,160,23,0.3); padding: 1.5rem; background: rgba(255,245,220,0.5); }
-    .aftercare-num { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; color: var(--gold); opacity: 0.35; line-height: 1; margin-bottom: 0.5rem; }
-    .aftercare-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.5rem; }
-    .aftercare-body { font-size: 0.88rem; color: #4a3010; line-height: 1.65; }
+    /* ── FLASH SHEET GALLERY ── */
+    .gallery-bg{background:var(--cream2);}
+    .flash-sheet{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;border:4px solid var(--dark);}
+    @media(max-width:640px){.flash-sheet{grid-template-columns:repeat(2,1fr);}}
+    .flash-cell{position:relative;aspect-ratio:1;overflow:hidden;background:var(--dark);}
+    .flash-cell img{width:100%;height:100%;object-fit:cover;display:block;filter:sepia(15%) contrast(1.1);transition:transform 0.4s,filter 0.3s;}
+    .flash-cell:hover img{transform:scale(1.06);filter:sepia(0%) contrast(1.15);}
+    .flash-label{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(22,5,0,0.9) 0%,transparent 100%);padding:0.6rem 0.5rem 0.4rem;text-align:center;}
+    .flash-label span{font-family:'EB Garamond',serif;font-style:italic;font-size:0.75rem;color:var(--gold);}
+    .flash-note{text-align:center;margin-top:1.25rem;font-family:'EB Garamond',serif;font-style:italic;font-size:0.9rem;color:#7a5020;}
 
-    /* Booking */
-    .booking-bg { background: var(--red); }
-    .booking-bg .section-title { color: var(--cream); }
-    .booking-bg .section-label { color: var(--gold); }
-    .booking-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
-    @media (min-width: 768px) { .booking-grid { grid-template-columns: 1fr 1fr; } }
-    .booking-info { color: var(--cream-dark); }
-    .booking-info p { line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; }
-    .booking-price-box { border: 1px solid rgba(212,160,23,0.4); padding: 1.25rem 1.5rem; margin-top: 1.5rem; }
-    .booking-price-box p { margin: 0.3rem 0; font-size: 0.88rem; color: #c8b89a; }
-    .booking-price-box strong { color: var(--gold); }
-    .booking-form { display: grid; gap: 1rem; }
-    label { display: block; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 0.35rem; }
-    input, select, textarea { width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(212,160,23,0.4); color: var(--cream); padding: 0.7rem 0.9rem; font-family: 'Lato', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
-    input:focus, select:focus, textarea:focus { border-color: var(--gold); }
-    input::placeholder, textarea::placeholder { color: rgba(255,245,220,0.35); }
-    select option { background: var(--dark-mid); color: var(--cream); }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .btn-submit { background: var(--gold); color: var(--dark); padding: 0.9rem 2rem; font-family: 'Lato', sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; border: none; cursor: pointer; transition: background 0.2s; width: 100%; margin-top: 0.5rem; }
-    .btn-submit:hover, .btn-submit:focus-visible { background: var(--gold-dark); }
+    /* ── AFTERCARE ── */
+    .aftercare-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0;border:1px solid rgba(122,0,0,0.2);}
+    .aftercare-item{padding:2rem 1.75rem;border-right:1px solid rgba(122,0,0,0.15);border-bottom:1px solid rgba(122,0,0,0.15);position:relative;}
+    .ac-num{font-family:'Teko',sans-serif;font-size:4.5rem;font-weight:700;color:rgba(122,0,0,0.08);line-height:1;position:absolute;top:1rem;right:1.25rem;}
+    .ac-title{font-family:'Teko',sans-serif;font-size:1.3rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--dark);margin-bottom:0.5rem;}
+    .ac-body{font-size:0.88rem;color:#6A4020;line-height:1.7;}
 
-    /* FAQ */
-    .faq-list { margin-top: 2rem; display: grid; gap: 0; border: 1px solid rgba(139,0,0,0.2); }
-    details { border-bottom: 1px solid rgba(139,0,0,0.15); }
-    details:last-child { border-bottom: none; }
-    summary { padding: 1.25rem 1.5rem; cursor: pointer; font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--dark); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-    summary::-webkit-details-marker { display: none; }
-    summary::after { content: '+'; font-family: 'Lato', sans-serif; font-size: 1.4rem; font-weight: 300; color: var(--red); flex-shrink: 0; transition: transform 0.2s; }
-    details[open] summary::after { transform: rotate(45deg); }
-    summary:hover { background: rgba(139,0,0,0.04); }
-    .faq-answer { padding: 0 1.5rem 1.25rem; font-size: 0.9rem; color: #4a3010; line-height: 1.7; }
+    /* ── BOOKING ── */
+    .booking-bg{background:var(--red);}
+    .booking-bg .section-h{color:var(--cream);}
+    .booking-bg .eyebrow{color:var(--gold2);}
+    .booking-bg .gold-bar{background:var(--cream);}
+    .booking-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;}
+    @media(max-width:768px){.booking-grid{grid-template-columns:1fr;}}
+    .booking-copy{color:var(--cream2);}
+    .booking-copy p{line-height:1.75;margin-bottom:1rem;font-size:0.95rem;}
+    .price-table{border:1px solid rgba(200,134,10,0.35);margin-top:1.5rem;}
+    .price-row{display:flex;justify-content:space-between;padding:0.6rem 1rem;border-bottom:1px solid rgba(200,134,10,0.2);font-size:0.88rem;color:#d4b090;}
+    .price-row:last-child{border-bottom:none;}
+    .price-row strong{color:var(--gold2);}
+    .booking-form{display:grid;gap:1.1rem;}
+    .f-label{display:block;font-family:'Teko',sans-serif;font-size:0.85rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold2);margin-bottom:0.3rem;}
+    .f-input{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(200,134,10,0.3);color:var(--cream);padding:0.65rem 0.9rem;font-family:'EB Garamond',serif;font-size:0.95rem;outline:none;transition:border-color 0.2s;}
+    .f-input:focus{border-color:var(--gold2);}
+    .f-input::placeholder{color:rgba(255,245,220,0.3);}
+    .f-input option{background:var(--dark);}
+    .f-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+    .f-submit{background:var(--gold);color:var(--dark);font-family:'Teko',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;border:none;cursor:pointer;padding:0.85rem 2rem;width:100%;transition:background 0.2s;margin-top:0.5rem;}
+    .f-submit:hover,.f-submit:focus-visible{background:var(--gold2);}
 
-    /* Hours & Location */
-    .location-bg { background: var(--dark); }
-    .location-bg .section-title { color: var(--cream); }
-    .location-bg .section-label { color: var(--gold); }
-    .location-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
-    @media (min-width: 768px) { .location-grid { grid-template-columns: 1fr 1fr; } }
-    .hours-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
-    .hours-table tr { border-bottom: 1px solid rgba(212,160,23,0.15); }
-    .hours-table td { padding: 0.65rem 0; font-size: 0.88rem; color: #c8b89a; }
-    .hours-table td:first-child { color: var(--cream); font-weight: 700; letter-spacing: 0.05em; }
-    .hours-table .closed { color: #6a5040; font-style: italic; }
-    .contact-list { margin-top: 1.5rem; display: grid; gap: 0.85rem; }
-    .contact-item { display: flex; gap: 0.75rem; align-items: flex-start; }
-    .contact-icon { color: var(--gold); font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
-    .contact-text { font-size: 0.9rem; color: #c8b89a; line-height: 1.5; }
-    .contact-text a { color: var(--gold); text-decoration: none; }
+    /* ── FAQ ── */
+    .faq-outer{border:1px solid rgba(122,0,0,0.2);}
+    details{border-bottom:1px solid rgba(122,0,0,0.15);}
+    details:last-child{border-bottom:none;}
+    summary{padding:1.25rem 1.5rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;list-style:none;font-family:'Teko',sans-serif;font-size:1.2rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--dark);}
+    summary::-webkit-details-marker{display:none;}
+    summary::after{content:'✦';color:var(--red);font-size:0.9rem;flex-shrink:0;transition:transform 0.3s;}
+    details[open] summary::after{transform:rotate(45deg);}
+    summary:hover{background:rgba(122,0,0,0.03);}
+    .faq-ans{padding:0 1.5rem 1.25rem;font-size:0.92rem;color:#6A4020;line-height:1.75;}
 
-    /* Instagram */
-    .ig-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 2rem; }
-    @media (min-width: 640px) { .ig-grid { grid-template-columns: repeat(6, 1fr); gap: 4px; } }
-    .ig-post { aspect-ratio: 1; overflow: hidden; position: relative; }
-    .ig-post img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; filter: sepia(15%); }
-    .ig-post a:hover img { transform: scale(1.06); }
-    .ig-post a { display: block; height: 100%; }
-    .ig-post a:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
-    .ig-follow { text-align: center; margin-top: 2rem; }
-    .ig-follow a { color: var(--gold); font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; text-decoration: none; border: 2px solid var(--gold); padding: 0.7rem 2rem; display: inline-block; transition: all 0.2s; }
-    .ig-follow a:hover, .ig-follow a:focus-visible { background: var(--gold); color: var(--dark); }
+    /* ── LOCATION ── */
+    .location-bg{background:var(--dark);}
+    .location-bg .section-h{color:var(--cream);}
+    .location-bg .eyebrow{color:var(--gold);}
+    .location-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
+    @media(max-width:700px){.location-grid{grid-template-columns:1fr;}}
+    .hours-tbl{width:100%;border-collapse:collapse;margin-top:1.5rem;}
+    .hours-tbl tr{border-bottom:1px solid rgba(200,134,10,0.15);}
+    .hours-tbl td{padding:0.6rem 0;font-size:0.9rem;color:#b89060;}
+    .hours-tbl td:first-child{color:var(--cream);font-family:'Teko',sans-serif;font-size:1rem;letter-spacing:0.06em;text-transform:uppercase;}
+    .hours-tbl .closed{color:#4a3020;font-style:italic;}
+    .contact-stack{margin-top:1.5rem;display:grid;gap:0.9rem;}
+    .contact-row{display:flex;gap:0.75rem;font-size:0.9rem;color:#b89060;}
+    .c-icon{color:var(--gold);flex-shrink:0;width:1.2rem;}
+    .contact-row a{color:var(--gold);text-decoration:none;}
 
-    /* Footer */
-    footer { background: #0D0500; border-top: 3px solid var(--gold); padding: 2.5rem 1.5rem; text-align: center; }
-    .footer-inner { max-width: 1200px; margin: 0 auto; }
-    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: var(--cream); margin-bottom: 0.5rem; }
-    .footer-logo span { color: var(--gold); }
-    .footer-tagline { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: #6a5040; margin-bottom: 1.25rem; }
-    .footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.25rem; }
-    .footer-links a { color: #8a6040; font-size: 0.78rem; text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; }
-    .footer-links a:hover { color: var(--gold); }
-    .footer-copy { font-size: 0.75rem; color: #3a2010; }
-    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } .hero-meta { display: none; } }
+    /* ── INSTAGRAM ── */
+    .ig-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;margin-top:2rem;border:3px solid var(--gold);}
+    @media(max-width:640px){.ig-grid{grid-template-columns:repeat(3,1fr);}}
+    .ig-cell{aspect-ratio:1;overflow:hidden;}
+    .ig-cell img{width:100%;height:100%;object-fit:cover;display:block;filter:sepia(20%);transition:filter 0.3s,transform 0.4s;}
+    .ig-cell a:hover img,.ig-cell a:focus-visible img{filter:sepia(0%);transform:scale(1.05);}
+    .ig-cell a{display:block;height:100%;}
+    .ig-cell a:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+    .ig-follow{text-align:center;margin-top:1.75rem;}
+    .ig-follow a{font-family:'Teko',sans-serif;font-size:1rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--dark);text-decoration:none;border:2px solid var(--dark);padding:0.65rem 2rem;display:inline-block;transition:all 0.2s;}
+    .ig-follow a:hover,.ig-follow a:focus-visible{background:var(--dark);color:var(--cream);}
+
+    /* ── FOOTER ── */
+    footer{background:#0D0300;border-top:4px solid var(--gold);padding:3rem 1.5rem;text-align:center;}
+    .footer-logo{font-family:'Teko',sans-serif;font-size:2.5rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--cream);}
+    .footer-logo span{color:var(--gold);}
+    .footer-est{font-family:'EB Garamond',serif;font-style:italic;font-size:0.85rem;letter-spacing:0.2em;color:#5a3010;margin:0.5rem 0 1.25rem;}
+    .footer-nav{display:flex;justify-content:center;gap:0;list-style:none;flex-wrap:wrap;margin-bottom:1.25rem;}
+    .footer-nav a{font-family:'Teko',sans-serif;font-size:0.95rem;letter-spacing:0.15em;text-transform:uppercase;color:#5a3010;text-decoration:none;padding:0.3rem 0.9rem;transition:color 0.2s;}
+    .footer-nav a:hover{color:var(--gold);}
+    .footer-copy{font-size:0.72rem;color:#2a1000;font-family:'EB Garamond',serif;}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @media(max-width:480px){.f-row{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
 
-<!-- Navigation -->
-<nav class="nav" aria-label="Main navigation">
+<nav aria-label="Main navigation">
   <div class="nav-inner">
-    <a href="/v1-traditional-american" class="nav-logo" aria-label="{studio.name} home">
-      Iron <span>&</span> Rose
-    </a>
-    <ul class="nav-links" role="list">
+    <ul class="nav-links-left" role="list">
       <li><a href="#portfolio">Portfolio</a></li>
       <li><a href="#artists">Artists</a></li>
       <li><a href="#aftercare">Aftercare</a></li>
+    </ul>
+    <a href="/dcrader-template-tattoo/v1-traditional-american" class="nav-logo-block" aria-label="{studio.name} home">
+      <div class="nav-logo-main">Iron <span style="color:var(--gold);">&</span> Rose</div>
+      <div class="nav-logo-sub">San Diego · Est. 2004</div>
+    </a>
+    <ul class="nav-links-right" role="list">
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#location">Location</a></li>
-      <li><a href="#booking" class="nav-cta">Book Now</a></li>
+      <li><a href="#booking" class="nav-book">Book Now</a></li>
     </ul>
   </div>
 </nav>
 
-<!-- Hero -->
-<section id="hero" aria-label="Hero — Iron &amp; Rose Tattoo">
+<!-- HERO -->
+<section id="hero" aria-label="Hero">
   <div class="hero">
-    <div class="hero-bg" role="img" aria-label={studio.heroAlt}></div>
+    <div class="hero-img" role="img" aria-label={studio.heroAlt}></div>
+    <div class="hero-grid-overlay" aria-hidden="true"></div>
     <div class="hero-content">
-      <div class="hero-badge" aria-hidden="true">★ Est. 2004 · San Diego, CA ★</div>
-      <h1>{studio.name}</h1>
-      <p class="hero-tagline">{studio.tagline}</p>
-      <div class="hero-actions">
-        <a href="#booking" class="btn-primary">Book a Session</a>
-        <a href="#portfolio" class="btn-outline">View Portfolio</a>
+      <div class="hero-left">
+        <p class="hero-est" aria-label="Established">Est. 2004 · American Traditional · San Diego</p>
+        <h1 class="hero-h1">Iron<br/><span class="hero-amp">&amp;</span><br/>Rose</h1>
+        <p class="hero-tagline">Since before your grandfather got his first tattoo. Bold outlines, saturated primaries, flash that outlasts a lifetime.</p>
+        <div class="hero-ctas">
+          <a href="#booking" class="btn-red">Book a Session</a>
+          <a href="#portfolio" class="btn-cream">View Flash</a>
+        </div>
       </div>
-    </div>
-    <div class="hero-meta" aria-hidden="true">
-      <p>Walk-ins <strong>Welcome</strong></p>
-      <p>Shop Min <strong>${studio.minimumCharge}</strong></p>
-      <p>{studio.phone}</p>
+      <div class="hero-panel">
+        <p class="hero-panel-title">The Numbers</p>
+        <div class="hero-stats" aria-label="Studio statistics">
+          <div class="hero-stat"><span class="stat-val">20+</span><span class="stat-lbl">Years Running</span></div>
+          <div class="hero-stat"><span class="stat-val">${studio.minimumCharge}</span><span class="stat-lbl">Shop Min.</span></div>
+          <div class="hero-stat"><span class="stat-val">3</span><span class="stat-lbl">Artists</span></div>
+          <div class="hero-stat"><span class="stat-val">Walk-in</span><span class="stat-lbl">Welcome</span></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Artists -->
-<section id="artists" class="section artists-bg" aria-labelledby="artists-heading">
+<!-- DIVIDER -->
+<div class="divider" aria-hidden="true">
+  <div class="divider-line"></div>
+  <svg viewBox="0 0 80 22" fill="var(--gold)" width="80" height="22" role="img" aria-label="Decorative swallow">
+    <path d="M40,11 C32,4 16,1 2,5 C9,8 17,9 21,11 C17,14 9,15 2,18 C16,22 32,18 40,11Z"/>
+    <path d="M40,11 C48,4 64,1 78,5 C71,8 63,9 59,11 C63,14 71,15 78,18 C64,22 48,18 40,11Z"/>
+    <ellipse cx="40" cy="11" rx="4" ry="5.5"/>
+  </svg>
+  <svg viewBox="0 0 28 36" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" width="28" height="36" role="img" aria-label="Decorative anchor">
+    <circle cx="14" cy="5.5" r="3.5"/>
+    <line x1="14" y1="9" x2="14" y2="31"/>
+    <line x1="5" y1="15" x2="23" y2="15"/>
+    <path d="M7,27 Q7,31 14,31 Q21,31 21,27"/>
+  </svg>
+  <svg viewBox="0 0 80 22" fill="var(--gold)" width="80" height="22" role="img" aria-label="Decorative swallow">
+    <path d="M40,11 C32,4 16,1 2,5 C9,8 17,9 21,11 C17,14 9,15 2,18 C16,22 32,18 40,11Z"/>
+    <path d="M40,11 C48,4 64,1 78,5 C71,8 63,9 59,11 C63,14 71,15 78,18 C64,22 48,18 40,11Z"/>
+    <ellipse cx="40" cy="11" rx="4" ry="5.5"/>
+  </svg>
+  <div class="divider-line"></div>
+</div>
+
+<!-- ARTISTS -->
+<section id="artists" class="section artists-bg" aria-labelledby="artists-h">
   <div class="section-inner">
-    <span class="section-label">Our Artists</span>
-    <h2 class="section-title" id="artists-heading">The Hands Behind the Work</h2>
-    <div class="gold-rule" aria-hidden="true"></div>
+    <span class="eyebrow">The Artists</span>
+    <h2 class="section-h" id="artists-h">The Hands<br/>Behind the Work</h2>
+    <div class="gold-bar" aria-hidden="true"></div>
     <div class="artist-grid" role="list">
-      {studio.artists.map(artist => (
-        <article class="artist-card" role="listitem" aria-label={`Artist: ${artist.name}`}>
-          <img
-            src={artist.image}
-            alt={`Portrait of ${artist.name}, ${artist.specialty} tattoo artist`}
-            class="artist-img"
-            loading="lazy"
-            width="400"
-            height="280"
-          />
-          <div class="artist-info">
-            <h3 class="artist-name">{artist.name}</h3>
-            <p class="artist-specialty">{artist.specialty}</p>
-            <p class="artist-bio">{artist.bio}</p>
-            <p class="artist-handle" aria-label={`Instagram handle: ${artist.handle}`}>{artist.handle}</p>
-            <div class="style-tags" aria-label={`Styles: ${artist.styles.join(', ')}`}>
-              {artist.styles.map(s => <span class="style-tag" aria-hidden="true">{s}</span>)}
+      {studio.artists.map(a => (
+        <article class="artist-card" role="listitem" aria-label={`Artist: ${a.name}`}>
+          <div class="artist-photo-wrap">
+            <img class="artist-photo" src={a.image} alt={`Portrait of ${a.name}, ${a.specialty}`} loading="lazy" width="400" height="340"/>
+            <div class="artist-photo-overlay" aria-hidden="true"></div>
+            <div class="artist-name-over">
+              <h3>{a.name}</h3>
+              <p>{a.specialty}</p>
             </div>
-            <p class="years-badge">{artist.yearsExp} years exp.</p>
+          </div>
+          <div class="artist-body">
+            <p class="artist-bio">{a.bio}</p>
+            <p class="artist-handle">{a.handle}</p>
+            <div class="artist-tags" aria-label={`Styles: ${a.styles.join(', ')}`}>
+              {a.styles.map(s => <span class="tag">{s}</span>)}
+            </div>
+            <p class="years">{a.yearsExp} Yrs</p>
           </div>
         </article>
       ))}
@@ -247,185 +286,137 @@ import '../../styles/global.css';
   </div>
 </section>
 
-<!-- Portfolio Gallery -->
-<section id="portfolio" class="section gallery-bg" aria-labelledby="gallery-heading">
+<!-- FLASH SHEET GALLERY -->
+<section id="portfolio" class="section gallery-bg" aria-labelledby="gallery-h">
   <div class="section-inner">
-    <span class="section-label">Portfolio</span>
-    <h2 class="section-title" id="gallery-heading">The Flash & The Classics</h2>
-    <div class="gold-rule" aria-hidden="true"></div>
-    <div class="masonry-grid" role="list" aria-label="Tattoo portfolio gallery">
+    <span class="eyebrow">The Flash</span>
+    <h2 class="section-h" id="gallery-h">Portfolio &amp; Flash Sheet</h2>
+    <div class="gold-bar" aria-hidden="true"></div>
+    <div class="flash-sheet" role="list" aria-label="Tattoo flash sheet gallery">
       {studio.gallery.map(item => (
-        <figure class="masonry-item" role="listitem">
-          <img
-            src={item.image}
-            alt={item.alt}
-            loading="lazy"
-            width="600"
-            height={item.size === 'tall' ? '800' : '500'}
-          />
-          <div class="masonry-overlay" aria-hidden="true">
-            <p class="masonry-caption">{item.artist} · {item.style}</p>
-          </div>
+        <figure class="flash-cell" role="listitem">
+          <img src={item.image} alt={item.alt} loading="lazy" width="400" height="400"/>
+          <div class="flash-label" aria-hidden="true"><span>{item.style}</span></div>
           <figcaption class="sr-only">{item.alt} — by {item.artist}</figcaption>
         </figure>
       ))}
     </div>
+    <p class="flash-note" aria-label="Flash availability note">All flash available for walk-in sessions. Custom designs by appointment.</p>
   </div>
 </section>
 
-<!-- Aftercare -->
-<section id="aftercare" class="section" aria-labelledby="aftercare-heading">
+<!-- DIVIDER -->
+<div class="divider" aria-hidden="true">
+  <div class="divider-line"></div>
+  <svg viewBox="0 0 20 24" fill="var(--gold)" width="20" height="24"><polygon points="10,1 12.5,7.5 19.5,8.5 14.5,13.5 16,20.5 10,17 4,20.5 5.5,13.5 0.5,8.5 7.5,7.5"/></svg>
+  <svg viewBox="0 0 20 24" fill="var(--red)" width="20" height="24"><polygon points="10,1 12.5,7.5 19.5,8.5 14.5,13.5 16,20.5 10,17 4,20.5 5.5,13.5 0.5,8.5 7.5,7.5"/></svg>
+  <svg viewBox="0 0 20 24" fill="var(--gold)" width="20" height="24"><polygon points="10,1 12.5,7.5 19.5,8.5 14.5,13.5 16,20.5 10,17 4,20.5 5.5,13.5 0.5,8.5 7.5,7.5"/></svg>
+  <div class="divider-line"></div>
+</div>
+
+<!-- AFTERCARE -->
+<section id="aftercare" class="section" aria-labelledby="aftercare-h">
   <div class="section-inner">
-    <span class="section-label">Tattoo Aftercare</span>
-    <h2 class="section-title" id="aftercare-heading">Protect Your Investment</h2>
-    <div class="gold-rule" aria-hidden="true"></div>
-    <p style="max-width:600px; color:#4a3010; line-height:1.7; margin-bottom:0.5rem; font-size:0.95rem;">A great tattoo requires great aftercare. Follow these steps and your piece will heal clean and last a lifetime.</p>
-    <div class="aftercare-grid" role="list">
+    <span class="eyebrow">Tattoo Aftercare</span>
+    <h2 class="section-h" id="aftercare-h">Protect Your Investment</h2>
+    <div class="gold-bar" aria-hidden="true"></div>
+    <div class="aftercare-list" role="list">
       {studio.aftercare.map(step => (
-        <div class="aftercare-card" role="listitem">
-          <div class="aftercare-num" aria-hidden="true">0{step.step}</div>
-          <h3 class="aftercare-title">{step.title}</h3>
-          <p class="aftercare-body">{step.body}</p>
+        <div class="aftercare-item" role="listitem">
+          <div class="ac-num" aria-hidden="true">0{step.step}</div>
+          <h3 class="ac-title">{step.title}</h3>
+          <p class="ac-body">{step.body}</p>
         </div>
       ))}
     </div>
   </div>
 </section>
 
-<!-- Booking -->
-<section id="booking" class="section booking-bg" aria-labelledby="booking-heading">
+<!-- BOOKING -->
+<section id="booking" class="section booking-bg" aria-labelledby="booking-h">
   <div class="section-inner">
     <div class="booking-grid">
-      <div class="booking-info">
-        <span class="section-label">Book a Session</span>
-        <h2 class="section-title" id="booking-heading">Let's Make Something Permanent</h2>
-        <div class="gold-rule" aria-hidden="true"></div>
-        <p>Ready to get tattooed? Fill out the form and we'll be in touch within 48 hours to confirm your appointment and artist match.</p>
-        <p>A non-refundable ${studio.depositAmount} deposit secures your session and is applied to your final cost. All deposits are processed after consultation confirmation.</p>
-        <div class="booking-price-box">
-          <p><strong>Shop Minimum</strong> — ${studio.minimumCharge}</p>
-          <p><strong>Hourly Rate</strong> — ${studio.hourlyRate}/hr</p>
-          <p><strong>Booking Deposit</strong> — ${studio.depositAmount} (applied to total)</p>
-          <p><strong>Walk-ins</strong> — Welcome Tue–Sun</p>
+      <div class="booking-copy">
+        <span class="eyebrow">Book a Session</span>
+        <h2 class="section-h" id="booking-h">Let's Make Something That Lasts</h2>
+        <div class="gold-bar" style="background:var(--cream);margin-top:1rem;" aria-hidden="true"></div>
+        <p>Fill out the form. We'll confirm within 48 hours. Walk-ins welcome Tue–Sun — call ahead to check availability.</p>
+        <p>A ${studio.depositAmount} non-refundable deposit secures your spot and goes toward your final cost. No deposit, no appointment.</p>
+        <div class="price-table">
+          <div class="price-row"><span>Shop Minimum</span><strong>${studio.minimumCharge}</strong></div>
+          <div class="price-row"><span>Hourly Rate</span><strong>${studio.hourlyRate}/hr</strong></div>
+          <div class="price-row"><span>Booking Deposit</span><strong>${studio.depositAmount}</strong></div>
+          <div class="price-row"><span>Walk-ins</span><strong>Tue–Sun</strong></div>
         </div>
       </div>
-      <div>
-        <form class="booking-form" action="#" method="post" aria-label="Tattoo booking deposit form" novalidate>
-          <input type="hidden" name="form-name" value="tattoo-booking-v1" />
-          <div>
-            <label for="b-name">Full Name <span aria-label="required">*</span></label>
-            <input type="text" id="b-name" name="name" placeholder="Your full name" required autocomplete="name" />
-          </div>
-          <div class="form-row">
-            <div>
-              <label for="b-email">Email <span aria-label="required">*</span></label>
-              <input type="email" id="b-email" name="email" placeholder="you@email.com" required autocomplete="email" />
-            </div>
-            <div>
-              <label for="b-phone">Phone</label>
-              <input type="tel" id="b-phone" name="phone" placeholder="(619) 555-0000" autocomplete="tel" />
-            </div>
-          </div>
-          <div>
-            <label for="b-artist">Preferred Artist</label>
-            <select id="b-artist" name="artist">
-              <option value="">Any available artist</option>
-              {studio.artists.map(a => <option value={a.name}>{a.name} — {a.specialty}</option>)}
+      <form class="booking-form" action="#" method="post" aria-label="Booking form" novalidate>
+        <div><label class="f-label" for="b-name">Full Name *</label><input class="f-input" type="text" id="b-name" name="name" placeholder="Your name" required autocomplete="name"/></div>
+        <div class="f-row">
+          <div><label class="f-label" for="b-email">Email *</label><input class="f-input" type="email" id="b-email" name="email" placeholder="you@email.com" required autocomplete="email"/></div>
+          <div><label class="f-label" for="b-phone">Phone</label><input class="f-input" type="tel" id="b-phone" name="phone" placeholder="(619) 555-0000" autocomplete="tel"/></div>
+        </div>
+        <div><label class="f-label" for="b-artist">Preferred Artist</label>
+          <select class="f-input" id="b-artist" name="artist">
+            <option value="">Any artist</option>
+            {studio.artists.map(a => <option value={a.name}>{a.name} — {a.specialty}</option>)}
+          </select>
+        </div>
+        <div class="f-row">
+          <div><label class="f-label" for="b-size">Size</label>
+            <select class="f-input" id="b-size" name="size">
+              <option>Small (coin)</option><option>Medium (hand)</option><option>Large (half sleeve)</option><option>Full sleeve / back</option>
             </select>
           </div>
-          <div class="form-row">
-            <div>
-              <label for="b-size">Approximate Size</label>
-              <select id="b-size" name="size">
-                <option value="">Select size</option>
-                <option value="small">Small (coin-sized)</option>
-                <option value="medium">Medium (hand-sized)</option>
-                <option value="large">Large (half sleeve)</option>
-                <option value="xlarge">Full sleeve / back</option>
-              </select>
-            </div>
-            <div>
-              <label for="b-placement">Placement</label>
-              <input type="text" id="b-placement" name="placement" placeholder="e.g. forearm, ribs" />
-            </div>
-          </div>
-          <div>
-            <label for="b-desc">Describe Your Tattoo Idea <span aria-label="required">*</span></label>
-            <textarea id="b-desc" name="description" placeholder="Tell us what you want — style, imagery, inspiration..." rows="4" required></textarea>
-          </div>
-          <div>
-            <label for="b-dates">Preferred Date Range</label>
-            <input type="text" id="b-dates" name="dates" placeholder="e.g. Any weekend in July" />
-          </div>
-          <button type="submit" class="btn-submit">
-            Request Booking + ${studio.depositAmount} Deposit
-          </button>
-        </form>
-      </div>
+          <div><label class="f-label" for="b-placement">Placement</label><input class="f-input" type="text" id="b-placement" name="placement" placeholder="e.g. forearm"/></div>
+        </div>
+        <div><label class="f-label" for="b-desc">Describe Your Idea *</label><textarea class="f-input" id="b-desc" name="description" rows="4" placeholder="Flash, custom, or bring your own..." required></textarea></div>
+        <div><label class="f-label" for="b-dates">Preferred Dates</label><input class="f-input" type="text" id="b-dates" name="dates" placeholder="e.g. Weekends in June"/></div>
+        <button class="f-submit" type="submit">Request Appointment + ${studio.depositAmount} Deposit</button>
+      </form>
     </div>
   </div>
 </section>
 
 <!-- FAQ -->
-<section id="faq" class="section" aria-labelledby="faq-heading">
+<section id="faq" class="section" aria-labelledby="faq-h">
   <div class="section-inner" style="max-width:800px;">
-    <span class="section-label">Frequently Asked</span>
-    <h2 class="section-title" id="faq-heading">Questions & Answers</h2>
-    <div class="gold-rule" aria-hidden="true"></div>
-    <div class="faq-list">
-      {studio.faqs.map((faq, i) => (
+    <span class="eyebrow">Common Questions</span>
+    <h2 class="section-h" id="faq-h">You Asked, We Answered</h2>
+    <div class="gold-bar" aria-hidden="true"></div>
+    <div class="faq-outer">
+      {studio.faqs.map(f => (
         <details>
-          <summary>{faq.question}</summary>
-          <div class="faq-answer" id={`faq-answer-${i}`}>
-            <p>{faq.answer}</p>
-          </div>
+          <summary>{f.question}</summary>
+          <div class="faq-ans"><p>{f.answer}</p></div>
         </details>
       ))}
     </div>
   </div>
 </section>
 
-<!-- Location & Hours -->
-<section id="location" class="section location-bg" aria-labelledby="location-heading">
+<!-- LOCATION -->
+<section id="location" class="section location-bg" aria-labelledby="location-h">
   <div class="section-inner">
     <div class="location-grid">
       <div>
-        <span class="section-label">Find Us</span>
-        <h2 class="section-title" id="location-heading">Studio Location</h2>
-        <div class="gold-rule" aria-hidden="true"></div>
-        <div class="contact-list">
-          <div class="contact-item">
-            <span class="contact-icon" aria-hidden="true">📍</span>
-            <div class="contact-text">
-              <p>{studio.address}</p>
-              <p>{studio.city}</p>
-              <a href={studio.mapUrl} target="_blank" rel="noopener noreferrer" style="font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; margin-top:0.4rem; display:inline-block;">Get Directions →</a>
-            </div>
-          </div>
-          <div class="contact-item">
-            <span class="contact-icon" aria-hidden="true">📞</span>
-            <div class="contact-text"><a href={`tel:${studio.phone}`}>{studio.phone}</a></div>
-          </div>
-          <div class="contact-item">
-            <span class="contact-icon" aria-hidden="true">✉️</span>
-            <div class="contact-text"><a href={`mailto:${studio.email}`}>{studio.email}</a></div>
-          </div>
-          <div class="contact-item">
-            <span class="contact-icon" aria-hidden="true">📸</span>
-            <div class="contact-text"><a href={`https://instagram.com/${studio.instagram.replace('@','')}`} target="_blank" rel="noopener noreferrer">{studio.instagram}</a></div>
-          </div>
+        <span class="eyebrow">Find Us</span>
+        <h2 class="section-h" id="location-h">Studio Location</h2>
+        <div class="gold-bar" aria-hidden="true"></div>
+        <div class="contact-stack">
+          <div class="contact-row"><span class="c-icon" aria-hidden="true">📍</span><div><p>{studio.address}</p><p>{studio.city}</p><a href={studio.mapUrl} target="_blank" rel="noopener noreferrer" style="font-family:'Teko',sans-serif;font-size:0.9rem;letter-spacing:0.12em;text-transform:uppercase;margin-top:0.3rem;display:inline-block;">Get Directions →</a></div></div>
+          <div class="contact-row"><span class="c-icon" aria-hidden="true">📞</span><a href={`tel:${studio.phone}`}>{studio.phone}</a></div>
+          <div class="contact-row"><span class="c-icon" aria-hidden="true">✉️</span><a href={`mailto:${studio.email}`}>{studio.email}</a></div>
+          <div class="contact-row"><span class="c-icon" aria-hidden="true">📸</span><a href={`https://instagram.com/${studio.instagram.replace('@','')}`} target="_blank" rel="noopener noreferrer">{studio.instagram}</a></div>
         </div>
       </div>
       <div>
-        <span class="section-label" style="display:block; margin-bottom:0.5rem;">Hours</span>
-        <table class="hours-table" aria-label="Studio hours">
+        <span class="eyebrow" style="display:block;margin-bottom:0.5rem;">Hours</span>
+        <table class="hours-tbl" aria-label="Studio hours">
           <tbody>
             {studio.hours.map(h => (
               <tr>
                 <td>{h.day}</td>
-                <td class={h.open === 'Closed' ? 'closed' : ''}>
-                  {h.open === 'Closed' ? 'Closed' : `${h.open} – ${h.close}`}
-                </td>
+                <td class={h.open==='Closed'?'closed':''}>{h.open==='Closed'?'Closed':`${h.open} – ${h.close}`}</td>
               </tr>
             ))}
           </tbody>
@@ -435,47 +426,41 @@ import '../../styles/global.css';
   </div>
 </section>
 
-<!-- Instagram -->
-<section id="instagram" class="section" aria-labelledby="ig-heading">
+<!-- INSTAGRAM -->
+<section id="instagram" class="section" aria-labelledby="ig-h">
   <div class="section-inner">
-    <span class="section-label">Instagram</span>
-    <h2 class="section-title" id="ig-heading">Follow the Work</h2>
-    <div class="gold-rule" aria-hidden="true"></div>
-    <div class="ig-grid" role="list" aria-label="Instagram posts from {studio.instagram}">
-      {studio.igPosts.map(post => (
-        <div class="ig-post" role="listitem">
-          <a href={post.link} aria-label={`Instagram post: ${post.alt}`} target="_blank" rel="noopener noreferrer">
-            <img src={post.image} alt={post.alt} loading="lazy" width="300" height="300" />
+    <span class="eyebrow">Follow the Work</span>
+    <h2 class="section-h" id="ig-h">On Instagram</h2>
+    <div class="gold-bar" aria-hidden="true"></div>
+    <div class="ig-grid" role="list" aria-label="Instagram feed">
+      {studio.igPosts.map(p => (
+        <div class="ig-cell" role="listitem">
+          <a href={p.link} aria-label={`Instagram: ${p.alt}`} target="_blank" rel="noopener noreferrer">
+            <img src={p.image} alt={p.alt} loading="lazy" width="300" height="300"/>
           </a>
         </div>
       ))}
     </div>
     <div class="ig-follow">
-      <a href={`https://instagram.com/${studio.instagram.replace('@','')}`} target="_blank" rel="noopener noreferrer">
-        Follow {studio.instagram} on Instagram
-      </a>
+      <a href={`https://instagram.com/${studio.instagram.replace('@','')}`} target="_blank" rel="noopener noreferrer">Follow {studio.instagram}</a>
     </div>
   </div>
 </section>
 
-<!-- Footer -->
+<!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-    <p class="footer-logo">Iron <span>&</span> Rose</p>
-    <p class="footer-tagline">Bold Lines. Timeless Art. American Classic.</p>
-    <nav aria-label="Footer navigation">
-      <ul class="footer-links" role="list">
-        <li><a href="#portfolio">Portfolio</a></li>
-        <li><a href="#artists">Artists</a></li>
-        <li><a href="#booking">Book</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="#location">Location</a></li>
-      </ul>
-    </nav>
-    <p class="footer-copy">&copy; 2024 {studio.name} · {studio.address}, {studio.city} · {studio.phone}</p>
-  </div>
+  <p class="footer-logo">Iron <span>&amp;</span> Rose</p>
+  <p class="footer-est">"Since before your grandfather got his first tattoo."</p>
+  <nav aria-label="Footer navigation">
+    <ul class="footer-nav" role="list">
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#artists">Artists</a></li>
+      <li><a href="#booking">Book</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#location">Location</a></li>
+    </ul>
+  </nav>
+  <p class="footer-copy">&copy; 2024 Iron &amp; Rose Tattoo · {studio.address}, {studio.city} · {studio.phone}</p>
 </footer>
-
-<style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}</style>
 </body>
 </html>
