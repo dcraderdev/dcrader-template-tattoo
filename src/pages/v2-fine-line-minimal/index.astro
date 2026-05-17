@@ -1,9 +1,18 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import { studio } from '../../data/v2';
 import { resolveImage } from '../../data/imageMap';
 import '../../styles/global.css';
 const toRoman = (n: number) => ['I','II','III','IV','V','VI','VII','VIII'][n-1] ?? n;
+const heroImg = resolveImage(studio.gallery[0].image);
+const heroWidths = [540, 800, 1080];
+const heroSrcset = (await Promise.all(
+  heroWidths.map(async (w) => {
+    const img = await getImage({ src: heroImg, width: w, format: 'webp' });
+    return `${img.src} ${w}w`;
+  })
+)).join(', ');
+const heroPreload = await getImage({ src: heroImg, width: 1080, format: 'webp' });
 ---
 <!doctype html>
 <html lang="en">
@@ -16,6 +25,7 @@ const toRoman = (n: number) => ['I','II','III','IV','V','VI','VII','VIII'][n-1] 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100;0,200;0,300;0,400;0,500;1,200;1,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet"/>
+  <link rel="preload" as="image" fetchpriority="high" type="image/webp" href={heroPreload.src} imagesrcset={heroSrcset} imagesizes="(min-width: 768px) 60vw, 100vw"/>
   <style>
     :root{--w:#FAFAFA;--off:#F5F5F2;--b:#0D0D0D;--mid:#888;--lt:#CCC;--xlt:#E8E8E5;}
     *{box-sizing:border-box;margin:0;padding:0;}

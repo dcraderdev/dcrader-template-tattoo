@@ -1,9 +1,17 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import { studio } from '../../data/v5';
 import { resolveImage } from '../../data/imageMap';
 const base = import.meta.env.BASE_URL;
 const heroImg = resolveImage(studio.heroImage);
+const heroWidths = [600, 1000, 1600];
+const heroSrcset = (await Promise.all(
+  heroWidths.map(async (w) => {
+    const img = await getImage({ src: heroImg, width: w, format: 'webp' });
+    return `${img.src} ${w}w`;
+  })
+)).join(', ');
+const heroPreload = await getImage({ src: heroImg, width: 1600, format: 'webp' });
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +24,7 @@ const heroImg = resolveImage(studio.heroImage);
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href={`${base}styles/global.css`} />
+  <link rel="preload" as="image" fetchpriority="high" type="image/webp" href={heroPreload.src} imagesrcset={heroSrcset} imagesizes="(min-width: 1024px) 50vw, 100vw"/>
   <style>
     :root {
       --cream: #FDFAF4;
