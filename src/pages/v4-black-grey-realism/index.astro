@@ -506,6 +506,86 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
       text-align: right;
     }
 
+    /* STUDIO INTERIOR — equipment / film-grain strip */
+    .studio-section {
+      padding: 6rem 0; border-bottom: 1px solid var(--gray-80);
+      background: var(--near-black);
+      position: relative;
+    }
+    .studio-section::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        repeating-linear-gradient(0deg, transparent 0 2px, rgba(255,255,255,0.012) 2px 3px),
+        radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.025) 0%, transparent 60%);
+      opacity: 0.9;
+      mix-blend-mode: screen;
+    }
+    .studio-strip {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      grid-template-rows: repeat(2, 240px);
+      gap: 2px;
+      margin-top: 2.5rem;
+    }
+    .studio-cell {
+      position: relative; overflow: hidden;
+      background: var(--mid-dark);
+      border: 1px solid var(--gray-80);
+    }
+    .studio-cell.tall { grid-row: span 2; }
+    .studio-cell img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: grayscale(100%) contrast(1.15) brightness(0.82);
+      transition: filter 0.4s, transform 0.5s;
+    }
+    .studio-cell:hover img { filter: grayscale(85%) contrast(1.2) brightness(0.92); transform: scale(1.03); }
+    .studio-cell-meta {
+      position: absolute; top: 0.75rem; left: 0.75rem;
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--gray-20);
+      background: rgba(0,0,0,0.6); padding: 0.25rem 0.5rem;
+      border: 1px solid var(--gray-80);
+    }
+    .studio-cell-cap {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 1rem; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+    }
+    .studio-cell-cap h4 {
+      font-family: var(--mono); font-size: 0.7rem; font-weight: 600;
+      color: var(--white); letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+    .studio-cell-cap p {
+      font-family: var(--sans); font-size: 0.72rem; font-weight: 300;
+      color: var(--gray-40); line-height: 1.5;
+    }
+    .studio-cell.placeholder {
+      display: flex; align-items: center; justify-content: center;
+      background:
+        linear-gradient(135deg, var(--mid-dark) 0%, var(--near-black) 100%);
+    }
+    .studio-cell.placeholder::after {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(45deg, transparent 0 6px, rgba(255,255,255,0.02) 6px 7px);
+    }
+    .studio-cell.placeholder .ph-content {
+      position: relative; z-index: 1; text-align: center; padding: 1rem;
+    }
+    .studio-cell.placeholder .ph-key {
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.2em;
+      color: var(--gray-60); text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .studio-cell.placeholder .ph-val {
+      font-family: var(--mono); font-size: 0.95rem; color: var(--gray-20);
+      font-weight: 500; letter-spacing: 0.08em;
+    }
+    .studio-cell.placeholder .ph-sub {
+      font-family: var(--sans); font-size: 0.7rem; color: var(--gray-60);
+      font-weight: 300; margin-top: 0.4rem; max-width: 22ch;
+      margin-left: auto; margin-right: auto; line-height: 1.5;
+    }
+
     /* CONTAINER */
     .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 
@@ -520,6 +600,8 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
       .ig-grid { grid-template-columns: repeat(3, 1fr); }
       .technical-grid { grid-template-columns: 1fr; }
       .process-grid { grid-template-columns: 1fr; }
+      .studio-strip { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, 200px); }
+      .studio-cell.tall { grid-row: span 1; }
     }
   </style>
 </head>
@@ -721,11 +803,64 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
       </div>
     </section>
 
+    <!-- STUDIO INTERIOR & STATION GALLERY -->
+    <section class="studio-section" id="studio" aria-labelledby="studio-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-index">05</span>
+          <h2 class="section-title" id="studio-heading">THE FLOOR</h2>
+          <span class="section-subtitle">STATION DOCUMENTATION / STERILE PROTOCOL</span>
+        </div>
+        <p style="font-family: var(--sans); font-size: 0.9rem; color: var(--gray-40); line-height: 1.8; font-weight: 300; max-width: 70ch; margin-bottom: 0.5rem;">
+          Realism is a clean discipline. Every station is photographed monthly for our internal log, every autoclave cycle is dated and filed. We don't romanticize the shop floor — we document it.
+        </p>
+        <div class="studio-strip" role="list" aria-label="Studio interior and equipment documentation">
+          <div class="studio-cell tall" role="listitem">
+            <Image src={resolveImage(studio.gallery[0].image)} alt="Cassandra Vane's primary station — Cheyenne Hawk rotary, single-use grips, ink cups taped down" loading="lazy" decoding="async" widths={[600, 900, 1200]} sizes="(min-width: 768px) 50vw, 100vw" width={1200} height={1600} />
+            <span class="studio-cell-meta" aria-hidden="true">STATION_01 / 35mm</span>
+            <div class="studio-cell-cap">
+              <h4>Cassandra's station, north wall</h4>
+              <p>Cheyenne Hawk Pen, custom RCA, daylight-balanced 5000K overhead. The only color in the room.</p>
+            </div>
+          </div>
+          <div class="studio-cell placeholder" role="listitem" aria-label="Sterilization specification">
+            <div class="ph-content">
+              <p class="ph-key">AUTOCLAVE / STATIM 2000</p>
+              <p class="ph-val">132°C / 6 min</p>
+              <p class="ph-sub">Spore-tested weekly. Logs available on request.</p>
+            </div>
+          </div>
+          <div class="studio-cell" role="listitem">
+            <Image src={resolveImage(studio.gallery[3].image)} alt="Jordan Ash's machine drawer — magnums and round liners sorted by gauge" loading="lazy" decoding="async" widths={[400, 600]} sizes="(min-width: 768px) 25vw, 50vw" width={600} height={600} />
+            <span class="studio-cell-meta" aria-hidden="true">DRAWER_03</span>
+            <div class="studio-cell-cap">
+              <h4>Sorted: gauge ascending</h4>
+              <p>Round liners 03 → 14, magnums 09 → 23 curved. Single-use, dated, never re-sleeved.</p>
+            </div>
+          </div>
+          <div class="studio-cell placeholder" role="listitem" aria-label="Ink inventory">
+            <div class="ph-content">
+              <p class="ph-key">INK_LOG / 09-23</p>
+              <p class="ph-val">Eternal · Quantum</p>
+              <p class="ph-sub">Black series only. Batch numbers recorded against every client.</p>
+            </div>
+          </div>
+          <div class="studio-cell placeholder" role="listitem" aria-label="Lighting specification">
+            <div class="ph-content">
+              <p class="ph-key">LIGHTING / CRI95+</p>
+              <p class="ph-val">5000K, dimmable</p>
+              <p class="ph-sub">Calibrated monthly against a Datacolor reference card.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- AFTERCARE -->
     <section class="aftercare-section" id="aftercare" aria-labelledby="aftercare-heading">
       <div class="container">
         <div class="section-header">
-          <span class="section-index">05</span>
+          <span class="section-index">06</span>
           <h2 class="section-title" id="aftercare-heading">AFTERCARE PROTOCOL</h2>
           <span class="section-subtitle">REQUIRED READING</span>
         </div>
@@ -745,7 +880,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
     <section class="booking-section" id="booking" aria-labelledby="booking-heading">
       <div class="container">
         <div class="section-header">
-          <span class="section-index">06</span>
+          <span class="section-index">07</span>
           <h2 class="section-title" id="booking-heading">REQUEST CONSULTATION</h2>
           <span class="section-subtitle">NO WALK-INS</span>
         </div>
@@ -806,7 +941,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
     <section class="faq-section" id="faq" aria-labelledby="faq-heading">
       <div class="container">
         <div class="section-header">
-          <span class="section-index">07</span>
+          <span class="section-index">08</span>
           <h2 class="section-title" id="faq-heading">COMMON QUERIES</h2>
         </div>
         <ul class="faq-list" role="list">
@@ -829,7 +964,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
     <section class="ig-section" aria-labelledby="ig-heading">
       <div class="container">
         <div class="section-header">
-          <span class="section-index">08</span>
+          <span class="section-index">09</span>
           <h2 class="section-title" id="ig-heading">INSTAGRAM</h2>
           <span class="section-subtitle">{studio.instagram}</span>
         </div>
@@ -850,7 +985,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
     <section class="location-section" id="location" aria-labelledby="location-heading">
       <div class="container">
         <div class="section-header">
-          <span class="section-index">09</span>
+          <span class="section-index">10</span>
           <h2 class="section-title" id="location-heading">LOCATION + HOURS</h2>
         </div>
         <div class="location-grid">

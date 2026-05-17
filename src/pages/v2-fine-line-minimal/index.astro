@@ -99,6 +99,23 @@ const heroPreload = await getImage({ src: heroImg, width: 1080, format: 'webp' }
     .museum-caption-sub{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--lt);margin-top:0.35rem;}
     @media(max-width:700px){.museum-item{grid-template-columns:1fr;}.museum-item:nth-child(even){direction:ltr;}}
 
+    /* SIGNATURE — featured single piece */
+    .signature-bg{background:var(--w);border-top:1px solid var(--xlt);border-bottom:1px solid var(--xlt);}
+    .sig-frame{display:grid;grid-template-columns:1fr 1.1fr;gap:5rem;align-items:center;margin-top:2.5rem;}
+    @media(max-width:820px){.sig-frame{grid-template-columns:1fr;gap:3rem;}}
+    .sig-img-wrap{position:relative;padding:1.5rem;background:var(--off);}
+    .sig-img-wrap::before{content:'';position:absolute;inset:0;border:1px solid var(--xlt);pointer-events:none;}
+    .sig-img-wrap img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;filter:grayscale(12%);}
+    .sig-img-cap{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.55rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--lt);margin-top:1rem;text-align:right;}
+    .sig-body{padding-right:1rem;}
+    .sig-tag{font-family:'Inter Tight',sans-serif;font-weight:300;font-size:0.6rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--mid);margin-bottom:1.25rem;}
+    .sig-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(2rem,4.5vw,3.6rem);color:var(--b);line-height:1.05;margin-bottom:1.5rem;}
+    .sig-rule{width:50px;height:1px;background:var(--b);margin-bottom:1.5rem;}
+    .sig-prose{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:#555;line-height:1.85;margin-bottom:1.25rem;font-style:italic;}
+    .sig-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem 2rem;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--xlt);}
+    .sig-meta dt{font-family:'Inter Tight',sans-serif;font-weight:300;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--lt);margin-bottom:0.3rem;}
+    .sig-meta dd{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:var(--b);line-height:1.4;}
+
     /* AFTERCARE */
     .aftercare-bg{background:var(--off);border-top:1px solid var(--xlt);}
     .aftercare-list{display:grid;gap:0;border:1px solid var(--xlt);margin-top:2rem;}
@@ -267,6 +284,34 @@ const heroPreload = await getImage({ src: heroImg, width: 1080, format: 'webp' }
           </div>
         </figure>
       ))}
+    </div>
+  </div>
+</section>
+
+<!-- SIGNATURE — featured single piece -->
+<section id="signature" class="section signature-bg" aria-labelledby="sig-h">
+  <div class="section-inner">
+    <span class="section-num">Section III</span>
+    <h2 class="section-h" id="sig-h">A Single Piece, At Length</h2>
+    <div class="thin-rule" aria-hidden="true"></div>
+    <div class="sig-frame">
+      <figure class="sig-img-wrap">
+        <Image src={resolveImage(studio.gallery[0].image)} alt={studio.gallery[0].alt} loading="lazy" decoding="async" widths={[480, 720, 960]} sizes="(min-width: 820px) 45vw, 100vw" width={960} height={1280} />
+        <figcaption class="sig-img-cap">Plate IV — {studio.gallery[0].artist}, single-needle on forearm, eight hours across two sittings.</figcaption>
+      </figure>
+      <div class="sig-body">
+        <p class="sig-tag">Signature work · 2024</p>
+        <h3 class="sig-title">"Fern, unfurling slowly — a study in restraint."</h3>
+        <div class="sig-rule" aria-hidden="true"></div>
+        <p class="sig-prose">Sora began this piece in late winter from a pressed-fern specimen brought in by the client's grandmother. The line weight is held within a quarter-millimeter from stem to tip — no shading, no fill, only line.</p>
+        <p class="sig-prose">Two sittings, four months apart, to allow the first pass to settle into the dermis before the finer fronds were committed. The result reads as botanical illustration, not tattoo. This is what we mean when we say <em>fine line</em>.</p>
+        <dl class="sig-meta">
+          <div><dt>Artist</dt><dd>{studio.artists[0].name}</dd></div>
+          <div><dt>Placement</dt><dd>Inner forearm, 14cm × 5cm</dd></div>
+          <div><dt>Technique</dt><dd>Single-needle, 0.18mm round liner</dd></div>
+          <div><dt>Sessions</dt><dd>Two · ~8 hours total</dd></div>
+        </dl>
+      </div>
     </div>
   </div>
 </section>
