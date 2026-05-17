@@ -1,9 +1,17 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import { studio } from '../../data/v4';
 import { resolveImage } from '../../data/imageMap';
 const base = import.meta.env.BASE_URL;
 const heroImg = resolveImage(studio.heroImage);
+const heroWidths = [768, 1280, 1920];
+const heroSrcset = (await Promise.all(
+  heroWidths.map(async (w) => {
+    const img = await getImage({ src: heroImg, width: w, format: 'webp' });
+    return `${img.src} ${w}w`;
+  })
+)).join(', ');
+const heroPreload = await getImage({ src: heroImg, width: 1920, format: 'webp' });
 
 function pad(n: number) { return n.toString().padStart(2, '0'); }
 ---
@@ -18,6 +26,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href={`${base}styles/global.css`} />
+  <link rel="preload" as="image" fetchpriority="high" type="image/webp" href={heroPreload.src} imagesrcset={heroSrcset} imagesizes="(min-width: 1024px) 50vw, 100vw"/>
   <style>
     :root {
       --black: #000000;
