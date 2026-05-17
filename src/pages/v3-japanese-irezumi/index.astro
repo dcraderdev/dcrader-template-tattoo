@@ -105,6 +105,26 @@ const heroPreload = await getImage({ src: heroImg, width: 1920, format: 'webp' }
     .vg-caption-desc{font-family:'Cormorant',serif;font-style:italic;font-size:1.1rem;color:var(--cream);}
     .vg-caption-artist{font-family:'Cormorant',serif;font-size:0.8rem;color:var(--gray);}
 
+    /* JOURNEY — booking process flowchart */
+    .journey-bg{background:linear-gradient(180deg,var(--bg) 0%,var(--surf) 100%);border-top:1px solid rgba(184,151,74,0.12);border-bottom:1px solid rgba(184,151,74,0.12);}
+    .journey-head{text-align:center;max-width:720px;margin:0 auto 3.5rem;}
+    .journey-head .section-h-jp{margin-bottom:0.5rem;}
+    .journey-head .gold-stroke{margin-left:auto;margin-right:auto;}
+    .journey-intro{font-family:'Cormorant',serif;font-style:italic;font-size:1.05rem;color:var(--gray);line-height:1.8;margin-top:1rem;}
+    .journey-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;margin-top:2rem;}
+    @media(max-width:900px){.journey-flow{grid-template-columns:1fr;}}
+    .journey-step{position:relative;padding:2.25rem 1.25rem 2rem;text-align:center;border-right:1px solid rgba(184,151,74,0.12);}
+    .journey-step:last-child{border-right:none;}
+    @media(max-width:900px){.journey-step{border-right:none;border-bottom:1px solid rgba(184,151,74,0.12);}.journey-step:last-child{border-bottom:none;}}
+    .journey-step::before{content:'';position:absolute;top:50%;right:-9px;width:18px;height:18px;background:var(--bg);border:1px solid var(--gold);transform:translateY(-50%) rotate(45deg);z-index:2;}
+    .journey-step:last-child::before{display:none;}
+    @media(max-width:900px){.journey-step::before{display:none;}}
+    .journey-kanji{font-family:'Noto Serif JP',serif;font-size:2.2rem;font-weight:700;color:var(--red);line-height:1;margin-bottom:0.4rem;}
+    .journey-num{font-family:'Cormorant',serif;font-style:italic;font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+    .journey-title{font-family:'Cormorant',serif;font-size:1.2rem;font-weight:600;color:var(--cream);margin-bottom:0.5rem;}
+    .journey-romaji{font-family:'Noto Serif JP',serif;font-size:0.7rem;letter-spacing:0.15em;color:rgba(184,151,74,0.55);margin-bottom:0.85rem;}
+    .journey-body{font-family:'Cormorant',serif;font-style:italic;font-size:0.92rem;color:var(--gray);line-height:1.7;}
+
     /* AFTERCARE */
     .ac-bg{background:var(--surf);}
     .ac-scroll{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(184,151,74,0.1);margin-top:2rem;}
@@ -278,6 +298,56 @@ const heroPreload = await getImage({ src: heroImg, width: 1920, format: 'webp' }
         </div>
       </figure>
     ))}
+  </div>
+</section>
+
+<!-- JOURNEY — five-step booking flow -->
+<section id="journey" class="section journey-bg" aria-labelledby="journey-h">
+  <div class="section-inner">
+    <div class="journey-head">
+      <span class="eyebrow">道 — The Path</span>
+      <span class="section-h-jp">予約の流れ</span>
+      <h2 class="section-h" id="journey-h">From First Letter to Final Session</h2>
+      <div class="gold-stroke" aria-hidden="true"></div>
+      <p class="journey-intro">A traditional irezumi is not booked the way a flash piece is booked. We move slowly, with intention. Most pieces take months from inquiry to first needle — and years to complete.</p>
+    </div>
+    <ol class="journey-flow" role="list" aria-label="Five-step booking process">
+      <li class="journey-step" role="listitem">
+        <div class="journey-kanji" aria-hidden="true">壱</div>
+        <div class="journey-num">Step One</div>
+        <h3 class="journey-title">Inquiry Letter</h3>
+        <div class="journey-romaji">問い合わせ · Toiawase</div>
+        <p class="journey-body">Write to us — not a form, a letter. Tell us the motif you carry, the placement you imagine, and why now. We read every word before we reply.</p>
+      </li>
+      <li class="journey-step" role="listitem">
+        <div class="journey-kanji" aria-hidden="true">弐</div>
+        <div class="journey-num">Step Two</div>
+        <h3 class="journey-title">Consultation</h3>
+        <div class="journey-romaji">相談 · Sōdan</div>
+        <p class="journey-body">In-person at the studio. We discuss lineage, traditional symbolism, and which horishi suits your piece. Tea is served. No needles are touched.</p>
+      </li>
+      <li class="journey-step" role="listitem">
+        <div class="journey-kanji" aria-hidden="true">参</div>
+        <div class="journey-num">Step Three</div>
+        <h3 class="journey-title">Design &amp; Deposit</h3>
+        <div class="journey-romaji">下絵 · Shitae</div>
+        <p class="journey-body">A ${studio.depositAmount} commitment secures your spot in the calendar. Your shitae — the master sketch — is drawn over six to ten weeks, never rushed.</p>
+      </li>
+      <li class="journey-step" role="listitem">
+        <div class="journey-kanji" aria-hidden="true">四</div>
+        <div class="journey-num">Step Four</div>
+        <h3 class="journey-title">The Sessions</h3>
+        <div class="journey-romaji">彫り · Hori</div>
+        <p class="journey-body">Outlines first across one or two sittings, then colour and shading in three- to five-hour blocks spaced weeks apart. A back piece may take a year. A full suit, several.</p>
+      </li>
+      <li class="journey-step" role="listitem">
+        <div class="journey-kanji" aria-hidden="true">五</div>
+        <div class="journey-num">Step Five</div>
+        <h3 class="journey-title">Healing &amp; Honour</h3>
+        <div class="journey-romaji">癒し · Iyashi</div>
+        <p class="journey-body">Aftercare is the apprentice's lesson and the client's discipline. When the work is fully settled, we photograph it for the studio archive — with your permission.</p>
+      </li>
+    </ol>
   </div>
 </section>
 
