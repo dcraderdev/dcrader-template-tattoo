@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import { studio } from '../../data/v2';
 import { resolveImage } from '../../data/imageMap';
 import '../../styles/global.css';
+import SkipToContent from '../../components/a11y/SkipToContent.astro';
 const toRoman = (n: number) => ['I','II','III','IV','V','VI','VII','VIII'][n-1] ?? n;
 ---
 <!doctype html>
@@ -17,7 +18,7 @@ const toRoman = (n: number) => ['I','II','III','IV','V','VI','VII','VIII'][n-1] 
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100;0,200;0,300;0,400;0,500;1,200;1,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet"/>
   <style>
-    :root{--w:#FAFAFA;--off:#F5F5F2;--b:#0D0D0D;--mid:#888;--lt:#CCC;--xlt:#E8E8E5;}
+    :root{--w:#FAFAFA;--off:#F5F5F2;--b:#0D0D0D;--mid:#595959;--lt:#CCC;--ltText:#6E6E6E;--xlt:#E8E8E5;}
     *{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;}
     body{background:var(--w);color:var(--b);font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;}
@@ -47,12 +48,12 @@ const toRoman = (n: number) => ['I','II','III','IV','V','VI','VII','VIII'][n-1] 
     .hero-meta{position:absolute;bottom:3rem;left:2rem;right:2rem;display:flex;justify-content:center;gap:4rem;}
     .hero-meta-item{text-align:center;}
     .hero-meta-item .v{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;display:block;color:var(--b);}
-    .hero-meta-item .l{font-family:'Inter Tight',sans-serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--lt);}
+    .hero-meta-item .l{font-family:'Inter Tight',sans-serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--ltText);}
 
     /* SECTIONS */
     .section{padding:6rem 2rem;}
     .section-inner{max-width:1000px;margin:0 auto;}
-    .section-num{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.55rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--lt);margin-bottom:0.75rem;display:block;}
+    .section-num{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.55rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--ltText);margin-bottom:0.75rem;display:block;}
     .section-h{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(2rem,4vw,3.5rem);color:var(--b);line-height:1.05;margin-bottom:0.5rem;}
     .thin-rule{width:40px;height:1px;background:var(--xlt);margin:1.25rem 0 3rem;}
 
@@ -66,14 +67,14 @@ const toRoman = (n: number) => ['I','II','III','IV','V','VI','VII','VIII'][n-1] 
     .artist-photo-col img{width:100%;height:220px;object-fit:cover;object-position:top;display:block;filter:grayscale(15%);transition:filter 0.4s;}
     .artist-row:hover .artist-photo-col img{filter:grayscale(0%);}
     .artist-info-col{padding:2rem 2.5rem;display:flex;flex-direction:column;justify-content:space-between;}
-    .artist-num{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.55rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--lt);margin-bottom:0.5rem;}
+    .artist-num{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.55rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--ltText);margin-bottom:0.5rem;}
     .artist-h{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--b);margin-bottom:0.2rem;}
     .artist-spec{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--mid);margin-bottom:1rem;}
     .artist-bio{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:#555;line-height:1.75;font-style:italic;margin-bottom:1rem;}
     .artist-foot{display:flex;justify-content:space-between;align-items:flex-end;}
     .artist-handle{font-family:'Inter Tight',sans-serif;font-size:0.62rem;color:var(--mid);}
     .artist-tags{display:flex;gap:0.5rem;flex-wrap:wrap;}
-    .tag{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--lt);border:1px solid var(--xlt);padding:0.15rem 0.5rem;}
+    .tag{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ltText);border:1px solid var(--xlt);padding:0.15rem 0.5rem;}
     @media(max-width:640px){.artist-row{grid-template-columns:1fr;}}
 
     /* MUSEUM GALLERY */
@@ -81,12 +82,12 @@ const toRoman = (n: number) => ['I','II','III','IV','V','VI','VII','VIII'][n-1] 
     .museum-item{display:grid;grid-template-columns:auto 1fr;gap:2rem;align-items:start;}
     .museum-item:nth-child(even){direction:rtl;}
     .museum-item:nth-child(even) > *{direction:ltr;}
-    .museum-roman{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:300;color:var(--lt);letter-spacing:0.1em;padding-top:0.5rem;min-width:2rem;}
+    .museum-roman{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:300;color:var(--ltText);letter-spacing:0.1em;padding-top:0.5rem;min-width:2rem;}
     .museum-img{max-width:540px;width:100%;}
     .museum-img img{width:100%;display:block;aspect-ratio:4/3;object-fit:cover;filter:grayscale(8%);}
     .museum-caption{margin-top:1rem;}
     .museum-caption-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--b);}
-    .museum-caption-sub{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--lt);margin-top:0.35rem;}
+    .museum-caption-sub{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--ltText);margin-top:0.35rem;}
     @media(max-width:700px){.museum-item{grid-template-columns:1fr;}.museum-item:nth-child(even){direction:ltr;}}
 
     /* AFTERCARE */
@@ -95,25 +96,25 @@ const toRoman = (n: number) => ['I','II','III','IV','V','VI','VII','VIII'][n-1] 
     .ac-item{display:grid;grid-template-columns:60px 1fr;border-bottom:1px solid var(--xlt);background:var(--w);}
     .ac-item:last-child{border-bottom:none;}
     .ac-num-col{border-right:1px solid var(--xlt);display:flex;align-items:center;justify-content:center;}
-    .ac-num-txt{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--xlt);}
+    .ac-num-txt{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--ltText);}
     .ac-content{padding:1.5rem 2rem;}
     .ac-title{font-family:'Inter Tight',sans-serif;font-weight:400;font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--b);margin-bottom:0.5rem;}
-    .ac-body{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:#777;line-height:1.75;}
+    .ac-body{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:#595959;line-height:1.75;}
 
     /* BOOKING */
     .booking-bg{background:var(--b);}
     .booking-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;}
     @media(max-width:768px){.booking-grid{grid-template-columns:1fr;}}
-    .booking-copy{color:#888;}
+    .booking-copy{color:#B8B8B5;}
     .booking-copy .section-h{color:var(--w);}
-    .booking-copy .section-num{color:#333;}
+    .booking-copy .section-num{color:#B8B8B5;}
     .booking-copy .thin-rule{background:#333;}
     .booking-copy p{font-family:'Cormorant Garamond',serif;font-size:0.95rem;line-height:1.8;margin-bottom:1rem;font-style:italic;}
     .price-block{border-top:1px solid #222;border-bottom:1px solid #222;padding:1rem 0;margin-top:1.5rem;display:grid;gap:0.5rem;}
-    .pr{display:flex;justify-content:space-between;font-family:'Inter Tight',sans-serif;font-weight:300;font-size:0.72rem;letter-spacing:0.06em;color:#555;}
+    .pr{display:flex;justify-content:space-between;font-family:'Inter Tight',sans-serif;font-weight:300;font-size:0.72rem;letter-spacing:0.06em;color:#bbb;}
     .pr strong{color:var(--w);font-weight:400;}
     .bk-form{display:grid;gap:1.25rem;}
-    .fl{display:block;font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:#444;margin-bottom:0.3rem;}
+    .fl{display:block;font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:#bbb;margin-bottom:0.3rem;}
     .fi{width:100%;background:transparent;border:none;border-bottom:1px solid #222;color:var(--w);padding:0.5rem 0;font-family:'Cormorant Garamond',serif;font-size:0.95rem;outline:none;transition:border-color 0.2s;}
     .fi:focus{border-color:#666;}
     .fi::placeholder{color:#333;}
@@ -136,11 +137,11 @@ const toRoman = (n: number) => ['I','II','III','IV','V','VI','VII','VIII'][n-1] 
     @media(max-width:700px){.loc-grid{grid-template-columns:1fr;}}
     .hours-tbl{width:100%;border-collapse:collapse;margin-top:1.5rem;}
     .hours-tbl tr{border-bottom:1px solid var(--xlt);}
-    .hours-tbl td{padding:0.65rem 0;font-family:'Cormorant Garamond',serif;font-size:1rem;color:#888;}
+    .hours-tbl td{padding:0.65rem 0;font-family:'Cormorant Garamond',serif;font-size:1rem;color:#595959;}
     .hours-tbl td:first-child{color:var(--b);}
-    .hours-tbl .closed{color:var(--xlt);}
+    .hours-tbl .closed{color:#5A5A5A;font-style:italic;}
     .contact-list{margin-top:1.5rem;display:grid;gap:0.9rem;}
-    .c-row{display:flex;gap:1rem;font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:#888;}
+    .c-row{display:flex;gap:1rem;font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:#595959;}
     .c-row a{color:var(--b);text-decoration:none;border-bottom:1px solid var(--xlt);}
 
     /* IG */
@@ -157,16 +158,18 @@ const toRoman = (n: number) => ['I','II','III','IV','V','VI','VII','VIII'][n-1] 
     /* FOOTER */
     footer{background:var(--off);border-top:1px solid var(--xlt);padding:4rem 2rem;text-align:center;}
     .foot-logo{font-family:'Cormorant Garamond',serif;font-weight:300;letter-spacing:0.45em;text-transform:uppercase;font-size:1.1rem;color:var(--b);}
-    .foot-sub{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--lt);margin:0.5rem 0 2rem;}
+    .foot-sub{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--mid);margin:0.5rem 0 2rem;}
     .foot-nav{display:flex;justify-content:center;gap:0;list-style:none;margin-bottom:2rem;flex-wrap:wrap;}
-    .foot-nav a{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--lt);text-decoration:none;padding:0.3rem 0.9rem;}
-    .foot-nav a:hover{color:var(--b);}
-    .foot-copy{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.6rem;color:var(--xlt);}
+    .foot-nav a{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);text-decoration:none;padding:0.3rem 0.9rem;}
+    .foot-nav a:hover,.foot-nav a:focus-visible{color:var(--b);}
+    .foot-copy{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.6rem;color:var(--mid);}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     @media(max-width:480px){.fr{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
+<SkipToContent />
+<main id="main-content" tabindex="-1">
 
 <nav aria-label="Main navigation">
   <div class="nav-row">
@@ -286,7 +289,7 @@ const toRoman = (n: number) => ['I','II','III','IV','V','VI','VII','VIII'][n-1] 
   <div class="section-inner">
     <div class="booking-grid">
       <div class="booking-copy">
-        <span class="section-num" style="color:#333">Section IV</span>
+        <span class="section-num" style="color:#B8B8B5">Section IV</span>
         <h2 class="section-h" id="booking-h">By Appointment Only</h2>
         <div class="thin-rule" style="background:#222;" aria-hidden="true"></div>
         <p>We do not accept walk-ins. Precision demands preparation. Submit an inquiry and your artist will respond within 48 hours.</p>
@@ -393,6 +396,7 @@ const toRoman = (n: number) => ['I','II','III','IV','V','VI','VII','VIII'][n-1] 
     </div>
   </div>
 </section>
+</main>
 
 <!-- FOOTER -->
 <footer>
@@ -408,6 +412,9 @@ const toRoman = (n: number) => ['I','II','III','IV','V','VI','VII','VIII'][n-1] 
     </ul>
   </nav>
   <p class="foot-copy">{studio.address}, {studio.city} · {studio.email}</p>
+  <p class="foot-copy" style="margin-top:1rem;font-size:0.55rem;">
+    <a href="/v2-fine-line-minimal/accessibility/" style="color:var(--mid);text-decoration:underline;">Accessibility Statement</a>
+  </p>
 </footer>
 </body>
 </html>

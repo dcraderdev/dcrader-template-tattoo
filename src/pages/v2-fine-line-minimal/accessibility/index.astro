@@ -1,0 +1,62 @@
+---
+import { studio } from '../../../data/v2';
+import '../../../styles/global.css';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Accessibility Statement — {studio.name}</title>
+  <meta name="description" content={`Accessibility statement for ${studio.name}. Committed to WCAG 2.1 AA compliance.`}/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--w:#FAFAFA;--off:#F5F5F2;--b:#0D0D0D;--mid:#404040;--lt:#CCC;--ltText:#5C5C5C;--xlt:#E8E8E5;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--w);color:var(--b);font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;line-height:1.75;}
+    .skip-link{position:absolute;top:-100px;left:0;background:var(--b);color:var(--w);padding:0.75rem 1.25rem;font-family:'Inter Tight',sans-serif;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;z-index:9999;}
+    .skip-link:focus{top:0;}
+    *:focus-visible{outline:2px solid var(--b)!important;outline-offset:3px;}
+    nav{background:var(--w);border-bottom:1px solid var(--xlt);padding:1.25rem 2rem;}
+    nav a{color:var(--b);text-decoration:none;font-family:'Inter Tight',sans-serif;font-weight:400;font-size:0.7rem;letter-spacing:0.22em;text-transform:uppercase;}
+    main{max-width:680px;margin:0 auto;padding:5rem 2rem;}
+    h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(2.5rem,5vw,4rem);color:var(--b);margin-bottom:1rem;letter-spacing:-0.01em;}
+    .rule{width:40px;height:1px;background:var(--b);margin:1rem 0 2.5rem;}
+    h2{font-family:'Inter Tight',sans-serif;font-weight:400;font-size:0.75rem;color:var(--b);text-transform:uppercase;letter-spacing:0.22em;margin:2.5rem 0 1rem;}
+    p{margin-bottom:1.1rem;font-size:1.1rem;color:var(--mid);}
+    a{color:var(--b);text-decoration:underline;text-underline-offset:3px;}
+    a:hover,a:focus-visible{color:var(--ltText);}
+    .updated{font-style:italic;color:var(--ltText);font-size:0.95rem;margin-top:2.5rem;border-top:1px solid var(--xlt);padding-top:1.5rem;}
+    footer{background:var(--off);color:var(--mid);padding:2rem;text-align:center;font-size:0.7rem;font-family:'Inter Tight',sans-serif;letter-spacing:0.18em;text-transform:uppercase;border-top:1px solid var(--xlt);}
+    footer a{color:var(--b);}
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<nav aria-label="Main navigation">
+  <a href="/v2-fine-line-minimal/">&larr; Back to {studio.name}</a>
+</nav>
+<main id="main-content" tabindex="-1">
+  <h1>Accessibility Statement</h1>
+  <div class="rule" aria-hidden="true"></div>
+  <p>{studio.name} is committed to ensuring digital accessibility for people of all abilities. We strive to conform to the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA and continuously improve the experience for every visitor.</p>
+
+  <h2>Our Commitment</h2>
+  <p>This website is reviewed regularly with assistive technology and automated tooling. We aim to meet or exceed WCAG 2.1 Level AA conformance across all pages and templates.</p>
+
+  <h2>Need Help?</h2>
+  <p>If you experience any difficulty accessing this website, or need accommodations to receive our services, please contact us at <a href="mailto:accessibility@lineworkstudio.com">accessibility@lineworkstudio.com</a> or <a href={`tel:${studio.phone}`}>{studio.phone}</a> and we will work with you to provide the information or service through alternative communication.</p>
+
+  <h2>Reporting an Issue</h2>
+  <p>To report an accessibility barrier, email <a href="mailto:accessibility@lineworkstudio.com">accessibility@lineworkstudio.com</a> with the URL of the page, a brief description of the issue, and your preferred contact method. We aim to acknowledge reports within five business days.</p>
+
+  <p class="updated">Last updated: 2026-05-17</p>
+</main>
+<footer>
+  <p>&copy; {new Date().getFullYear()} {studio.name} · <a href="/v2-fine-line-minimal/">Home</a></p>
+</footer>
+</body>
+</html>

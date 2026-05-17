@@ -2,6 +2,8 @@
 import { Image } from 'astro:assets';
 import { studio } from '../../data/v5';
 import { resolveImage } from '../../data/imageMap';
+import '../../styles/global.css';
+import SkipToContent from '../../components/a11y/SkipToContent.astro';
 const base = import.meta.env.BASE_URL;
 const heroImg = resolveImage(studio.heroImage);
 ---
@@ -15,19 +17,22 @@ const heroImg = resolveImage(studio.heroImage);
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href={`${base}styles/global.css`} />
   <style>
     :root {
       --cream: #FDFAF4;
       --cream-dark: #F4F0E6;
       --ink: #1A1208;
       --ink-soft: #3D3322;
-      --mid: #7A6E5E;
+      --mid: #5A5040;
       --light: #B8AFA0;
       --purple: #7C3AED;
+      --purple-text: #5B1FB8;
       --pink: #EC4899;
+      --pink-text: #B91F66;
       --teal: #0D9488;
+      --teal-text: #0B6B62;
       --orange: #F59E0B;
+      --orange-text: #8B5400;
       --yellow: #EAB308;
       --red: #EF4444;
       --blue: #3B82F6;
@@ -122,9 +127,9 @@ const heroImg = resolveImage(studio.heroImage);
       padding: 0.35rem 0.85rem; border-radius: 999px; border: 1.5px solid;
     }
     .pill-purple { color: var(--purple); border-color: var(--purple); }
-    .pill-pink { color: var(--pink); border-color: var(--pink); }
-    .pill-teal { color: var(--teal); border-color: var(--teal); }
-    .pill-orange { color: var(--orange); border-color: var(--orange); }
+    .pill-pink { color: #B3296C; border-color: var(--pink); }
+    .pill-teal { color: #086B62; border-color: var(--teal); }
+    .pill-orange { color: #8A5A06; border-color: var(--orange); }
     .hero-ctas { display: flex; gap: 1rem; align-items: center; }
     .btn-big {
       font-family: var(--display); font-size: 0.95rem; font-weight: 700;
@@ -242,9 +247,9 @@ const heroImg = resolveImage(studio.heroImage);
       text-transform: uppercase; letter-spacing: 0.08em;
       margin-bottom: 1rem;
     }
-    .artist-card:nth-child(1) .artist-card-specialty { color: var(--purple); }
-    .artist-card:nth-child(2) .artist-card-specialty { color: var(--teal); }
-    .artist-card:nth-child(3) .artist-card-specialty { color: var(--orange); }
+    .artist-card:nth-child(1) .artist-card-specialty { color: var(--purple-text); }
+    .artist-card:nth-child(2) .artist-card-specialty { color: var(--teal-text); }
+    .artist-card:nth-child(3) .artist-card-specialty { color: var(--orange-text); }
     .artist-card-bio {
       font-family: var(--body); font-size: 0.85rem; color: var(--ink-soft);
       line-height: 1.7; font-weight: 400; margin-bottom: 1.25rem;
@@ -300,7 +305,7 @@ const heroImg = resolveImage(studio.heroImage);
     .aftercare-card:nth-child(6)::before { background: var(--blue); }
     .aftercare-num {
       font-family: var(--display); font-size: 3rem; font-weight: 700;
-      line-height: 1; color: var(--light); margin-bottom: 1rem;
+      line-height: 1; color: var(--mid); margin-bottom: 1rem;
     }
     .aftercare-title {
       font-family: var(--display); font-size: 1rem; font-weight: 700;
@@ -411,7 +416,7 @@ const heroImg = resolveImage(studio.heroImage);
     }
     .hours-day { font-family: var(--body); font-size: 0.85rem; font-weight: 600; color: var(--ink); }
     .hours-time { font-family: var(--body); font-size: 0.85rem; font-weight: 400; color: var(--ink-soft); }
-    .hours-time.closed { color: var(--light); }
+    .hours-time.closed { color: var(--mid); font-style: italic; }
     .contact-list { display: flex; flex-direction: column; gap: 1.5rem; }
     .contact-item {}
     .contact-label { font-family: var(--body); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--mid); margin-bottom: 0.25rem; }
@@ -437,7 +442,7 @@ const heroImg = resolveImage(studio.heroImage);
       font-weight: 400;
     }
     .footer-copy {
-      font-family: var(--body); font-size: 0.7rem; color: var(--mid);
+      font-family: var(--body); font-size: 0.7rem; color: var(--light);
     }
 
     @media (max-width: 768px) {
@@ -453,7 +458,7 @@ const heroImg = resolveImage(studio.heroImage);
   </style>
 </head>
 <body>
-  <a href="#main" class="sr-only">Skip to main content</a>
+  <SkipToContent />
 
   <!-- NAV -->
   <nav class="nav" role="navigation" aria-label="Main navigation">
@@ -472,7 +477,7 @@ const heroImg = resolveImage(studio.heroImage);
   </nav>
 
   <!-- HERO -->
-  <main id="main">
+  <main id="main-content" tabindex="-1">
     <section class="hero" aria-label="Studio hero">
       <div class="hero-bar" aria-hidden="true"></div>
       <div class="hero-main">
@@ -740,7 +745,7 @@ const heroImg = resolveImage(studio.heroImage);
       <div class="footer-name">{studio.name}</div>
       <div class="footer-tagline">{studio.tagline}</div>
     </div>
-    <div class="footer-copy">&copy; {new Date().getFullYear()} {studio.name}. San Diego, CA. All rights reserved.</div>
+    <div class="footer-copy">&copy; {new Date().getFullYear()} {studio.name}. San Diego, CA. All rights reserved. · <a href="/v5-modern-color-studio/accessibility/" style="color:inherit;text-decoration:underline;">Accessibility</a></div>
   </footer>
 </body>
 </html>

@@ -17,7 +17,7 @@ const heroImg = resolveImage(studio.heroImage);
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet"/>
   <style>
-    :root{--bg:#060606;--surf:#0E0E0E;--surf2:#161616;--gold:#B8974A;--gold2:#D4AE68;--red:#9B1324;--cream:#EAD8B4;--gray:#6A6050;}
+    :root{--bg:#060606;--surf:#0E0E0E;--surf2:#161616;--gold:#D4AE68;--gold2:#E6C488;--red:#9B1324;--red-text:#E04A60;--cream:#EAD8B4;--gray:#9A8870;}
     *{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;}
     body{background:var(--bg);color:var(--cream);font-family:'Cormorant',Georgia,serif;}
@@ -27,9 +27,9 @@ const heroImg = resolveImage(studio.heroImage);
     .nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;min-height:70px;}
     .nav-logo{text-decoration:none;display:flex;align-items:baseline;gap:0.75rem;}
     .nav-jp{font-family:'Noto Serif JP',serif;font-size:1.3rem;font-weight:400;color:var(--gold);}
-    .nav-en{font-family:'Cormorant',serif;font-size:0.75rem;font-weight:300;letter-spacing:0.3em;text-transform:uppercase;color:rgba(234,216,180,0.5);}
+    .nav-en{font-family:'Cormorant',serif;font-size:0.75rem;font-weight:300;letter-spacing:0.3em;text-transform:uppercase;color:rgba(234,216,180,0.85);}
     .nav-links{display:flex;list-style:none;gap:0;align-items:center;}
-    nav a{font-family:'Cormorant',serif;font-size:0.85rem;letter-spacing:0.1em;color:var(--gray);text-decoration:none;padding:0.4rem 0.85rem;display:block;transition:color 0.2s;}
+    nav a{font-family:'Cormorant',serif;font-size:0.85rem;letter-spacing:0.1em;color:#C9B89A;text-decoration:none;padding:0.4rem 0.85rem;display:block;transition:color 0.2s;}
     nav a:hover,nav a:focus-visible{color:var(--gold);}
     .nav-book-btn{background:var(--red)!important;color:var(--cream)!important;font-family:'Noto Serif JP',serif!important;font-size:0.75rem!important;letter-spacing:0.08em!important;}
 
@@ -53,14 +53,14 @@ const heroImg = resolveImage(studio.heroImage);
     /* TRADITION STATEMENT — full-width interstitial */
     .tradition{background:var(--red);padding:3.5rem 2rem;text-align:center;}
     .tradition blockquote{font-family:'Cormorant',serif;font-style:italic;font-size:clamp(1.2rem,2.5vw,2rem);color:var(--cream);max-width:800px;margin:0 auto;line-height:1.6;}
-    .tradition cite{display:block;margin-top:1rem;font-family:'Noto Serif JP',serif;font-size:0.7rem;letter-spacing:0.25em;color:rgba(234,216,180,0.6);font-style:normal;}
+    .tradition cite{display:block;margin-top:1rem;font-family:'Noto Serif JP',serif;font-size:0.7rem;letter-spacing:0.25em;color:rgba(255,240,210,0.95);font-style:normal;}
 
     /* SECTIONS */
     .section{padding:6rem 2rem;}
     .section-inner{max-width:1200px;margin:0 auto;}
-    .eyebrow{font-family:'Noto Serif JP',serif;font-size:0.65rem;letter-spacing:0.3em;color:var(--red);margin-bottom:0.5rem;display:block;}
+    .eyebrow{font-family:'Noto Serif JP',serif;font-size:0.65rem;letter-spacing:0.3em;color:var(--red-text);margin-bottom:0.5rem;display:block;}
     .section-h{font-family:'Cormorant',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:600;color:var(--cream);line-height:1.05;}
-    .section-h-jp{font-family:'Noto Serif JP',serif;font-size:0.9rem;font-weight:300;color:rgba(184,151,74,0.5);letter-spacing:0.15em;display:block;margin-bottom:0.25rem;}
+    .section-h-jp{font-family:'Noto Serif JP',serif;font-size:0.9rem;font-weight:300;color:#C9A85C;letter-spacing:0.15em;display:block;margin-bottom:0.25rem;}
     .gold-stroke{width:50px;height:2px;background:linear-gradient(to right,var(--red),var(--gold));margin:1.25rem 0 2.5rem;}
 
     /* ARTISTS — full-width vertical panels */
@@ -77,10 +77,10 @@ const heroImg = resolveImage(studio.heroImage);
     .artist-panel-num{font-family:'Noto Serif JP',serif;font-size:3.5rem;font-weight:700;color:rgba(184,151,74,0.06);position:absolute;top:2rem;right:2rem;line-height:1;}
     .artist-panel-h{font-family:'Cormorant',serif;font-size:1.8rem;font-weight:600;color:var(--cream);margin-bottom:0.25rem;}
     .artist-panel-spec{font-family:'Noto Serif JP',serif;font-size:0.65rem;letter-spacing:0.2em;color:var(--gold);margin-bottom:1.25rem;}
-    .artist-panel-bio{font-family:'Cormorant',serif;font-style:italic;font-size:1rem;color:var(--gray);line-height:1.8;margin-bottom:1.25rem;}
-    .artist-panel-handle{font-size:0.8rem;color:rgba(184,151,74,0.5);}
+    .artist-panel-bio{font-family:'Cormorant',serif;font-style:italic;font-size:1rem;color:#B8A890;line-height:1.8;margin-bottom:1.25rem;}
+    .artist-panel-handle{font-size:0.8rem;color:#C9A85C;}
     .artist-tags{display:flex;gap:0.4rem;flex-wrap:wrap;margin-top:0.75rem;}
-    .tag{background:rgba(155,19,36,0.15);color:var(--red);border:1px solid rgba(155,19,36,0.25);font-family:'Noto Serif JP',serif;font-size:0.6rem;letter-spacing:0.08em;padding:0.2rem 0.5rem;}
+    .tag{background:rgba(200,50,74,0.18);color:#FF8090;border:1px solid rgba(200,50,74,0.4);font-family:'Noto Serif JP',serif;font-size:0.6rem;letter-spacing:0.08em;padding:0.2rem 0.5rem;}
     .years{display:inline-block;background:rgba(184,151,74,0.1);border:1px solid rgba(184,151,74,0.2);color:var(--gold);font-family:'Noto Serif JP',serif;font-size:0.62rem;letter-spacing:0.1em;padding:0.2rem 0.6rem;margin-top:0.5rem;}
     @media(max-width:768px){.artist-panel{grid-template-columns:1fr;min-height:auto;}.artist-panel:nth-child(even){grid-template-columns:1fr;}.artist-panel-photo{height:280px;}.artist-panel:nth-child(even) .artist-panel-photo{order:1;}.artist-panel:nth-child(even) .artist-panel-info{order:2;}}
 
@@ -101,9 +101,9 @@ const heroImg = resolveImage(studio.heroImage);
     .ac-scroll{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(184,151,74,0.1);margin-top:2rem;}
     @media(max-width:640px){.ac-scroll{grid-template-columns:1fr;}}
     .ac-card{background:var(--bg);padding:2.5rem;}
-    .ac-num-jp{font-family:'Noto Serif JP',serif;font-size:2.5rem;font-weight:700;color:rgba(184,151,74,0.12);line-height:1;margin-bottom:0.75rem;}
+    .ac-num-jp{font-family:'Noto Serif JP',serif;font-size:2.5rem;font-weight:700;color:#C9A85C;line-height:1;margin-bottom:0.75rem;}
     .ac-title{font-family:'Cormorant',serif;font-size:1.15rem;font-weight:600;color:var(--gold);margin-bottom:0.6rem;}
-    .ac-body{font-family:'Cormorant',serif;font-style:italic;font-size:0.95rem;color:var(--gray);line-height:1.8;}
+    .ac-body{font-family:'Cormorant',serif;font-style:italic;font-size:0.95rem;color:#B8A890;line-height:1.8;}
 
     /* BOOKING */
     .bk-bg{background:linear-gradient(135deg,var(--surf2) 0%,var(--bg) 100%);border-top:1px solid rgba(184,151,74,0.15);}
@@ -141,11 +141,11 @@ const heroImg = resolveImage(studio.heroImage);
     @media(max-width:700px){.loc-grid{grid-template-columns:1fr;}}
     .hours-tbl{width:100%;border-collapse:collapse;margin-top:1.5rem;}
     .hours-tbl tr{border-bottom:1px solid rgba(184,151,74,0.1);}
-    .hours-tbl td{padding:0.65rem 0;font-family:'Cormorant',serif;font-size:1rem;color:var(--gray);}
+    .hours-tbl td{padding:0.65rem 0;font-family:'Cormorant',serif;font-size:1rem;color:#C9B89A;}
     .hours-tbl td:first-child{color:var(--cream);font-family:'Noto Serif JP',serif;font-size:0.85rem;}
-    .hours-tbl .closed{color:#2a2010;font-style:italic;}
+    .hours-tbl .closed{color:#9A8870;font-style:italic;}
     .c-stack{margin-top:1.5rem;display:grid;gap:0.9rem;}
-    .c-row{display:flex;gap:0.75rem;font-family:'Cormorant',serif;font-size:1rem;color:var(--gray);}
+    .c-row{display:flex;gap:0.75rem;font-family:'Cormorant',serif;font-size:1rem;color:#C9B89A;}
     .c-row a{color:var(--gold);text-decoration:none;}
 
     /* IG */
@@ -162,17 +162,21 @@ const heroImg = resolveImage(studio.heroImage);
     /* FOOTER */
     footer{background:#030303;border-top:1px solid var(--red);padding:3.5rem 2rem;text-align:center;}
     .foot-jp{font-family:'Noto Serif JP',serif;font-size:2rem;font-weight:700;color:var(--gold);margin-bottom:0.25rem;}
-    .foot-en{font-family:'Cormorant',serif;font-style:italic;font-size:1rem;color:rgba(234,216,180,0.4);letter-spacing:0.15em;margin-bottom:0.75rem;}
-    .foot-quote{font-family:'Cormorant',serif;font-style:italic;font-size:0.9rem;color:rgba(184,151,74,0.3);max-width:500px;margin:0 auto 1.5rem;}
+    .foot-en{font-family:'Cormorant',serif;font-style:italic;font-size:1rem;color:rgba(234,216,180,0.95);letter-spacing:0.15em;margin-bottom:0.75rem;}
+    .foot-quote{font-family:'Cormorant',serif;font-style:italic;font-size:0.9rem;color:#C9A85C;max-width:500px;margin:0 auto 1.5rem;}
     .foot-nav{display:flex;justify-content:center;gap:0;list-style:none;flex-wrap:wrap;margin-bottom:1.25rem;}
-    .foot-nav a{font-family:'Cormorant',serif;font-size:0.85rem;color:rgba(184,151,74,0.25);text-decoration:none;padding:0.3rem 0.9rem;transition:color 0.2s;}
-    .foot-nav a:hover{color:var(--gold);}
-    .foot-copy{font-family:'Noto Serif JP',serif;font-size:0.62rem;color:#1a1008;letter-spacing:0.1em;}
+    .foot-nav a{font-family:'Cormorant',serif;font-size:0.85rem;color:#D4AE68;text-decoration:none;padding:0.3rem 0.9rem;transition:color 0.2s;}
+    .foot-nav a:hover,.foot-nav a:focus-visible{color:var(--cream);}
+    .foot-copy{font-family:'Noto Serif JP',serif;font-size:0.62rem;color:#9A8870;letter-spacing:0.1em;}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .skip-link{position:absolute;top:-100px;left:0;background:var(--gold);color:var(--bg);padding:0.75rem 1.25rem;font-family:'Noto Serif JP',serif;font-weight:700;letter-spacing:0.1em;text-decoration:none;z-index:9999;}
+    .skip-link:focus{top:0;}
+    *:focus-visible{outline:3px solid var(--gold)!important;outline-offset:2px;}
     @media(max-width:480px){.fr{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
 
 <nav aria-label="Main navigation">
   <div class="nav-inner">
@@ -191,6 +195,7 @@ const heroImg = resolveImage(studio.heroImage);
   </div>
 </nav>
 
+<main id="main-content" tabindex="-1">
 <!-- HERO -->
 <section id="hero" aria-label="Hero">
   <div class="hero">
@@ -211,12 +216,12 @@ const heroImg = resolveImage(studio.heroImage);
 </section>
 
 <!-- TRADITION INTERSTITIAL -->
-<div class="tradition" role="note">
+<aside class="tradition" aria-label="Studio philosophy">
   <blockquote>
     "A true horishi does not pick up the needle until they have spent five years watching, cleaning, and learning. The art lives in that patience."
     <cite>— Studio Philosophy, Ryūboku Tattoo</cite>
   </blockquote>
-</div>
+</aside>
 
 <!-- ARTISTS -->
 <section id="artists" class="section artist-bg" aria-labelledby="artists-h">
@@ -228,7 +233,7 @@ const heroImg = resolveImage(studio.heroImage);
   </div>
   <div class="artist-panels" role="list">
     {studio.artists.map((a, i) => (
-      <article class="artist-panel" role="listitem" aria-label={`Artist: ${a.name}`}>
+      <div class="artist-panel" role="listitem" aria-label={`Artist: ${a.name}`}>
         <div class="artist-panel-photo">
           <Image src={resolveImage(a.image)} alt={`Portrait of ${a.name}`} loading="lazy" decoding="async" widths={[380, 600, 800]} sizes="(min-width: 768px) 380px, 100vw" width={800} height={840} />
         </div>
@@ -243,7 +248,7 @@ const heroImg = resolveImage(studio.heroImage);
           </div>
           <p class="years">{a.yearsExp} 年 / {a.yearsExp} Years</p>
         </div>
-      </article>
+      </div>
     ))}
   </div>
 </section>
@@ -406,6 +411,7 @@ const heroImg = resolveImage(studio.heroImage);
   </div>
 </section>
 
+</main>
 <!-- FOOTER -->
 <footer>
   <p class="foot-jp">龍墨</p>
@@ -418,6 +424,7 @@ const heroImg = resolveImage(studio.heroImage);
       <li><a href="#booking">Book</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#location">Location</a></li>
+      <li><a href="/v3-japanese-irezumi/accessibility/">Accessibility</a></li>
     </ul>
   </nav>
   <p class="foot-copy">&copy; 2024 Ryūboku Tattoo · {studio.address}, {studio.city}</p>

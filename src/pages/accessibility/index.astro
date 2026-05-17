@@ -1,0 +1,51 @@
+---
+import '../../styles/global.css';
+import SkipToContent from '../../components/a11y/SkipToContent.astro';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Accessibility Statement — Tattoo Studio Templates</title>
+  <meta name="description" content="Accessibility statement for the dcrader Tattoo Studio Templates. Committed to WCAG 2.1 AA compliance." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <style>
+    body { background:#0f0f0f; color:#f5f5f5; font-family:system-ui,sans-serif; margin:0; min-height:100vh; line-height:1.7; }
+    main { max-width:720px; margin:0 auto; padding:3rem 1.5rem; }
+    h1 { font-size:clamp(2rem,5vw,2.75rem); margin:0 0 1.25rem; font-family:Georgia,serif; }
+    h2 { font-size:1.15rem; margin:2rem 0 0.5rem; color:#f0c040; }
+    p { margin-bottom:1rem; color:#d0d0d0; }
+    a { color:#f0c040; text-decoration:underline; }
+    a:focus-visible { outline:3px solid #f0c040; outline-offset:3px; }
+    .updated { color:#9a9a9a; font-style:italic; border-top:1px solid #333; padding-top:1.25rem; margin-top:2rem; }
+    nav.top { padding:1.5rem; border-bottom:1px solid #222; }
+    nav.top a { color:#cccccc; text-decoration:none; font-size:0.85rem; letter-spacing:0.05em; }
+    nav.top a:hover, nav.top a:focus-visible { color:#f0c040; }
+    footer { border-top:1px solid #222; padding:1.5rem; text-align:center; color:#9a9a9a; font-size:0.85rem; }
+  </style>
+</head>
+<body>
+  <SkipToContent />
+  <nav class="top" aria-label="Primary"><a href="/">&larr; Back to all templates</a></nav>
+  <main id="main-content" tabindex="-1">
+    <h1>Accessibility Statement</h1>
+    <p><strong>Template name:</strong> dcrader Tattoo Studio Templates (5 variants)</p>
+
+    <h2>Our Commitment</h2>
+    <p>We are committed to ensuring digital accessibility for people of all abilities. We aim to conform to Web Content Accessibility Guidelines (WCAG) 2.1 Level AA and continuously improve the user experience for everyone who visits these pages.</p>
+    <p>This template ships with semantic landmarks, visible focus indicators, skip-to-content links, sufficient color contrast, and respect for the <code>prefers-reduced-motion</code> media query. Every variant is audited with axe-core before release.</p>
+
+    <h2>Contact</h2>
+    <p>If you experience difficulty accessing any content on these template pages, or have feedback to share, please contact us at <a href="mailto:accessibility@dcrader.dev">accessibility@dcrader.dev</a>. We will work to provide the information or service through alternative communication where needed.</p>
+
+    <h2>Standards</h2>
+    <p>These templates are designed to align with WCAG 2.1 Level AA. Every variant ships with zero serious or critical axe-core violations at publish time.</p>
+
+    <p class="updated">Last updated: 2026-05-17</p>
+  </main>
+  <footer>
+    <p>Built by <a href="https://dcrader.dev">dcrader.dev</a></p>
+  </footer>
+</body>
+</html>

@@ -2,6 +2,8 @@
 import { Image } from 'astro:assets';
 import { studio } from '../../data/v4';
 import { resolveImage } from '../../data/imageMap';
+import '../../styles/global.css';
+import SkipToContent from '../../components/a11y/SkipToContent.astro';
 const base = import.meta.env.BASE_URL;
 const heroImg = resolveImage(studio.heroImage);
 
@@ -17,7 +19,6 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href={`${base}styles/global.css`} />
   <style>
     :root {
       --black: #000000;
@@ -25,7 +26,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
       --dark: #111111;
       --mid-dark: #1C1C1C;
       --gray-80: #333333;
-      --gray-60: #666666;
+      --gray-60: #8A8A8A;
       --gray-40: #999999;
       --gray-20: #CCCCCC;
       --gray-10: #E8E8E8;
@@ -332,7 +333,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
     }
     .aftercare-num {
       font-family: var(--mono); font-size: 3rem; font-weight: 600;
-      color: var(--gray-80); line-height: 1;
+      color: var(--gray-60); line-height: 1;
     }
     .aftercare-title {
       font-family: var(--mono); font-size: 0.8rem; font-weight: 500;
@@ -515,7 +516,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
   </style>
 </head>
 <body>
-  <a href="#main" class="sr-only">Skip to main content</a>
+  <SkipToContent />
 
   <!-- NAV -->
   <nav class="nav" role="navigation" aria-label="Main navigation">
@@ -532,7 +533,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
   </nav>
 
   <!-- HERO -->
-  <main id="main">
+  <main id="main-content" tabindex="-1">
     <section class="hero" aria-label="Studio hero">
       <div class="hero-image-panel">
         <Image src={heroImg} alt={studio.heroAlt} loading="eager" fetchpriority="high" widths={[768, 1280, 1920]} sizes="(min-width: 1024px) 50vw, 100vw" width={1920} height={1280} />
@@ -648,7 +649,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
             <li class="artist-row" role="listitem">
               <div class="artist-index" aria-hidden="true">
                 <span>{pad(i+1)}</span><br />
-                <span style="color: var(--gray-80)">of {pad(studio.artists.length)}</span>
+                <span style="color: var(--gray-60)">of {pad(studio.artists.length)}</span>
               </div>
               <Image src={resolveImage(artist.image)} alt={`Portrait of ${artist.name}`} class="artist-photo" loading="lazy" decoding="async" widths={[220, 440]} sizes="220px" width={440} height={440} />
               <div class="artist-info">
@@ -889,7 +890,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
   </main>
 
   <footer>
-    <div class="footer-left">&copy; {new Date().getFullYear()} {studio.name}. San Diego, CA.</div>
+    <div class="footer-left">&copy; {new Date().getFullYear()} {studio.name}. San Diego, CA. · <a href="/v4-black-grey-realism/accessibility/" style="color:inherit;text-decoration:underline;">Accessibility</a></div>
     <div class="footer-center">{studio.name}</div>
     <div class="footer-right">{studio.tagline}</div>
   </footer>
