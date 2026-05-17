@@ -3,8 +3,8 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://dcraderdev.github.io',
-  base: '/dcrader-template-tattoo',
+  site: 'https://tattoo.dcrader.dev',
+  base: '/',
   vite: {
     plugins: [tailwindcss()]
   }
