@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import { studio } from '../../data/v2';
+import { resolveImage } from '../../data/imageMap';
 import '../../styles/global.css';
 const toRoman = (n: number) => ['I','II','III','IV','V','VI','VII','VIII'][n-1] ?? n;
 ---
@@ -212,7 +214,7 @@ const toRoman = (n: number) => ['I','II','III','IV','V','VI','VII','VIII'][n-1] 
       {studio.artists.map((a, i) => (
         <article class="artist-row" role="listitem" aria-label={`Artist: ${a.name}`}>
           <div class="artist-photo-col">
-            <img src={a.image} alt={`Portrait of ${a.name}`} loading="lazy" width="200" height="220"/>
+            <Image src={resolveImage(a.image)} alt={`Portrait of ${a.name}`} loading="lazy" decoding="async" widths={[200, 400]} sizes="200px" width={400} height={440} />
           </div>
           <div class="artist-info-col">
             <div>
@@ -246,7 +248,7 @@ const toRoman = (n: number) => ['I','II','III','IV','V','VI','VII','VIII'][n-1] 
           <span class="museum-roman" aria-hidden="true">{toRoman(i+1)}</span>
           <div>
             <div class="museum-img">
-              <img src={item.image} alt={item.alt} loading="lazy" width="540" height="405"/>
+              <Image src={resolveImage(item.image)} alt={item.alt} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" widths={[540, 800, 1080]} sizes="(min-width: 768px) 60vw, 100vw" width={1080} height={810} />
             </div>
             <div class="museum-caption">
               <p class="museum-caption-title">{item.alt.split('.')[0]}</p>
@@ -381,7 +383,7 @@ const toRoman = (n: number) => ['I','II','III','IV','V','VI','VII','VIII'][n-1] 
       {studio.igPosts.map(p => (
         <div class="ig-cell" role="listitem">
           <a href={p.link} aria-label={`Instagram: ${p.alt}`} target="_blank" rel="noopener noreferrer">
-            <img src={p.image} alt={p.alt} loading="lazy" width="300" height="300"/>
+            <Image src={resolveImage(p.image)} alt={p.alt} loading="lazy" decoding="async" widths={[200, 400]} sizes="(min-width: 640px) 16vw, 33vw" width={400} height={400} />
           </a>
         </div>
       ))}

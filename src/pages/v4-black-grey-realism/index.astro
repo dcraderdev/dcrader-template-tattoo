@@ -1,6 +1,9 @@
 ---
+import { Image } from 'astro:assets';
 import { studio } from '../../data/v4';
+import { resolveImage } from '../../data/imageMap';
 const base = import.meta.env.BASE_URL;
+const heroImg = resolveImage(studio.heroImage);
 
 function pad(n: number) { return n.toString().padStart(2, '0'); }
 ---
@@ -210,18 +213,19 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
       grid-template-columns: repeat(4, 1fr);
       gap: 2px;
     }
+    @media (max-width: 1024px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 768px)  { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px)  { .gallery-grid { grid-template-columns: 1fr; } }
     .gallery-item {
       position: relative; overflow: hidden;
       background: var(--mid-dark); cursor: pointer;
     }
     .gallery-item img {
-      width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block;
+      width: 100%; height: 100%; aspect-ratio: 3/4; object-fit: cover; display: block;
       filter: grayscale(100%) contrast(1.15) brightness(0.95);
       transition: filter 0.4s, transform 0.4s;
     }
     .gallery-item:hover img { filter: grayscale(100%) contrast(1.3) brightness(1.05); transform: scale(1.03); }
-    .gallery-item.wide { grid-column: span 2; }
-    .gallery-item.wide img { aspect-ratio: 3/2; }
     .gallery-caption {
       position: absolute; bottom: 0; left: 0; right: 0;
       background: linear-gradient(transparent, rgba(0,0,0,0.9));
@@ -531,7 +535,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
   <main id="main">
     <section class="hero" aria-label="Studio hero">
       <div class="hero-image-panel">
-        <img src={studio.heroImage} alt={studio.heroAlt} loading="eager" />
+        <Image src={heroImg} alt={studio.heroAlt} loading="eager" fetchpriority="high" widths={[768, 1280, 1920]} sizes="(min-width: 1024px) 50vw, 100vw" width={1920} height={1280} />
         <div class="hero-scan-line" aria-hidden="true"></div>
         <div class="hero-image-label" aria-hidden="true">IMG_001 // GRAYSCALE // 300DPI</div>
       </div>
@@ -618,8 +622,8 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
       <div class="container">
         <div class="gallery-grid" role="list" aria-label="Portfolio gallery">
           {studio.gallery.map((item, i) => (
-            <div class={`gallery-item${item.size === 'tall' ? ' wide' : ''}`} role="listitem">
-              <img src={item.image} alt={item.alt} loading="lazy" />
+            <div class="gallery-item" role="listitem">
+              <Image src={resolveImage(item.image)} alt={item.alt} loading="lazy" decoding="async" widths={[300, 600, 800]} sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw" width={600} height={800} />
               <div class="gallery-item-num" aria-hidden="true">{pad(i+1)}/{pad(studio.gallery.length)}</div>
               <div class="gallery-caption">
                 <div class="gallery-caption-artist">{item.artist}</div>
@@ -646,7 +650,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
                 <span>{pad(i+1)}</span><br />
                 <span style="color: var(--gray-80)">of {pad(studio.artists.length)}</span>
               </div>
-              <img src={artist.image} alt={`Portrait of ${artist.name}`} class="artist-photo" loading="lazy" />
+              <Image src={resolveImage(artist.image)} alt={`Portrait of ${artist.name}`} class="artist-photo" loading="lazy" decoding="async" widths={[220, 440]} sizes="220px" width={440} height={440} />
               <div class="artist-info">
                 <h3 class="artist-name">{artist.name}</h3>
                 <span class="artist-handle">{artist.handle}</span>
@@ -825,7 +829,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
         <div class="ig-grid" role="list" aria-label="Instagram posts">
           {studio.igPosts.map(post => (
             <a href={post.link} class="ig-post" target="_blank" rel="noopener noreferrer" role="listitem" aria-label={post.alt}>
-              <img src={post.image} alt={post.alt} loading="lazy" />
+              <Image src={resolveImage(post.image)} alt={post.alt} loading="lazy" decoding="async" widths={[200, 400]} sizes="(min-width: 640px) 16vw, 33vw" width={400} height={400} />
               <div class="ig-post-overlay"><span class="ig-handle">{studio.instagram}</span></div>
             </a>
           ))}

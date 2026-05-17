@@ -1,6 +1,9 @@
 ---
+import { Image } from 'astro:assets';
 import { studio } from '../../data/v3';
+import { resolveImage } from '../../data/imageMap';
 import '../../styles/global.css';
+const heroImg = resolveImage(studio.heroImage);
 ---
 <!doctype html>
 <html lang="en">
@@ -32,7 +35,7 @@ import '../../styles/global.css';
 
     /* HERO — full-bleed with Japanese vertical text element */
     .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;}
-    .hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1566738928-9462c47c5673?w=1920&q=85&auto=format&fit=crop') center/cover;filter:brightness(0.35) saturate(0.7);}
+    .hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.35) saturate(0.7);}
     .hero-fade{position:absolute;inset:0;background:linear-gradient(to right,rgba(6,6,6,0.92) 45%,rgba(6,6,6,0.2) 100%);}
     .hero-vertical{position:absolute;right:2rem;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-family:'Noto Serif JP',serif;font-size:0.8rem;font-weight:300;letter-spacing:0.3em;color:rgba(184,151,74,0.25);user-select:none;}
     .hero-content{position:relative;max-width:1200px;margin:0 auto;padding:4rem 2rem;width:100%;}
@@ -191,7 +194,7 @@ import '../../styles/global.css';
 <!-- HERO -->
 <section id="hero" aria-label="Hero">
   <div class="hero">
-    <div class="hero-bg" role="img" aria-label={studio.heroAlt}></div>
+    <Image class="hero-bg" src={heroImg} alt={studio.heroAlt} loading="eager" fetchpriority="high" widths={[768, 1280, 1920]} sizes="100vw" width={1920} height={1280} />
     <div class="hero-fade" aria-hidden="true"></div>
     <p class="hero-vertical" aria-hidden="true">伝統的刺青　龍墨　サンディエゴ</p>
     <div class="hero-content">
@@ -227,7 +230,7 @@ import '../../styles/global.css';
     {studio.artists.map((a, i) => (
       <article class="artist-panel" role="listitem" aria-label={`Artist: ${a.name}`}>
         <div class="artist-panel-photo">
-          <img src={a.image} alt={`Portrait of ${a.name}`} loading="lazy" width="380" height="400"/>
+          <Image src={resolveImage(a.image)} alt={`Portrait of ${a.name}`} loading="lazy" decoding="async" widths={[380, 600, 800]} sizes="(min-width: 768px) 380px, 100vw" width={800} height={840} />
         </div>
         <div class="artist-panel-info">
           <div class="artist-panel-num" aria-hidden="true">{i+1}</div>
@@ -256,7 +259,7 @@ import '../../styles/global.css';
   <div class="vertical-gallery" role="list" aria-label="Portfolio gallery">
     {studio.gallery.slice(0,6).map(item => (
       <figure class="vg-item" role="listitem">
-        <img src={item.image} alt={item.alt} loading="lazy" width="1200" height="525"/>
+        <Image src={resolveImage(item.image)} alt={item.alt} loading="lazy" decoding="async" widths={[800, 1280, 1600]} sizes="100vw" width={1600} height={700} />
         <div class="vg-overlay" aria-hidden="true">
           <figcaption class="vg-caption">
             <p class="vg-caption-style">{item.style}</p>
@@ -394,7 +397,7 @@ import '../../styles/global.css';
       {studio.igPosts.map(p => (
         <div class="ig-cell" role="listitem">
           <a href={p.link} aria-label={`Instagram: ${p.alt}`} target="_blank" rel="noopener noreferrer">
-            <img src={p.image} alt={p.alt} loading="lazy" width="300" height="300"/>
+            <Image src={resolveImage(p.image)} alt={p.alt} loading="lazy" decoding="async" widths={[200, 400]} sizes="(min-width: 640px) 16vw, 33vw" width={400} height={400} />
           </a>
         </div>
       ))}

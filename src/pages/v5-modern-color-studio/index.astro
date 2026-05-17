@@ -1,6 +1,9 @@
 ---
+import { Image } from 'astro:assets';
 import { studio } from '../../data/v5';
+import { resolveImage } from '../../data/imageMap';
 const base = import.meta.env.BASE_URL;
+const heroImg = resolveImage(studio.heroImage);
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -492,7 +495,7 @@ const base = import.meta.env.BASE_URL;
           </div>
         </div>
         <div class="hero-image-panel">
-          <img src={studio.heroImage} alt={studio.heroAlt} loading="eager" />
+          <Image src={heroImg} alt={studio.heroAlt} loading="eager" fetchpriority="high" widths={[600, 1000, 1600]} sizes="(min-width: 1024px) 50vw, 100vw" width={1600} height={1200} />
           <div class="hero-image-badge" aria-hidden="true">Color Only Studio</div>
         </div>
       </div>
@@ -509,7 +512,7 @@ const base = import.meta.env.BASE_URL;
         <div class="flash-grid" role="list" aria-label="Portfolio gallery">
           {studio.gallery.map(item => (
             <div class="flash-card" role="listitem">
-              <img src={item.image} alt={item.alt} loading="lazy" />
+              <Image src={resolveImage(item.image)} alt={item.alt} loading="lazy" decoding="async" widths={[300, 600]} sizes="(min-width: 1024px) 25vw, 50vw" width={600} height={600} />
               <div class="flash-card-info">
                 <div class="flash-card-artist">{item.artist}</div>
                 <div class="flash-card-style">{item.style}</div>
@@ -545,7 +548,7 @@ const base = import.meta.env.BASE_URL;
           {studio.artists.map(artist => (
             <article class="artist-card" role="listitem">
               <div class="artist-card-image">
-                <img src={artist.image} alt={`Portrait of ${artist.name}`} loading="lazy" />
+                <Image src={resolveImage(artist.image)} alt={`Portrait of ${artist.name}`} loading="lazy" decoding="async" widths={[300, 600, 800]} sizes="(min-width: 1024px) 33vw, 100vw" width={800} height={600} />
               </div>
               <div class="artist-card-color-bar" aria-hidden="true"></div>
               <div class="artist-card-body">
@@ -678,7 +681,7 @@ const base = import.meta.env.BASE_URL;
         <div class="ig-grid" role="list" aria-label="Instagram feed">
           {studio.igPosts.map(post => (
             <a href={post.link} class="ig-post" target="_blank" rel="noopener noreferrer" role="listitem" aria-label={post.alt}>
-              <img src={post.image} alt={post.alt} loading="lazy" />
+              <Image src={resolveImage(post.image)} alt={post.alt} loading="lazy" decoding="async" widths={[200, 400]} sizes="(min-width: 640px) 16vw, 33vw" width={400} height={400} />
             </a>
           ))}
         </div>

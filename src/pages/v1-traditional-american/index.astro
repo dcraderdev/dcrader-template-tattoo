@@ -1,7 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import { studio } from '../../data/v1';
+import { resolveImage } from '../../data/imageMap';
 import '../../styles/global.css';
 const romanFAQ = ['I','II','III','IV','V','VI'];
+const heroImg = resolveImage(studio.heroImage);
 ---
 <!doctype html>
 <html lang="en">
@@ -35,7 +38,7 @@ const romanFAQ = ['I','II','III','IV','V','VI'];
 
     /* ── HERO ── */
     .hero{position:relative;min-height:94vh;display:flex;align-items:center;overflow:hidden;background:var(--dark);}
-    .hero-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=1920&q=85&auto=format&fit=crop') center/cover;filter:sepia(40%) contrast(1.1) brightness(0.55);}
+    .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:sepia(40%) contrast(1.1) brightness(0.55);}
     .hero-grid-overlay{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(200,134,10,0.07) 60px),repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(200,134,10,0.07) 60px);}
     .hero-content{position:relative;width:100%;max-width:1200px;margin:0 auto;padding:3rem 1.5rem;display:grid;grid-template-columns:1fr 420px;gap:3rem;align-items:center;}
     @media(max-width:900px){.hero-content{grid-template-columns:1fr;}}
@@ -203,7 +206,7 @@ const romanFAQ = ['I','II','III','IV','V','VI'];
 <!-- HERO -->
 <section id="hero" aria-label="Hero">
   <div class="hero">
-    <div class="hero-img" role="img" aria-label={studio.heroAlt}></div>
+    <Image class="hero-img" src={heroImg} alt={studio.heroAlt} loading="eager" fetchpriority="high" widths={[768, 1280, 1920]} sizes="100vw" width={1920} height={1280} />
     <div class="hero-grid-overlay" aria-hidden="true"></div>
     <div class="hero-content">
       <div class="hero-left">
@@ -251,7 +254,8 @@ const romanFAQ = ['I','II','III','IV','V','VI'];
       {studio.artists.map(a => (
         <article class="artist-card" role="listitem" aria-label={`Artist: ${a.name}`}>
           <div class="artist-photo-wrap">
-            <img class="artist-photo" src={a.image} alt={`Portrait of ${a.name}, ${a.specialty}`} loading="lazy" width="400" height="340"/>
+            <Image class="artist-photo" src={resolveImage(a.image)} alt={`Portrait of ${a.name}, ${a.specialty}`} loading="lazy" decoding="async" widths={[300, 600]} sizes="(min-width: 768px) 33vw, 100vw" width={600} height={510} />
+
             <div class="artist-photo-overlay" aria-hidden="true"></div>
             <div class="artist-name-over">
               <h3>{a.name}</h3>
@@ -281,7 +285,7 @@ const romanFAQ = ['I','II','III','IV','V','VI'];
     <div class="flash-sheet" role="list" aria-label="Tattoo flash sheet gallery">
       {studio.gallery.map(item => (
         <figure class="flash-cell" role="listitem">
-          <img src={item.image} alt={item.alt} loading="lazy" width="400" height="400"/>
+          <Image src={resolveImage(item.image)} alt={item.alt} loading="lazy" decoding="async" widths={[400, 600]} sizes="(min-width: 1024px) 25vw, 50vw" width={600} height={600} />
           <div class="flash-label" aria-hidden="true"><span>{item.style}</span></div>
           <figcaption class="sr-only">{item.alt} — by {item.artist}</figcaption>
         </figure>
@@ -422,7 +426,7 @@ const romanFAQ = ['I','II','III','IV','V','VI'];
       {studio.igPosts.map(p => (
         <div class="ig-cell" role="listitem">
           <a href={p.link} aria-label={`Instagram: ${p.alt}`} target="_blank" rel="noopener noreferrer">
-            <img src={p.image} alt={p.alt} loading="lazy" width="300" height="300"/>
+            <Image src={resolveImage(p.image)} alt={p.alt} loading="lazy" decoding="async" widths={[200, 400]} sizes="(min-width: 1024px) 16vw, 33vw" width={300} height={300} />
           </a>
         </div>
       ))}
