@@ -64,10 +64,13 @@ const heroPreload = await getImage({ src: heroImg, width: 1080, format: 'webp' }
     .btn-bk:hover,.btn-bk:focus-visible{opacity:0.75;}
     .btn-lt{font-family:'Inter Tight',sans-serif;font-weight:300;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--mid);text-decoration:none;border-bottom:1px solid var(--lt);padding-bottom:2px;transition:color 0.2s,border-color 0.2s;}
     .btn-lt:hover,.btn-lt:focus-visible{color:var(--b);border-color:var(--b);}
-    .hero-meta{position:absolute;bottom:3rem;left:2rem;right:2rem;display:flex;justify-content:center;gap:4rem;}
-    .hero-meta-item{text-align:center;}
-    .hero-meta-item .v{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;display:block;color:var(--b);}
-    .hero-meta-item .l{font-family:'Inter Tight',sans-serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--lt);}
+    .hero-ledger{position:absolute;bottom:2.25rem;left:50%;transform:translateX(-50%);width:min(640px,calc(100% - 4rem));display:grid;gap:0;border-top:1px solid var(--xlt);border-bottom:1px solid var(--xlt);padding:0.4rem 0;}
+    .hero-ledger .hl-row{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:1.25rem;padding:0.45rem 0.25rem;border-bottom:1px dotted var(--xlt);}
+    .hero-ledger .hl-row:last-child{border-bottom:none;}
+    .hero-ledger dt{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.58rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--mid);}
+    .hero-ledger dd{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:0.95rem;font-style:italic;color:#444;text-align:right;}
+    .hero-ledger dd em{font-style:normal;font-family:'Cormorant Garamond',serif;font-weight:400;color:var(--b);font-size:1.05rem;padding-right:0.15em;}
+    @media(max-width:560px){.hero-ledger{position:static;transform:none;margin:2.5rem auto 0;}.hero-ledger .hl-row{grid-template-columns:1fr;text-align:left;}.hero-ledger dd{text-align:left;}}
 
     /* SECTIONS */
     .section{padding:6rem 2rem;}
@@ -234,11 +237,12 @@ const heroPreload = await getImage({ src: heroImg, width: 1080, format: 'webp' }
       <a href="#booking" class="btn-bk">Inquire to book</a>
       <a href="#portfolio" class="btn-lt">View collected works</a>
     </div>
-    <div class="hero-meta" aria-label="Studio facts">
-      <div class="hero-meta-item"><span class="v">3</span><span class="l">Artists</span></div>
-      <div class="hero-meta-item"><span class="v">${studio.minimumCharge}</span><span class="l">Minimum</span></div>
-      <div class="hero-meta-item"><span class="v">Appt.</span><span class="l">Only</span></div>
-    </div>
+    <dl class="hero-ledger" aria-label="Studio practice — current ledger">
+      <div class="hl-row"><dt>Average waitlist</dt><dd><em>nine</em> weeks</dd></div>
+      <div class="hl-row"><dt>Sessions logged, 2024</dt><dd><em>412</em> &amp; counting</dd></div>
+      <div class="hl-row"><dt>Pieces under 4cm</dt><dd><em>68%</em> of the book</dd></div>
+      <div class="hl-row"><dt>Needles used</dt><dd>single &amp; 0.18mm round</dd></div>
+    </dl>
   </div>
 </section>
 

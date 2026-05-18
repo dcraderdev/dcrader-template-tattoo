@@ -134,16 +134,23 @@ const heroPreload = await getImage({ src: heroImg, width: 1600, format: 'webp' }
       font-family: var(--body); font-size: 1.05rem; color: var(--ink-soft);
       line-height: 1.7; margin-bottom: 2.5rem; max-width: 40ch; font-weight: 400;
     }
-    .hero-pills { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
-    .pill {
-      font-family: var(--body); font-size: 0.7rem; font-weight: 600;
-      letter-spacing: 0.05em; text-transform: uppercase;
-      padding: 0.35rem 0.85rem; border-radius: 999px; border: 1.5px solid;
+    .hero-palette { display: flex; gap: 0.6rem 1rem; flex-wrap: wrap; align-items: center; margin-bottom: 2.5rem; }
+    .palette-label {
+      font-family: var(--body); font-size: 0.7rem; font-weight: 500;
+      color: var(--mid); letter-spacing: 0.02em;
+      width: 100%; margin-bottom: -0.15rem;
     }
-    .pill-purple { color: var(--purple); border-color: var(--purple); }
-    .pill-pink { color: var(--pink); border-color: var(--pink); }
-    .pill-teal { color: var(--teal); border-color: var(--teal); }
-    .pill-orange { color: var(--orange); border-color: var(--orange); }
+    .palette-swatch {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      font-family: var(--body); font-size: 0.78rem; font-weight: 500;
+      color: var(--ink); padding: 0.25rem 0.6rem 0.25rem 0.3rem;
+      border-radius: 999px; background: rgba(0,0,0,0.04);
+    }
+    .palette-swatch .dot {
+      width: 0.85rem; height: 0.85rem; border-radius: 50%;
+      box-shadow: 0 0 0 1.5px rgba(255,255,255,0.8), 0 0 0 2.5px rgba(0,0,0,0.08);
+      flex-shrink: 0;
+    }
     .hero-ctas { display: flex; gap: 1rem; align-items: center; }
     .btn-big {
       font-family: var(--display); font-size: 0.95rem; font-weight: 700;
@@ -592,15 +599,16 @@ const heroPreload = await getImage({ src: heroImg, width: 1600, format: 'webp' }
             <span class="color-line">is alive.</span>
           </h1>
           <p class="hero-tagline">{studio.description}</p>
-          <div class="hero-pills" role="list" aria-label="Studio specialties">
-            <span class="pill pill-purple" role="listitem">Neo-Traditional</span>
-            <span class="pill pill-pink" role="listitem">New School</span>
-            <span class="pill pill-teal" role="listitem">Illustrative</span>
-            <span class="pill pill-orange" role="listitem">Watercolor</span>
+          <div class="hero-palette" role="list" aria-label="This week's working palette">
+            <span class="palette-label">This week, on the table:</span>
+            <span class="palette-swatch" role="listitem"><span class="dot" style="background:#EC4899" aria-hidden="true"></span>Magenta peony</span>
+            <span class="palette-swatch" role="listitem"><span class="dot" style="background:#F59E0B" aria-hidden="true"></span>Marigold flame</span>
+            <span class="palette-swatch" role="listitem"><span class="dot" style="background:#7C3AED" aria-hidden="true"></span>Iris dusk</span>
+            <span class="palette-swatch" role="listitem"><span class="dot" style="background:#0D9488" aria-hidden="true"></span>Jade wave</span>
           </div>
           <div class="hero-ctas">
             <a href="#booking" class="btn-big">Book a Consult</a>
-            <a href="#gallery" class="btn-ghost">See Work</a>
+            <a href={`https://instagram.com/${studio.instagram.replace('@','')}`} target="_blank" rel="noopener noreferrer" class="btn-ghost">DM us on IG ↗</a>
           </div>
         </div>
         <div class="hero-image-panel">

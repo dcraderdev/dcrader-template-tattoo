@@ -141,21 +141,38 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
       color: var(--gray-20); line-height: 1.7; margin-bottom: 3rem;
       max-width: 38ch;
     }
-    .hero-metrics {
-      display: grid; grid-template-columns: repeat(3, 1fr);
+    .hero-record {
       border: 1px solid var(--gray-80); margin-bottom: 2.5rem;
+      background: rgba(255,255,255,0.015);
+      position: relative;
     }
-    .hero-metric {
-      padding: 1.25rem 1rem; border-right: 1px solid var(--gray-80);
+    .hero-record::before {
+      content: 'RECORD_03 // SESSION_LOG';
+      position: absolute; top: -0.55rem; left: 1rem;
+      font-family: var(--mono); font-size: 0.55rem; color: var(--gray-60);
+      letter-spacing: 0.15em; background: var(--black); padding: 0 0.5rem;
     }
-    .hero-metric:last-child { border-right: none; }
-    .metric-val {
-      font-family: var(--mono); font-size: 1.5rem; font-weight: 600;
-      color: var(--white); display: block;
+    .hero-record .rec-row {
+      display: grid; grid-template-columns: 150px 1fr;
+      gap: 1rem; align-items: baseline;
+      padding: 0.65rem 1rem; border-bottom: 1px solid var(--gray-80);
     }
-    .metric-label {
+    .hero-record .rec-row:last-child { border-bottom: none; }
+    .hero-record dt {
       font-family: var(--mono); font-size: 0.6rem; color: var(--gray-40);
-      letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.25rem;
+      letter-spacing: 0.12em;
+    }
+    .hero-record dd {
+      font-family: var(--mono); font-size: 0.9rem; color: var(--white);
+      font-weight: 500;
+    }
+    .hero-record .rec-note {
+      color: var(--gray-60); font-weight: 300; font-size: 0.7rem;
+      margin-left: 0.5rem;
+    }
+    @media (max-width: 540px) {
+      .hero-record .rec-row { grid-template-columns: 1fr; gap: 0.15rem; }
+      .hero-record .rec-note { display: block; margin-left: 0; }
     }
     .hero-ctas { display: flex; gap: 1rem; }
     .btn-primary {
@@ -648,20 +665,28 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
           <span class="dim">{studio.name.split(' ').slice(1).join(' ')}</span>
         </h1>
         <p class="hero-desc">{studio.description}</p>
-        <div class="hero-metrics" role="list" aria-label="Studio statistics">
-          <div class="hero-metric" role="listitem">
-            <span class="metric-val">${studio.minimumCharge}</span>
-            <span class="metric-label">Min. charge</span>
+        <dl class="hero-record" aria-label="Studio working record">
+          <div class="rec-row">
+            <dt>AVG_SESSION</dt>
+            <dd>6.2 hr <span class="rec-note">// per booked block</span></dd>
           </div>
-          <div class="hero-metric" role="listitem">
-            <span class="metric-val">${studio.hourlyRate}/hr</span>
-            <span class="metric-label">Day rate</span>
+          <div class="rec-row">
+            <dt>TOUCHUP_WINDOW</dt>
+            <dd>4–6 mo <span class="rec-note">// included for major work</span></dd>
           </div>
-          <div class="hero-metric" role="listitem">
-            <span class="metric-val">3</span>
-            <span class="metric-label">Specialists</span>
+          <div class="rec-row">
+            <dt>REF_LIBRARY</dt>
+            <dd>8,400 img <span class="rec-note">// RAW only, archived</span></dd>
           </div>
-        </div>
+          <div class="rec-row">
+            <dt>TONAL_RANGE</dt>
+            <dd>9 steps <span class="rec-note">// black → distilled-water white</span></dd>
+          </div>
+          <div class="rec-row">
+            <dt>WALK_INS</dt>
+            <dd>0 <span class="rec-note">// realism is never walk-in</span></dd>
+          </div>
+        </dl>
         <div class="hero-ctas">
           <a href="#booking" class="btn-primary">Request Consultation</a>
           <a href="#gallery" class="btn-secondary">View Portfolio</a>

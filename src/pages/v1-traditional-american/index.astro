@@ -74,6 +74,23 @@ const heroPreload = await getImage({ src: heroImg, width: 1920, format: 'webp' }
     .btn-cream:hover,.btn-cream:focus-visible{border-color:var(--cream);}
     .hero-panel{background:rgba(22,5,0,0.85);border:2px solid var(--gold);padding:2rem;backdrop-filter:blur(4px);}
     .hero-panel-title{font-family:'Teko',sans-serif;font-size:1.1rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem;text-align:center;}
+    /* ── TALLY — chalkboard ledger ── */
+    .tally{background:#0A0300;border-top:4px solid var(--gold);border-bottom:4px solid var(--gold);position:relative;color:var(--cream);}
+    .tally::before,.tally::after{content:'';position:absolute;left:0;right:0;height:6px;background:repeating-linear-gradient(45deg,var(--red) 0 8px,#0A0300 8px 16px);}
+    .tally::before{top:4px;}.tally::after{bottom:4px;}
+    .tally-inner{max-width:1200px;margin:0 auto;padding:4.5rem 1.5rem 3.5rem;}
+    .tally-head{font-family:'EB Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--gold);text-align:center;margin-bottom:2.5rem;display:flex;align-items:center;justify-content:center;gap:0.6rem;}
+    .tally-cross{font-family:'Teko',sans-serif;font-size:1.6rem;color:var(--red);font-style:normal;}
+    .tally-grid{list-style:none;display:grid;gap:0.4rem;max-width:780px;margin:0 auto;}
+    .tally-row{display:grid;grid-template-columns:120px 1fr auto;align-items:baseline;gap:1.5rem;padding:0.85rem 1rem;border-bottom:1px dashed rgba(200,134,10,0.25);}
+    .tally-row:last-child{border-bottom:none;}
+    .tally-num{font-family:'Teko',sans-serif;font-size:2.4rem;font-weight:700;color:var(--gold2);letter-spacing:0.03em;line-height:1;}
+    .tally-label{font-family:'EB Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--cream2);}
+    .tally-marks{font-family:'Courier New',monospace;font-size:0.85rem;letter-spacing:0.15em;color:rgba(200,134,10,0.45);white-space:nowrap;}
+    .tally-foot{font-family:'EB Garamond',serif;font-style:italic;font-size:0.9rem;color:rgba(255,245,220,0.55);text-align:center;margin-top:2.25rem;}
+    .tally-foot strong{color:var(--gold);font-style:normal;font-family:'Teko',sans-serif;letter-spacing:0.12em;}
+    @media(max-width:640px){.tally-row{grid-template-columns:90px 1fr;}.tally-marks{display:none;}.tally-num{font-size:2rem;}}
+
     /* ── DIVIDERS ── */
     .divider{display:flex;align-items:center;justify-content:center;gap:1.25rem;padding:1.5rem 0;color:var(--gold);}
     .divider-line{flex:1;height:1px;background:var(--gold);opacity:0.3;max-width:200px;}
@@ -256,12 +273,42 @@ const heroPreload = await getImage({ src: heroImg, width: 1920, format: 'webp' }
         <p class="hero-tagline">Since before your grandfather got his first tattoo. Bold outlines, saturated primaries, flash that outlasts a lifetime.</p>
         <div class="hero-ctas">
           <a href="#booking" class="btn-red">Book a Session</a>
-          <a href="#portfolio" class="btn-cream">View Flash</a>
+          <a href="#walkin" class="btn-cream">Walk-in Hours</a>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- TALLY — chalkboard ledger of the shop's count -->
+<aside class="tally" id="walkin" aria-label="Shop tally since 2004">
+  <div class="tally-inner">
+    <p class="tally-head"><span class="tally-cross" aria-hidden="true">+</span> Tallied behind the counter, since the doors opened in 2004</p>
+    <ul class="tally-grid" role="list">
+      <li class="tally-row" role="listitem">
+        <span class="tally-num">2,840</span>
+        <span class="tally-label">pieces inked</span>
+        <span class="tally-marks" aria-hidden="true">||||·||||·||||·||||·</span>
+      </li>
+      <li class="tally-row" role="listitem">
+        <span class="tally-num">312</span>
+        <span class="tally-label">cover-ups walked out clean</span>
+        <span class="tally-marks" aria-hidden="true">||||·||||·||||·</span>
+      </li>
+      <li class="tally-row" role="listitem">
+        <span class="tally-num">7</span>
+        <span class="tally-label">apprentices trained &amp; turned loose</span>
+        <span class="tally-marks" aria-hidden="true">||||·||</span>
+      </li>
+      <li class="tally-row" role="listitem">
+        <span class="tally-num">41</span>
+        <span class="tally-label">conventions worked, four states</span>
+        <span class="tally-marks" aria-hidden="true">||||·||||·||||·|</span>
+      </li>
+    </ul>
+    <p class="tally-foot">Walk-ins welcome <strong>Tue–Sun · 12–7</strong> · phone ahead or take a seat &amp; pick from the wall</p>
+  </div>
+</aside>
 
 <!-- DIVIDER -->
 <div class="divider" aria-hidden="true">

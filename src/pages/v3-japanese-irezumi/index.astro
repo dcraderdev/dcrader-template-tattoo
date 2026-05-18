@@ -74,6 +74,16 @@ const heroPreload = await getImage({ src: heroImg, width: 1920, format: 'webp' }
     .tradition blockquote{font-family:'Cormorant',serif;font-style:italic;font-size:clamp(1.2rem,2.5vw,2rem);color:var(--cream);max-width:800px;margin:0 auto;line-height:1.6;}
     .tradition cite{display:block;margin-top:1rem;font-family:'Noto Serif JP',serif;font-size:0.7rem;letter-spacing:0.25em;color:rgba(234,216,180,0.6);font-style:normal;}
 
+    /* LINEAGE PLAQUE */
+    .lineage{background:var(--surf);border-top:1px solid rgba(184,151,74,0.15);border-bottom:1px solid rgba(184,151,74,0.15);}
+    .lineage-inner{max-width:1200px;margin:0 auto;padding:3.5rem 2rem;display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:2rem;align-items:center;}
+    .lineage-col{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0.6rem;max-width:300px;margin:0 auto;}
+    .lineage-kanji{font-family:'Noto Serif JP',serif;font-size:clamp(2.5rem,4.5vw,4rem);font-weight:700;color:var(--gold);letter-spacing:0.05em;line-height:1;}
+    .lineage-jp{font-family:'Noto Serif JP',serif;font-size:0.7rem;letter-spacing:0.2em;color:var(--red);}
+    .lineage-en{font-family:'Cormorant',serif;font-style:italic;font-size:0.95rem;color:var(--gray);line-height:1.6;}
+    .lineage-divider{width:1px;height:80px;background:linear-gradient(to bottom,transparent,rgba(184,151,74,0.4),transparent);}
+    @media(max-width:820px){.lineage-inner{grid-template-columns:1fr;gap:2.5rem;}.lineage-divider{width:60px;height:1px;background:linear-gradient(to right,transparent,rgba(184,151,74,0.4),transparent);}}
+
     /* SECTIONS */
     .section{padding:6rem 2rem;}
     .section-inner{max-width:1200px;margin:0 auto;}
@@ -243,8 +253,8 @@ const heroPreload = await getImage({ src: heroImg, width: 1920, format: 'webp' }
       <span class="hero-stroke" aria-hidden="true"></span>
       <p class="hero-desc">{studio.tagline}<br/><br/>Where the tradition of five-year apprenticeship meets living skin.</p>
       <div class="hero-ctas">
-        <a href="#booking" class="btn-red">Begin Your Journey</a>
-        <a href="#portfolio" class="btn-gold">View the Work</a>
+        <a href="#booking" class="btn-red">Write to the Studio</a>
+        <a href="#journey" class="btn-gold">Read the Path · 道</a>
       </div>
     </div>
   </div>
@@ -257,6 +267,29 @@ const heroPreload = await getImage({ src: heroImg, width: 1920, format: 'webp' }
     <cite>— Studio Philosophy, Ryūboku Tattoo</cite>
   </blockquote>
 </div>
+
+<!-- LINEAGE PLAQUE — kanji-numbered counts -->
+<aside class="lineage" aria-label="The studio's lineage at a glance">
+  <div class="lineage-inner">
+    <div class="lineage-col">
+      <span class="lineage-kanji" aria-hidden="true">弐拾弐</span>
+      <span class="lineage-jp">伝承年</span>
+      <span class="lineage-en">Years of horishi lineage carried from Yokohama to San Diego — twenty-two</span>
+    </div>
+    <div class="lineage-divider" aria-hidden="true"></div>
+    <div class="lineage-col">
+      <span class="lineage-kanji" aria-hidden="true">陸</span>
+      <span class="lineage-jp">進行中の総身彫</span>
+      <span class="lineage-en">Full-body suits currently in progress — six, three in their final year</span>
+    </div>
+    <div class="lineage-divider" aria-hidden="true"></div>
+    <div class="lineage-col">
+      <span class="lineage-kanji" aria-hidden="true">手彫</span>
+      <span class="lineage-jp">手彫りに応じる</span>
+      <span class="lineage-en">Tebori — by-hand work — offered for back pieces and full suits, by request only</span>
+    </div>
+  </div>
+</aside>
 
 <!-- ARTISTS -->
 <section id="artists" class="section artist-bg" aria-labelledby="artists-h">
