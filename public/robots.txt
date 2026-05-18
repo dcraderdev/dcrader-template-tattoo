@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tattoo.dcrader.dev/sitemap-index.xml
