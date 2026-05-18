@@ -20,6 +20,16 @@ const heroPreload = await getImage({ src: heroImg, width: 1600, format: 'webp' }
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{studio.name} — {studio.tagline}</title>
   <meta name="description" content={studio.description} />
+  <link rel="canonical" href={Astro.url.href} />
+  <meta property="og:title" content={`${studio.name} — ${studio.tagline}`} />
+  <meta property="og:description" content={studio.description} />
+  <meta property="og:image" content="/og-image.png" />
+  <meta property="og:url" content={Astro.url.href} />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={`${studio.name} — ${studio.tagline}`} />
+  <meta name="twitter:description" content={studio.description} />
+  <meta name="twitter:image" content="/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -885,6 +895,7 @@ const heroPreload = await getImage({ src: heroImg, width: 1600, format: 'webp' }
       <div class="footer-tagline">{studio.tagline}</div>
     </div>
     <div class="footer-copy">&copy; {new Date().getFullYear()} {studio.name}. San Diego, CA. All rights reserved.</div>
+    <div style="grid-column:1/-1;width:100%;text-align:center;padding-top:1.5rem;border-top:1px solid rgba(0,0,0,0.06);margin-top:1.5rem;font-family:'Space Grotesk',sans-serif;font-size:0.75rem;color:#8a7a5a;">Built by <a href="https://dcrader.dev" style="color:#7C3AED;text-decoration:none;font-weight:500;">Donovan Crader · dcrader.dev</a></div>
   </footer>
 </body>
 </html>

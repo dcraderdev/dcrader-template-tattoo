@@ -21,6 +21,16 @@ const heroPreload = await getImage({ src: heroImg, width: 1920, format: 'webp' }
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>{studio.name} — Traditional American Tattoo · {studio.city}</title>
   <meta name="description" content={studio.description}/>
+  <link rel="canonical" href={Astro.url.href}/>
+  <meta property="og:title" content={`${studio.name} — Traditional American Tattoo`}/>
+  <meta property="og:description" content={studio.description}/>
+  <meta property="og:image" content="/og-image.png"/>
+  <meta property="og:url" content={Astro.url.href}/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content={`${studio.name} — Traditional American Tattoo`}/>
+  <meta name="twitter:description" content={studio.description}/>
+  <meta name="twitter:image" content="/og-image.png"/>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -543,6 +553,7 @@ const heroPreload = await getImage({ src: heroImg, width: 1920, format: 'webp' }
     </ul>
   </nav>
   <p class="footer-copy">&copy; 2024 Iron &amp; Rose Tattoo · {studio.address}, {studio.city} · {studio.phone}</p>
+  <p style="margin-top:1rem;font-family:'EB Garamond',serif;font-size:0.75rem;color:rgba(255,245,220,0.4);letter-spacing:0.08em;">Built by <a href="https://dcrader.dev" style="color:var(--gold);text-decoration:none;">Donovan Crader · dcrader.dev</a></p>
 </footer>
 </body>
 </html>

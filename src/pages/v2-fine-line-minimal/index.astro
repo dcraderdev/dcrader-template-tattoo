@@ -21,6 +21,16 @@ const heroPreload = await getImage({ src: heroImg, width: 1080, format: 'webp' }
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>{studio.name} — Fine-Line Tattoo · {studio.city}</title>
   <meta name="description" content={studio.description}/>
+  <link rel="canonical" href={Astro.url.href}/>
+  <meta property="og:title" content={`${studio.name} — Fine-Line Tattoo`}/>
+  <meta property="og:description" content={studio.description}/>
+  <meta property="og:image" content="/og-image.png"/>
+  <meta property="og:url" content={Astro.url.href}/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content={`${studio.name} — Fine-Line Tattoo`}/>
+  <meta name="twitter:description" content={studio.description}/>
+  <meta name="twitter:image" content="/og-image.png"/>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -464,6 +474,7 @@ const heroPreload = await getImage({ src: heroImg, width: 1080, format: 'webp' }
     </ul>
   </nav>
   <p class="foot-copy">{studio.address}, {studio.city} · {studio.email}</p>
+  <p style="margin-top:1.5rem;font-family:'Inter Tight',sans-serif;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mid);">Built by <a href="https://dcrader.dev" style="color:var(--b);text-decoration:none;border-bottom:1px solid var(--lt);">Donovan Crader · dcrader.dev</a></p>
 </footer>
 </body>
 </html>

@@ -22,6 +22,16 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{studio.name} — {studio.tagline}</title>
   <meta name="description" content={studio.description} />
+  <link rel="canonical" href={Astro.url.href} />
+  <meta property="og:title" content={`${studio.name} — ${studio.tagline}`} />
+  <meta property="og:description" content={studio.description} />
+  <meta property="og:image" content="/og-image.png" />
+  <meta property="og:url" content={Astro.url.href} />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={`${studio.name} — ${studio.tagline}`} />
+  <meta name="twitter:description" content={studio.description} />
+  <meta name="twitter:image" content="/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -1037,6 +1047,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
     <div class="footer-left">&copy; {new Date().getFullYear()} {studio.name}. San Diego, CA.</div>
     <div class="footer-center">{studio.name}</div>
     <div class="footer-right">{studio.tagline}</div>
+    <div style="grid-column:1/-1;width:100%;text-align:center;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.06);margin-top:1.5rem;font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;color:#666;">Built by <a href="https://dcrader.dev" style="color:#aaa;text-decoration:none;">Donovan Crader · dcrader.dev</a></div>
   </footer>
 </body>
 </html>
