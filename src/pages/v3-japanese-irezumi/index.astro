@@ -1,5 +1,5 @@
 ---
-import { Image, getImage } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
 import { studio } from '../../data/v3';
 import { resolveImage } from '../../data/imageMap';
 import '../../styles/global.css';
@@ -224,7 +224,7 @@ const heroPreload = await getImage({ src: heroImg, width: 1920, format: 'webp' }
 <!-- HERO -->
 <section id="hero" aria-label="Hero">
   <div class="hero">
-    <Image class="hero-bg" src={heroImg} alt={studio.heroAlt} loading="eager" fetchpriority="high" widths={[768, 1280, 1920]} sizes="100vw" width={1920} height={1280} />
+    <Picture formats={['avif','webp']} class="hero-bg" src={heroImg} alt={studio.heroAlt} loading="eager" fetchpriority="high" widths={[768, 1280, 1920]} sizes="100vw" width={1920} height={1280} />
     <div class="hero-fade" aria-hidden="true"></div>
     <p class="hero-vertical" aria-hidden="true">伝統的刺青　龍墨　サンディエゴ</p>
     <div class="hero-content">
@@ -260,7 +260,7 @@ const heroPreload = await getImage({ src: heroImg, width: 1920, format: 'webp' }
     {studio.artists.map((a, i) => (
       <article class="artist-panel" role="listitem" aria-label={`Artist: ${a.name}`}>
         <div class="artist-panel-photo">
-          <Image src={resolveImage(a.image)} alt={`Portrait of ${a.name}`} loading="lazy" decoding="async" widths={[380, 600, 800]} sizes="(min-width: 768px) 380px, 100vw" width={800} height={840} />
+          <Picture formats={['avif','webp']} src={resolveImage(a.image)} alt={`Portrait of ${a.name}`} loading="lazy" decoding="async" widths={[380, 600, 800]} sizes="(min-width: 768px) 380px, 100vw" width={800} height={840} />
         </div>
         <div class="artist-panel-info">
           <div class="artist-panel-num" aria-hidden="true">{i+1}</div>
@@ -289,7 +289,7 @@ const heroPreload = await getImage({ src: heroImg, width: 1920, format: 'webp' }
   <div class="vertical-gallery" role="list" aria-label="Portfolio gallery">
     {studio.gallery.slice(0,6).map(item => (
       <figure class="vg-item" role="listitem">
-        <Image src={resolveImage(item.image)} alt={item.alt} loading="lazy" decoding="async" widths={[800, 1280, 1600]} sizes="100vw" width={1600} height={700} />
+        <Picture formats={['avif','webp']} src={resolveImage(item.image)} alt={item.alt} loading="lazy" decoding="async" widths={[800, 1280, 1600]} sizes="100vw" width={1600} height={700} />
         <div class="vg-overlay" aria-hidden="true">
           <figcaption class="vg-caption">
             <p class="vg-caption-style">{item.style}</p>
@@ -477,7 +477,7 @@ const heroPreload = await getImage({ src: heroImg, width: 1920, format: 'webp' }
       {studio.igPosts.map(p => (
         <div class="ig-cell" role="listitem">
           <a href={p.link} aria-label={`Instagram: ${p.alt}`} target="_blank" rel="noopener noreferrer">
-            <Image src={resolveImage(p.image)} alt={p.alt} loading="lazy" decoding="async" widths={[200, 400]} sizes="(min-width: 640px) 16vw, 33vw" width={400} height={400} />
+            <Picture formats={['avif','webp']} src={resolveImage(p.image)} alt={p.alt} loading="lazy" decoding="async" widths={[200, 400]} sizes="(min-width: 640px) 16vw, 33vw" width={400} height={400} />
           </a>
         </div>
       ))}

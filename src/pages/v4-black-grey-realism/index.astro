@@ -1,5 +1,5 @@
 ---
-import { Image, getImage } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
 import { studio } from '../../data/v4';
 import { resolveImage } from '../../data/imageMap';
 const base = import.meta.env.BASE_URL;
@@ -627,7 +627,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
   <main id="main">
     <section class="hero" aria-label="Studio hero">
       <div class="hero-image-panel">
-        <Image src={heroImg} alt={studio.heroAlt} loading="eager" fetchpriority="high" widths={[768, 1280, 1920]} sizes="(min-width: 1024px) 50vw, 100vw" width={1920} height={1280} />
+        <Picture formats={['avif','webp']} src={heroImg} alt={studio.heroAlt} loading="eager" fetchpriority="high" widths={[768, 1280, 1920]} sizes="(min-width: 1024px) 50vw, 100vw" width={1920} height={1280} />
         <div class="hero-scan-line" aria-hidden="true"></div>
         <div class="hero-image-label" aria-hidden="true">IMG_001 // GRAYSCALE // 300DPI</div>
       </div>
@@ -715,7 +715,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
         <div class="gallery-grid" role="list" aria-label="Portfolio gallery">
           {studio.gallery.map((item, i) => (
             <div class="gallery-item" role="listitem">
-              <Image src={resolveImage(item.image)} alt={item.alt} loading="lazy" decoding="async" widths={[300, 600, 800]} sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw" width={600} height={800} />
+              <Picture formats={['avif','webp']} src={resolveImage(item.image)} alt={item.alt} loading="lazy" decoding="async" widths={[300, 600, 800]} sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw" width={600} height={800} />
               <div class="gallery-item-num" aria-hidden="true">{pad(i+1)}/{pad(studio.gallery.length)}</div>
               <div class="gallery-caption">
                 <div class="gallery-caption-artist">{item.artist}</div>
@@ -742,7 +742,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
                 <span>{pad(i+1)}</span><br />
                 <span style="color: var(--gray-80)">of {pad(studio.artists.length)}</span>
               </div>
-              <Image src={resolveImage(artist.image)} alt={`Portrait of ${artist.name}`} class="artist-photo" loading="lazy" decoding="async" widths={[220, 440]} sizes="220px" width={440} height={440} />
+              <Picture formats={['avif','webp']} src={resolveImage(artist.image)} alt={`Portrait of ${artist.name}`} class="artist-photo" loading="lazy" decoding="async" widths={[220, 440]} sizes="220px" width={440} height={440} />
               <div class="artist-info">
                 <h3 class="artist-name">{artist.name}</h3>
                 <span class="artist-handle">{artist.handle}</span>
@@ -817,7 +817,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
         </p>
         <div class="studio-strip" role="list" aria-label="Studio interior and equipment documentation">
           <div class="studio-cell tall" role="listitem">
-            <Image src={resolveImage(studio.gallery[0].image)} alt="Cassandra Vane's primary station — Cheyenne Hawk rotary, single-use grips, ink cups taped down" loading="lazy" decoding="async" widths={[600, 900, 1200]} sizes="(min-width: 768px) 50vw, 100vw" width={1200} height={1600} />
+            <Picture formats={['avif','webp']} src={resolveImage(studio.gallery[0].image)} alt="Cassandra Vane's primary station — Cheyenne Hawk rotary, single-use grips, ink cups taped down" loading="lazy" decoding="async" widths={[600, 900, 1200]} sizes="(min-width: 768px) 50vw, 100vw" width={1200} height={1600} />
             <span class="studio-cell-meta" aria-hidden="true">STATION_01 / 35mm</span>
             <div class="studio-cell-cap">
               <h4>Cassandra's station, north wall</h4>
@@ -832,7 +832,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
             </div>
           </div>
           <div class="studio-cell" role="listitem">
-            <Image src={resolveImage(studio.gallery[3].image)} alt="Jordan Ash's machine drawer — magnums and round liners sorted by gauge" loading="lazy" decoding="async" widths={[400, 600]} sizes="(min-width: 768px) 25vw, 50vw" width={600} height={600} />
+            <Picture formats={['avif','webp']} src={resolveImage(studio.gallery[3].image)} alt="Jordan Ash's machine drawer — magnums and round liners sorted by gauge" loading="lazy" decoding="async" widths={[400, 600]} sizes="(min-width: 768px) 25vw, 50vw" width={600} height={600} />
             <span class="studio-cell-meta" aria-hidden="true">DRAWER_03</span>
             <div class="studio-cell-cap">
               <h4>Sorted: gauge ascending</h4>
@@ -974,7 +974,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
         <div class="ig-grid" role="list" aria-label="Instagram posts">
           {studio.igPosts.map(post => (
             <a href={post.link} class="ig-post" target="_blank" rel="noopener noreferrer" role="listitem" aria-label={post.alt}>
-              <Image src={resolveImage(post.image)} alt={post.alt} loading="lazy" decoding="async" widths={[200, 400]} sizes="(min-width: 640px) 16vw, 33vw" width={400} height={400} />
+              <Picture formats={['avif','webp']} src={resolveImage(post.image)} alt={post.alt} loading="lazy" decoding="async" widths={[200, 400]} sizes="(min-width: 640px) 16vw, 33vw" width={400} height={400} />
               <div class="ig-post-overlay"><span class="ig-handle">{studio.instagram}</span></div>
             </a>
           ))}
