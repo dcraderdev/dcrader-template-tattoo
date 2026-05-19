@@ -73,12 +73,12 @@ export const studio: StudioData = {
   ],
   instagram: '@ironandrosetattoo',
   igPosts: [
-    { image: 'https://images.unsplash.com/photo-1542856391-010fb87dcfed?w=300&q=80&auto=format&fit=crop', alt: 'Traditional eagle tattoo', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=300&q=80&auto=format&fit=crop', alt: 'Rose and dagger tattoo', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=300&q=80&auto=format&fit=crop', alt: 'Anchor tattoo', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1567593810070-7a3d471af022?w=300&q=80&auto=format&fit=crop', alt: 'Pinup tattoo', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1574169208507-84376144848b?w=300&q=80&auto=format&fit=crop', alt: 'Panther tattoo', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1566738928-9462c47c5673?w=300&q=80&auto=format&fit=crop', alt: 'Horseshoe tattoo', link: '#' },
+    { image: 'https://images.unsplash.com/photo-1542856391-010fb87dcfed?w=300&q=80&auto=format&fit=crop', alt: 'Traditional eagle tattoo', link: 'https://instagram.com/ironandrosetattoo' },
+    { image: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=300&q=80&auto=format&fit=crop', alt: 'Rose and dagger tattoo', link: 'https://instagram.com/ironandrosetattoo' },
+    { image: 'https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=300&q=80&auto=format&fit=crop', alt: 'Anchor tattoo', link: 'https://instagram.com/ironandrosetattoo' },
+    { image: 'https://images.unsplash.com/photo-1567593810070-7a3d471af022?w=300&q=80&auto=format&fit=crop', alt: 'Pinup tattoo', link: 'https://instagram.com/ironandrosetattoo' },
+    { image: 'https://images.unsplash.com/photo-1574169208507-84376144848b?w=300&q=80&auto=format&fit=crop', alt: 'Panther tattoo', link: 'https://instagram.com/ironandrosetattoo' },
+    { image: 'https://images.unsplash.com/photo-1566738928-9462c47c5673?w=300&q=80&auto=format&fit=crop', alt: 'Horseshoe tattoo', link: 'https://instagram.com/ironandrosetattoo' },
   ],
   hours: [
     { day: 'Monday', open: 'Closed', close: '' },

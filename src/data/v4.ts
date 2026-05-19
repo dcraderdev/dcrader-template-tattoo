@@ -72,12 +72,12 @@ export const studio: StudioData = {
   ],
   instagram: '@shadowcollective.ink',
   igPosts: [
-    { image: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=300&q=80&auto=format&fit=crop', alt: 'Portrait tattoo', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1542856391-010fb87dcfed?w=300&q=80&auto=format&fit=crop', alt: 'Wolf tattoo', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1574169208507-84376144848b?w=300&q=80&auto=format&fit=crop', alt: 'Cathedral tattoo', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=300&q=80&auto=format&fit=crop', alt: 'Owl tattoo', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1567593810070-7a3d471af022?w=300&q=80&auto=format&fit=crop', alt: 'Rose realism', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=300&q=80&auto=format&fit=crop', alt: 'Mechanical tattoo', link: '#' },
+    { image: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=300&q=80&auto=format&fit=crop', alt: 'Portrait tattoo', link: 'https://instagram.com/shadowcollective.ink' },
+    { image: 'https://images.unsplash.com/photo-1542856391-010fb87dcfed?w=300&q=80&auto=format&fit=crop', alt: 'Wolf tattoo', link: 'https://instagram.com/shadowcollective.ink' },
+    { image: 'https://images.unsplash.com/photo-1574169208507-84376144848b?w=300&q=80&auto=format&fit=crop', alt: 'Cathedral tattoo', link: 'https://instagram.com/shadowcollective.ink' },
+    { image: 'https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=300&q=80&auto=format&fit=crop', alt: 'Owl tattoo', link: 'https://instagram.com/shadowcollective.ink' },
+    { image: 'https://images.unsplash.com/photo-1567593810070-7a3d471af022?w=300&q=80&auto=format&fit=crop', alt: 'Rose realism', link: 'https://instagram.com/shadowcollective.ink' },
+    { image: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=300&q=80&auto=format&fit=crop', alt: 'Mechanical tattoo', link: 'https://instagram.com/shadowcollective.ink' },
   ],
   hours: [
     { day: 'Monday', open: 'Closed', close: '' },

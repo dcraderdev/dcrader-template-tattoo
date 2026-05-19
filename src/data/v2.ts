@@ -72,12 +72,12 @@ export const studio: StudioData = {
   ],
   instagram: '@lineworkstudio',
   igPosts: [
-    { image: 'https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?w=300&q=80&auto=format&fit=crop', alt: 'Botanical fine-line tattoo', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=300&q=80&auto=format&fit=crop', alt: 'Geometric mandala', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1542856391-010fb87dcfed?w=300&q=80&auto=format&fit=crop', alt: 'Script lettering', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1574169208507-84376144848b?w=300&q=80&auto=format&fit=crop', alt: 'Orchid illustration', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=300&q=80&auto=format&fit=crop', alt: 'Sacred geometry', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=300&q=80&auto=format&fit=crop', alt: 'Portrait miniature', link: '#' },
+    { image: 'https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?w=300&q=80&auto=format&fit=crop', alt: 'Botanical fine-line tattoo', link: 'https://instagram.com/lineworkstudio' },
+    { image: 'https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=300&q=80&auto=format&fit=crop', alt: 'Geometric mandala', link: 'https://instagram.com/lineworkstudio' },
+    { image: 'https://images.unsplash.com/photo-1542856391-010fb87dcfed?w=300&q=80&auto=format&fit=crop', alt: 'Script lettering', link: 'https://instagram.com/lineworkstudio' },
+    { image: 'https://images.unsplash.com/photo-1574169208507-84376144848b?w=300&q=80&auto=format&fit=crop', alt: 'Orchid illustration', link: 'https://instagram.com/lineworkstudio' },
+    { image: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=300&q=80&auto=format&fit=crop', alt: 'Sacred geometry', link: 'https://instagram.com/lineworkstudio' },
+    { image: 'https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=300&q=80&auto=format&fit=crop', alt: 'Portrait miniature', link: 'https://instagram.com/lineworkstudio' },
   ],
   hours: [
     { day: 'Monday', open: 'Closed', close: '' },

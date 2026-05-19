@@ -73,12 +73,12 @@ export const studio: StudioData = {
   ],
   instagram: '@ryubokutattoo',
   igPosts: [
-    { image: 'https://images.unsplash.com/photo-1566738928-9462c47c5673?w=300&q=80&auto=format&fit=crop', alt: 'Dragon sleeve', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=300&q=80&auto=format&fit=crop', alt: 'Koi tattoo', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1542856391-010fb87dcfed?w=300&q=80&auto=format&fit=crop', alt: 'Oni mask', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=300&q=80&auto=format&fit=crop', alt: 'Phoenix tattoo', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=300&q=80&auto=format&fit=crop', alt: 'Hannya mask', link: '#' },
-    { image: 'https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=300&q=80&auto=format&fit=crop', alt: 'Back piece', link: '#' },
+    { image: 'https://images.unsplash.com/photo-1566738928-9462c47c5673?w=300&q=80&auto=format&fit=crop', alt: 'Dragon sleeve', link: 'https://instagram.com/ryubokutattoo' },
+    { image: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=300&q=80&auto=format&fit=crop', alt: 'Koi tattoo', link: 'https://instagram.com/ryubokutattoo' },
+    { image: 'https://images.unsplash.com/photo-1542856391-010fb87dcfed?w=300&q=80&auto=format&fit=crop', alt: 'Oni mask', link: 'https://instagram.com/ryubokutattoo' },
+    { image: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=300&q=80&auto=format&fit=crop', alt: 'Phoenix tattoo', link: 'https://instagram.com/ryubokutattoo' },
+    { image: 'https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=300&q=80&auto=format&fit=crop', alt: 'Hannya mask', link: 'https://instagram.com/ryubokutattoo' },
+    { image: 'https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=300&q=80&auto=format&fit=crop', alt: 'Back piece', link: 'https://instagram.com/ryubokutattoo' },
   ],
   hours: [
     { day: 'Monday', open: 'Closed', close: '' },
