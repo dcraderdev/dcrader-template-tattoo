@@ -1,0 +1,132 @@
+---
+// BookingWidgetHero — v4: appointment + artist + style selector front-and-center.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import type { StudioData } from '../../data/types';
+
+interface Props {
+  studio: StudioData;
+  heroImg: ImageMetadata;
+}
+const { studio, heroImg } = Astro.props;
+
+// Build a unique style list off the artist + gallery records.
+const allStyles = Array.from(new Set([
+  ...studio.artists.flatMap(a => a.styles),
+  ...studio.gallery.map(g => g.style),
+])).slice(0, 8);
+---
+<section id="hero" class="thv4" aria-label="Hero — book a consultation">
+  <div class="thv4-image-panel">
+    <Picture formats={['avif','webp']} src={heroImg} alt={studio.heroAlt} loading="eager" fetchpriority="high" widths={[768, 1280, 1920]} sizes="(min-width: 1024px) 55vw, 100vw" width={1920} height={1280} />
+    <div class="thv4-scan" aria-hidden="true"></div>
+    <div class="thv4-image-label" aria-hidden="true">IMG_001 // GRAYSCALE // 300DPI</div>
+    <div class="thv4-image-overlay">
+      <p class="thv4-spec-tag">San Diego Black &amp; Grey Realism</p>
+      <h1 class="thv4-h1">
+        {studio.name.split(' ').slice(0,1).join(' ')}<br />
+        <span class="thv4-dim">{studio.name.split(' ').slice(1).join(' ')}</span>
+      </h1>
+      <p class="thv4-desc">{studio.description}</p>
+    </div>
+  </div>
+
+  <aside class="thv4-widget" aria-labelledby="thv4-widget-h">
+    <header class="thv4-widget-head">
+      <p class="thv4-eyebrow">Direct booking</p>
+      <h2 class="thv4-widget-h" id="thv4-widget-h">Start your consultation</h2>
+      <p class="thv4-widget-sub">No back-and-forth. Pick a date, an artist, and a style — we confirm within 48 hours.</p>
+    </header>
+
+    <form class="thv4-form" action="#booking" method="post" aria-label="Booking request" novalidate>
+      <div class="thv4-row">
+        <label class="thv4-label" for="thv4-date">Preferred date</label>
+        <input class="thv4-input" id="thv4-date" name="date" type="date" required />
+      </div>
+      <div class="thv4-row-2">
+        <div>
+          <label class="thv4-label" for="thv4-artist">Artist</label>
+          <select class="thv4-input" id="thv4-artist" name="artist">
+            <option value="">Any artist</option>
+            {studio.artists.map(a => <option value={a.name}>{a.name.split(' ')[0]} — {a.specialty}</option>)}
+          </select>
+        </div>
+        <div>
+          <label class="thv4-label" for="thv4-style">Style</label>
+          <select class="thv4-input" id="thv4-style" name="style">
+            <option value="">Open to suggestion</option>
+            {allStyles.map(s => <option value={s}>{s}</option>)}
+          </select>
+        </div>
+      </div>
+      <div class="thv4-row-2">
+        <div>
+          <label class="thv4-label" for="thv4-size">Approx. size</label>
+          <select class="thv4-input" id="thv4-size" name="size">
+            <option>Small (palm)</option>
+            <option>Medium (forearm)</option>
+            <option>Large (half-sleeve)</option>
+            <option>Major (full-day / multi-session)</option>
+          </select>
+        </div>
+        <div>
+          <label class="thv4-label" for="thv4-budget">Budget range</label>
+          <select class="thv4-input" id="thv4-budget" name="budget">
+            <option>$200 – $500</option>
+            <option>$500 – $1,200</option>
+            <option>$1,200 – $3,000</option>
+            <option>$3,000+</option>
+          </select>
+        </div>
+      </div>
+      <div class="thv4-row">
+        <label class="thv4-label" for="thv4-email">Email</label>
+        <input class="thv4-input" id="thv4-email" name="email" type="email" placeholder="you@email.com" autocomplete="email" required />
+      </div>
+      <button class="thv4-submit" type="submit">Request consultation slot →</button>
+      <p class="thv4-fineprint">A ${studio.depositAmount} non-refundable deposit is required to confirm. Goes toward final cost.</p>
+    </form>
+
+    <dl class="thv4-record" aria-label="Studio working record">
+      <div class="thv4-rec"><dt>AVG_SESSION</dt><dd>6.2 hr</dd></div>
+      <div class="thv4-rec"><dt>TOUCHUP</dt><dd>4–6 mo · incl.</dd></div>
+      <div class="thv4-rec"><dt>REF_LIBRARY</dt><dd>8,400 img</dd></div>
+      <div class="thv4-rec"><dt>WALK_INS</dt><dd>0 · by appt only</dd></div>
+    </dl>
+  </aside>
+</section>
+
+<style>
+  .thv4{display:grid;grid-template-columns:1.2fr 1fr;min-height:100vh;background:#0A0A0A;color:#EDEDED;font-family:'Inter',system-ui,sans-serif;}
+  @media(max-width:1024px){.thv4{grid-template-columns:1fr;}}
+  .thv4-image-panel{position:relative;overflow:hidden;background:#000;}
+  .thv4-image-panel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(100%) contrast(1.1);}
+  .thv4-scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,rgba(255,255,255,0.025) 3px,rgba(255,255,255,0.025) 4px);pointer-events:none;}
+  .thv4-image-label{position:absolute;top:1rem;left:1rem;font-family:'JetBrains Mono','SF Mono',monospace;font-size:0.7rem;letter-spacing:0.15em;color:rgba(237,237,237,0.55);background:rgba(0,0,0,0.5);padding:0.25rem 0.55rem;border:1px solid rgba(237,237,237,0.18);}
+  .thv4-image-overlay{position:absolute;left:0;right:0;bottom:0;padding:2.5rem 2rem;background:linear-gradient(to top,rgba(0,0,0,0.92) 0%,rgba(0,0,0,0.65) 60%,transparent 100%);}
+  .thv4-spec-tag{font-family:'JetBrains Mono','SF Mono',monospace;font-size:0.72rem;letter-spacing:0.25em;text-transform:uppercase;color:#A8A8A8;margin-bottom:0.75rem;}
+  .thv4-h1{font-family:Georgia,serif;font-size:clamp(2.4rem,5.5vw,4.2rem);font-weight:300;line-height:0.95;letter-spacing:-0.01em;color:#fff;}
+  .thv4-dim{color:#888;font-style:italic;}
+  .thv4-desc{font-size:0.92rem;line-height:1.6;color:#BDBDBD;margin-top:1rem;max-width:480px;}
+  .thv4-widget{padding:3rem 2.25rem;background:#111;border-left:1px solid #232323;display:flex;flex-direction:column;gap:1.75rem;}
+  @media(max-width:1024px){.thv4-widget{border-left:none;border-top:1px solid #232323;}}
+  .thv4-widget-head{padding-bottom:1rem;border-bottom:1px solid #232323;}
+  .thv4-eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:#888;margin-bottom:0.5rem;}
+  .thv4-widget-h{font-family:Georgia,serif;font-size:1.6rem;font-weight:400;line-height:1.2;color:#fff;}
+  .thv4-widget-sub{font-size:0.85rem;color:#A8A8A8;margin-top:0.6rem;line-height:1.55;}
+  .thv4-form{display:flex;flex-direction:column;gap:1rem;}
+  .thv4-row,.thv4-row-2{display:grid;}
+  .thv4-row-2{grid-template-columns:1fr 1fr;gap:0.85rem;}
+  @media(max-width:480px){.thv4-row-2{grid-template-columns:1fr;}}
+  .thv4-label{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:#888;margin-bottom:0.35rem;display:block;}
+  .thv4-input{width:100%;background:#0A0A0A;border:1px solid #2B2B2B;color:#EDEDED;padding:0.7rem 0.85rem;font-family:inherit;font-size:0.92rem;outline:none;transition:border-color 0.2s,background 0.2s;}
+  .thv4-input:focus{border-color:#A8A8A8;background:#0D0D0D;}
+  .thv4-input::placeholder{color:#555;}
+  .thv4-submit{margin-top:0.5rem;background:#EDEDED;color:#0A0A0A;font-family:'JetBrains Mono',monospace;font-size:0.82rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.95rem 1rem;border:none;cursor:pointer;transition:background 0.2s;}
+  .thv4-submit:hover,.thv4-submit:focus-visible{background:#fff;}
+  .thv4-fineprint{font-size:0.72rem;color:#666;line-height:1.5;text-align:center;}
+  .thv4-record{display:grid;grid-template-columns:1fr 1fr;gap:0 1.25rem;padding-top:1.25rem;border-top:1px solid #232323;}
+  .thv4-rec{display:flex;justify-content:space-between;border-bottom:1px dashed #232323;padding:0.55rem 0;font-family:'JetBrains Mono',monospace;font-size:0.72rem;}
+  .thv4-rec dt{color:#666;letter-spacing:0.15em;}
+  .thv4-rec dd{color:#EDEDED;margin:0;}
+</style>

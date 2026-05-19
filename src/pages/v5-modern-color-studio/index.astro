@@ -2,6 +2,7 @@
 import { Picture, getImage } from 'astro:assets';
 import { studio } from '../../data/v5';
 import { resolveImage } from '../../data/imageMap';
+import StyleExplorerHero from '../../components/tattoo/StyleExplorerHero.astro';
 const base = import.meta.env.BASE_URL;
 const heroImg = resolveImage(studio.heroImage);
 const heroWidths = [600, 1000, 1600];
@@ -589,34 +590,7 @@ const heroPreload = await getImage({ src: heroImg, width: 1600, format: 'webp' }
 
   <!-- HERO -->
   <main id="main">
-    <section class="hero" aria-label="Studio hero">
-      <div class="hero-bar" aria-hidden="true"></div>
-      <div class="hero-main">
-        <div class="hero-text">
-          <p class="hero-eyebrow">San Diego Color Studio</p>
-          <h1 class="hero-h1">
-            Color<br />
-            <span class="color-line">is alive.</span>
-          </h1>
-          <p class="hero-tagline">{studio.description}</p>
-          <div class="hero-palette" role="list" aria-label="This week's working palette">
-            <span class="palette-label">This week, on the table:</span>
-            <span class="palette-swatch" role="listitem"><span class="dot" style="background:#EC4899" aria-hidden="true"></span>Magenta peony</span>
-            <span class="palette-swatch" role="listitem"><span class="dot" style="background:#F59E0B" aria-hidden="true"></span>Marigold flame</span>
-            <span class="palette-swatch" role="listitem"><span class="dot" style="background:#7C3AED" aria-hidden="true"></span>Iris dusk</span>
-            <span class="palette-swatch" role="listitem"><span class="dot" style="background:#0D9488" aria-hidden="true"></span>Jade wave</span>
-          </div>
-          <div class="hero-ctas">
-            <a href="#booking" class="btn-big">Book a Consult</a>
-            <a href={`https://instagram.com/${studio.instagram.replace('@','')}`} target="_blank" rel="noopener noreferrer" class="btn-ghost">DM us on IG ↗</a>
-          </div>
-        </div>
-        <div class="hero-image-panel">
-          <Picture formats={['avif','webp']} src={heroImg} alt={studio.heroAlt} loading="eager" fetchpriority="high" widths={[600, 1000, 1600]} sizes="(min-width: 1024px) 50vw, 100vw" width={1600} height={1200} />
-          <div class="hero-image-badge" aria-hidden="true">Color Only Studio</div>
-        </div>
-      </div>
-    </section>
+    <StyleExplorerHero studio={studio} />
 
     <!-- FLASH GALLERY -->
     <section class="flash-section" id="gallery" aria-labelledby="gallery-heading">

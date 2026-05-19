@@ -2,6 +2,7 @@
 import { Picture, getImage } from 'astro:assets';
 import { studio } from '../../data/v3';
 import { resolveImage } from '../../data/imageMap';
+import PortfolioCarouselHero from '../../components/tattoo/PortfolioCarouselHero.astro';
 import '../../styles/global.css';
 const heroImg = resolveImage(studio.heroImage);
 const heroWidths = [768, 1280, 1920];
@@ -241,24 +242,8 @@ const heroPreload = await getImage({ src: heroImg, width: 1920, format: 'webp' }
   </div>
 </nav>
 
-<!-- HERO -->
-<section id="hero" aria-label="Hero">
-  <div class="hero">
-    <Picture formats={['avif','webp']} class="hero-bg" src={heroImg} alt={studio.heroAlt} loading="eager" fetchpriority="high" widths={[768, 1280, 1920]} sizes="100vw" width={1920} height={1280} />
-    <div class="hero-fade" aria-hidden="true"></div>
-    <p class="hero-vertical" aria-hidden="true">伝統的刺青　龍墨　サンディエゴ</p>
-    <div class="hero-content">
-      <span class="hero-tag">伝統的刺青 · Traditional Irezumi · San Diego, CA</span>
-      <h1 class="hero-h1">龍墨<em class="hero-h1-en">Ryūboku Tattoo</em></h1>
-      <span class="hero-stroke" aria-hidden="true"></span>
-      <p class="hero-desc">{studio.tagline}<br/><br/>Where the tradition of five-year apprenticeship meets living skin.</p>
-      <div class="hero-ctas">
-        <a href="#booking" class="btn-red">Write to the Studio</a>
-        <a href="#journey" class="btn-gold">Read the Path · 道</a>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- HERO — portfolio carousel -->
+<PortfolioCarouselHero studio={studio} />
 
 <!-- TRADITION INTERSTITIAL -->
 <div class="tradition" role="note">

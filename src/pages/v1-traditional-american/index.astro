@@ -2,6 +2,7 @@
 import { Picture, getImage } from 'astro:assets';
 import { studio } from '../../data/v1';
 import { resolveImage } from '../../data/imageMap';
+import TraditionalHero from '../../components/tattoo/TraditionalHero.astro';
 import '../../styles/global.css';
 const romanFAQ = ['I','II','III','IV','V','VI'];
 const heroImg = resolveImage(studio.heroImage);
@@ -262,23 +263,7 @@ const heroPreload = await getImage({ src: heroImg, width: 1920, format: 'webp' }
 </nav>
 
 <!-- HERO -->
-<section id="hero" aria-label="Hero">
-  <div class="hero">
-    <Picture formats={['avif','webp']} class="hero-img" src={heroImg} alt={studio.heroAlt} loading="eager" fetchpriority="high" widths={[768, 1280, 1920]} sizes="100vw" width={1920} height={1280} />
-    <div class="hero-grid-overlay" aria-hidden="true"></div>
-    <div class="hero-content">
-      <div class="hero-left">
-        <p class="hero-est" aria-label="Established">Est. 2004 · American Traditional · San Diego</p>
-        <h1 class="hero-h1">Iron<br/><span class="hero-amp">&amp;</span><br/>Rose</h1>
-        <p class="hero-tagline">Since before your grandfather got his first tattoo. Bold outlines, saturated primaries, flash that outlasts a lifetime.</p>
-        <div class="hero-ctas">
-          <a href="#booking" class="btn-red">Book a Session</a>
-          <a href="#walkin" class="btn-cream">Walk-in Hours</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<TraditionalHero studio={studio} heroImg={heroImg} />
 
 <!-- TALLY — chalkboard ledger of the shop's count -->
 <aside class="tally" id="walkin" aria-label="Shop tally since 2004">

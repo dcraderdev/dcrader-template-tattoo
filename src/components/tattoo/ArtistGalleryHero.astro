@@ -1,0 +1,91 @@
+---
+// ArtistGalleryHero — v2: artist cards with portfolio thumbnails as the hero element.
+import { Picture } from 'astro:assets';
+import { resolveImage } from '../../data/imageMap';
+import type { StudioData } from '../../data/types';
+
+interface Props {
+  studio: StudioData;
+}
+const { studio } = Astro.props;
+
+// Pair each featured artist with up to 2 of their gallery thumbnails.
+const featured = studio.artists.slice(0, 3).map((a) => {
+  const thumbs = studio.gallery.filter(g => g.artist.includes(a.name.split(' ')[0]) || a.styles.includes(g.style)).slice(0, 2);
+  // Fallback: if no matches, just take the first 2 gallery items.
+  const finalThumbs = thumbs.length ? thumbs : studio.gallery.slice(0, 2);
+  return { artist: a, thumbs: finalThumbs };
+});
+---
+<section id="hero" class="thv2" aria-label="Hero — meet the artists">
+  <div class="thv2-inner">
+    <div class="thv2-top">
+      <p class="thv2-label">Fine-line · Single-needle · By appointment · Gaslamp Quarter, San Diego</p>
+      <h1 class="thv2-h1">Meet the hands.<br/><em>Then choose the work.</em></h1>
+      <p class="thv2-sub">{studio.description}</p>
+    </div>
+
+    <div class="thv2-gallery" role="list" aria-label="Featured artists with portfolio samples">
+      {featured.map(({ artist, thumbs }) => (
+        <article class="thv2-card" role="listitem" aria-label={`Artist ${artist.name}`}>
+          <div class="thv2-portrait">
+            <Picture formats={['avif','webp']} src={resolveImage(artist.image)} alt={`Portrait of ${artist.name}`} loading="eager" widths={[280, 560]} sizes="(min-width: 900px) 33vw, 100vw" width={560} height={620} />
+            <span class="thv2-handle">{artist.handle}</span>
+          </div>
+          <div class="thv2-meta">
+            <h2 class="thv2-name">{artist.name}</h2>
+            <p class="thv2-specialty">{artist.specialty}</p>
+            <p class="thv2-years">{artist.yearsExp} years on the needle</p>
+          </div>
+          <div class="thv2-thumbs" aria-label={`Recent work by ${artist.name}`}>
+            {thumbs.map(t => (
+              <figure class="thv2-thumb">
+                <Picture formats={['avif','webp']} src={resolveImage(t.image)} alt={t.alt} loading="eager" widths={[200, 400]} sizes="(min-width: 900px) 16vw, 50vw" width={400} height={400} />
+              </figure>
+            ))}
+          </div>
+          <a class="thv2-cta" href={`#booking-${artist.handle.replace('@','')}`} data-artist={artist.name}>Book with {artist.name.split(' ')[0]} →</a>
+        </article>
+      ))}
+    </div>
+
+    <div class="thv2-bottom">
+      <a href="#booking" class="thv2-btn">Inquire to book</a>
+      <a href="#portfolio" class="thv2-btn-lt">View the full collection</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .thv2{background:#FAFAFA;color:#0D0D0D;padding:5rem 1.5rem 4rem;border-bottom:1px solid #E8E8E5;}
+  .thv2-inner{max-width:1280px;margin:0 auto;}
+  .thv2-top{max-width:780px;margin:0 auto 3.5rem;text-align:center;}
+  .thv2-label{font-size:0.72rem;letter-spacing:0.4em;text-transform:uppercase;color:#888;margin-bottom:1.5rem;}
+  .thv2-h1{font-family:Georgia,'EB Garamond',serif;font-size:clamp(2.4rem,5.5vw,4.2rem);font-weight:400;line-height:1.05;letter-spacing:-0.01em;}
+  .thv2-h1 em{font-style:italic;color:#666;}
+  .thv2-sub{font-family:Georgia,serif;font-size:1rem;line-height:1.7;color:#444;margin-top:1.5rem;}
+  .thv2-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-bottom:3rem;}
+  @media(max-width:900px){.thv2-gallery{grid-template-columns:1fr;}}
+  .thv2-card{display:flex;flex-direction:column;background:#fff;border:1px solid #E8E8E5;transition:transform 0.3s,box-shadow 0.3s;}
+  .thv2-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(0,0,0,0.07);}
+  .thv2-portrait{position:relative;aspect-ratio:5/6;overflow:hidden;}
+  .thv2-portrait img{width:100%;height:100%;object-fit:cover;filter:grayscale(20%);transition:filter 0.4s;}
+  .thv2-card:hover .thv2-portrait img{filter:grayscale(0%);}
+  .thv2-handle{position:absolute;bottom:0.75rem;left:0.75rem;background:rgba(13,13,13,0.85);color:#FAFAFA;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.25rem 0.55rem;}
+  .thv2-meta{padding:1.25rem 1.25rem 0.5rem;}
+  .thv2-name{font-family:Georgia,serif;font-size:1.25rem;font-weight:500;line-height:1.2;margin:0;}
+  .thv2-specialty{font-size:0.82rem;color:#888;margin-top:0.2rem;font-style:italic;}
+  .thv2-years{font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:#0D0D0D;margin-top:0.5rem;}
+  .thv2-thumbs{display:grid;grid-template-columns:1fr 1fr;gap:2px;padding:0.75rem 1.25rem 0;}
+  .thv2-thumb{margin:0;aspect-ratio:1;overflow:hidden;background:#F5F5F2;}
+  .thv2-thumb img{width:100%;height:100%;object-fit:cover;filter:grayscale(30%);transition:filter 0.3s,transform 0.4s;}
+  .thv2-card:hover .thv2-thumb img{filter:grayscale(0%);transform:scale(1.04);}
+  .thv2-cta{display:block;text-align:center;text-decoration:none;padding:0.85rem 1rem;background:#0D0D0D;color:#FAFAFA;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;margin:1rem 1.25rem 1.25rem;transition:background 0.2s;}
+  .thv2-cta:hover,.thv2-cta:focus-visible{background:#333;}
+  .thv2-bottom{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;border-top:1px solid #E8E8E5;padding-top:2.5rem;}
+  .thv2-btn,.thv2-btn-lt{font-family:Georgia,serif;font-size:0.85rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.8rem 2rem;text-decoration:none;border:1px solid #0D0D0D;transition:all 0.2s;}
+  .thv2-btn{background:#0D0D0D;color:#FAFAFA;}
+  .thv2-btn:hover,.thv2-btn:focus-visible{background:#333;}
+  .thv2-btn-lt{color:#0D0D0D;background:transparent;}
+  .thv2-btn-lt:hover,.thv2-btn-lt:focus-visible{background:#0D0D0D;color:#FAFAFA;}
+</style>

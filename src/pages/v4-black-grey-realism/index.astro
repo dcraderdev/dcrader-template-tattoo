@@ -2,6 +2,7 @@
 import { Picture, getImage } from 'astro:assets';
 import { studio } from '../../data/v4';
 import { resolveImage } from '../../data/imageMap';
+import BookingWidgetHero from '../../components/tattoo/BookingWidgetHero.astro';
 const base = import.meta.env.BASE_URL;
 const heroImg = resolveImage(studio.heroImage);
 const heroWidths = [768, 1280, 1920];
@@ -652,47 +653,7 @@ function pad(n: number) { return n.toString().padStart(2, '0'); }
 
   <!-- HERO -->
   <main id="main">
-    <section class="hero" aria-label="Studio hero">
-      <div class="hero-image-panel">
-        <Picture formats={['avif','webp']} src={heroImg} alt={studio.heroAlt} loading="eager" fetchpriority="high" widths={[768, 1280, 1920]} sizes="(min-width: 1024px) 50vw, 100vw" width={1920} height={1280} />
-        <div class="hero-scan-line" aria-hidden="true"></div>
-        <div class="hero-image-label" aria-hidden="true">IMG_001 // GRAYSCALE // 300DPI</div>
-      </div>
-      <div class="hero-info-panel">
-        <p class="hero-spec-tag">San Diego Black & Grey Realism</p>
-        <h1 class="hero-h1">
-          {studio.name.split(' ').slice(0,1).join(' ')}<br />
-          <span class="dim">{studio.name.split(' ').slice(1).join(' ')}</span>
-        </h1>
-        <p class="hero-desc">{studio.description}</p>
-        <dl class="hero-record" aria-label="Studio working record">
-          <div class="rec-row">
-            <dt>AVG_SESSION</dt>
-            <dd>6.2 hr <span class="rec-note">// per booked block</span></dd>
-          </div>
-          <div class="rec-row">
-            <dt>TOUCHUP_WINDOW</dt>
-            <dd>4–6 mo <span class="rec-note">// included for major work</span></dd>
-          </div>
-          <div class="rec-row">
-            <dt>REF_LIBRARY</dt>
-            <dd>8,400 img <span class="rec-note">// RAW only, archived</span></dd>
-          </div>
-          <div class="rec-row">
-            <dt>TONAL_RANGE</dt>
-            <dd>9 steps <span class="rec-note">// black → distilled-water white</span></dd>
-          </div>
-          <div class="rec-row">
-            <dt>WALK_INS</dt>
-            <dd>0 <span class="rec-note">// realism is never walk-in</span></dd>
-          </div>
-        </dl>
-        <div class="hero-ctas">
-          <a href="#booking" class="btn-primary">Request Consultation</a>
-          <a href="#gallery" class="btn-secondary">View Portfolio</a>
-        </div>
-      </div>
-    </section>
+    <BookingWidgetHero studio={studio} heroImg={heroImg} />
 
     <!-- PROCESS -->
     <section class="process-section" id="process" aria-labelledby="process-heading">

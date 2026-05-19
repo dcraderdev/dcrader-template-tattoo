@@ -1,0 +1,97 @@
+---
+// StyleExplorerHero — v5: browse-by-style tiles (blackwork / color / fineline / japanese / etc.).
+import { Picture } from 'astro:assets';
+import { resolveImage } from '../../data/imageMap';
+import type { StudioData } from '../../data/types';
+
+interface Props {
+  studio: StudioData;
+}
+const { studio } = Astro.props;
+
+// Six fixed style tiles with a curated swatch + matched gallery image.
+const tiles = [
+  { key: 'color',     label: 'Color',     sub: 'Saturated, expressive, alive.',  accent: '#EC4899', textOn: '#fff' },
+  { key: 'blackwork', label: 'Blackwork', sub: 'Solid black, bold geometry.',    accent: '#0F172A', textOn: '#fff' },
+  { key: 'fineline',  label: 'Fineline',  sub: 'Single-needle, minimal, exact.', accent: '#F5F5F2', textOn: '#0D0D0D' },
+  { key: 'japanese',  label: 'Japanese',  sub: 'Irezumi, wind bars, koi.',       accent: '#9B1324', textOn: '#fff' },
+  { key: 'realism',   label: 'Realism',   sub: 'Photographic black & grey.',     accent: '#1F2937', textOn: '#fff' },
+  { key: 'flash',     label: 'Flash',     sub: 'Wall sheet, walk-in friendly.',   accent: '#F59E0B', textOn: '#0D0D0D' },
+];
+
+// Pick a representative image per tile (cycle through gallery; resolveImage is keyword-stable).
+const pool = studio.gallery;
+const enriched = tiles.map((t, i) => ({ ...t, image: pool[i % pool.length].image, alt: pool[i % pool.length].alt }));
+---
+<section id="hero" class="thv5" aria-label="Hero — browse by style">
+  <div class="thv5-bar" aria-hidden="true"></div>
+  <div class="thv5-top">
+    <div class="thv5-left">
+      <p class="thv5-eyebrow">San Diego Color Studio · Browse by style</p>
+      <h1 class="thv5-h1">Pick the style.<br/><span class="thv5-color">Pick the artist.</span></h1>
+      <p class="thv5-tagline">{studio.description}</p>
+      <div class="thv5-palette" role="list" aria-label="This week's working palette">
+        <span class="thv5-palette-label">On the table this week:</span>
+        <span class="thv5-swatch" role="listitem"><span class="thv5-dot" style="background:#EC4899" aria-hidden="true"></span>Magenta peony</span>
+        <span class="thv5-swatch" role="listitem"><span class="thv5-dot" style="background:#F59E0B" aria-hidden="true"></span>Marigold flame</span>
+        <span class="thv5-swatch" role="listitem"><span class="thv5-dot" style="background:#7C3AED" aria-hidden="true"></span>Iris dusk</span>
+        <span class="thv5-swatch" role="listitem"><span class="thv5-dot" style="background:#0D9488" aria-hidden="true"></span>Jade wave</span>
+      </div>
+    </div>
+    <div class="thv5-right">
+      <a href="#booking" class="thv5-btn-big">Book a Consult</a>
+      <a href={`https://instagram.com/${studio.instagram.replace('@','')}`} target="_blank" rel="noopener noreferrer" class="thv5-btn-ghost">DM us on IG ↗</a>
+    </div>
+  </div>
+
+  <div class="thv5-explorer" role="list" aria-label="Browse styles">
+    {enriched.map(t => (
+      <a href={`#portfolio-${t.key}`} class="thv5-tile" role="listitem" data-style={t.key} aria-label={`Browse ${t.label} tattoos`} style={`--tile-accent:${t.accent};--tile-text:${t.textOn};`}>
+        <div class="thv5-tile-image">
+          <Picture formats={['avif','webp']} src={resolveImage(t.image)} alt={t.alt} loading="eager" widths={[300, 600]} sizes="(min-width: 900px) 16vw, 50vw" width={600} height={600} />
+        </div>
+        <div class="thv5-tile-body">
+          <span class="thv5-tile-label">{t.label}</span>
+          <span class="thv5-tile-sub">{t.sub}</span>
+          <span class="thv5-tile-arrow" aria-hidden="true">→</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .thv5{background:#FAFAFA;color:#0D0D0D;padding:0 0 4rem;}
+  .thv5-bar{height:6px;background:linear-gradient(90deg,#EC4899,#F59E0B,#7C3AED,#0D9488);}
+  .thv5-top{max-width:1280px;margin:0 auto;padding:4rem 1.5rem 3rem;display:grid;grid-template-columns:2fr 1fr;gap:3rem;align-items:end;}
+  @media(max-width:900px){.thv5-top{grid-template-columns:1fr;align-items:start;}}
+  .thv5-eyebrow{font-family:'Inter',system-ui,sans-serif;font-size:0.72rem;letter-spacing:0.28em;text-transform:uppercase;color:#888;margin-bottom:1.25rem;}
+  .thv5-h1{font-family:'Inter',system-ui,sans-serif;font-size:clamp(2.6rem,6vw,5rem);font-weight:800;line-height:0.98;letter-spacing:-0.02em;}
+  .thv5-color{background:linear-gradient(90deg,#EC4899,#F59E0B,#7C3AED);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .thv5-tagline{font-size:1rem;color:#444;line-height:1.65;margin-top:1.25rem;max-width:580px;}
+  .thv5-palette{display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;margin-top:1.75rem;font-size:0.78rem;color:#444;}
+  .thv5-palette-label{font-weight:600;color:#0D0D0D;margin-right:0.25rem;}
+  .thv5-swatch{display:inline-flex;align-items:center;gap:0.4rem;background:#fff;border:1px solid #E8E8E5;padding:0.3rem 0.65rem;border-radius:9999px;}
+  .thv5-dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+  .thv5-right{display:flex;flex-direction:column;gap:0.85rem;align-items:flex-end;}
+  @media(max-width:900px){.thv5-right{align-items:flex-start;}}
+  .thv5-btn-big{background:#0D0D0D;color:#fff;font-family:'Inter',sans-serif;font-weight:600;font-size:0.95rem;letter-spacing:0.04em;text-decoration:none;padding:1rem 2rem;border-radius:9999px;transition:background 0.2s,transform 0.2s;display:inline-block;}
+  .thv5-btn-big:hover,.thv5-btn-big:focus-visible{background:#333;transform:translateY(-1px);}
+  .thv5-btn-ghost{font-family:'Inter',sans-serif;font-size:0.85rem;color:#0D0D0D;text-decoration:none;padding:0.5rem 0.75rem;letter-spacing:0.03em;}
+  .thv5-btn-ghost:hover,.thv5-btn-ghost:focus-visible{text-decoration:underline;}
+
+  .thv5-explorer{max-width:1400px;margin:0 auto;padding:0 1.5rem;display:grid;grid-template-columns:repeat(6,1fr);gap:0.85rem;}
+  @media(max-width:1100px){.thv5-explorer{grid-template-columns:repeat(3,1fr);}}
+  @media(max-width:600px){.thv5-explorer{grid-template-columns:repeat(2,1fr);}}
+  .thv5-tile{position:relative;display:block;background:#fff;border:1px solid #E8E8E5;text-decoration:none;color:inherit;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s;}
+  .thv5-tile:hover,.thv5-tile:focus-visible{transform:translateY(-5px);box-shadow:0 14px 28px rgba(0,0,0,0.10);outline:none;}
+  .thv5-tile-image{position:relative;aspect-ratio:1;overflow:hidden;}
+  .thv5-tile-image::after{content:'';position:absolute;inset:0;background:var(--tile-accent);mix-blend-mode:multiply;opacity:0.55;transition:opacity 0.3s;}
+  .thv5-tile:hover .thv5-tile-image::after,.thv5-tile:focus-visible .thv5-tile-image::after{opacity:0.25;}
+  .thv5-tile-image img{width:100%;height:100%;object-fit:cover;}
+  .thv5-tile-body{padding:0.95rem 1rem 1.1rem;background:var(--tile-accent);color:var(--tile-text);display:flex;flex-direction:column;gap:0.15rem;}
+  .thv5-tile-label{font-family:'Inter',sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:0.01em;}
+  .thv5-tile-sub{font-size:0.74rem;opacity:0.82;line-height:1.4;}
+  .thv5-tile-arrow{font-size:1.1rem;align-self:flex-end;margin-top:-1.4rem;transition:transform 0.2s;}
+  .thv5-tile:hover .thv5-tile-arrow,.thv5-tile:focus-visible .thv5-tile-arrow{transform:translateX(4px);}
+</style>

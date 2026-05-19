@@ -1,0 +1,127 @@
+---
+// PortfolioCarouselHero — v3: full-bleed tattoo photo carousel as the hero.
+import { Picture } from 'astro:assets';
+import { resolveImage } from '../../data/imageMap';
+import type { StudioData } from '../../data/types';
+
+interface Props {
+  studio: StudioData;
+}
+const { studio } = Astro.props;
+const slides = studio.gallery.slice(0, 5);
+---
+<section id="hero" class="thv3" aria-label="Hero — portfolio carousel">
+  <div class="thv3-stage" role="region" aria-roledescription="carousel" aria-label="Featured portfolio">
+    <div class="thv3-track" id="thv3-track">
+      {slides.map((s, i) => (
+        <figure class={`thv3-slide ${i === 0 ? 'is-active' : ''}`} data-idx={i} aria-hidden={i !== 0 ? 'true' : 'false'}>
+          <Picture formats={['avif','webp']} class="thv3-img" src={resolveImage(s.image)} alt={s.alt} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} widths={[768, 1280, 1920]} sizes="100vw" width={1920} height={1280} />
+          <figcaption class="thv3-cap">
+            <span class="thv3-style">{s.style}</span>
+            <span class="thv3-artist">by {s.artist}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+
+    <div class="thv3-overlay" aria-hidden="true"></div>
+    <div class="thv3-vertical" aria-hidden="true">伝統的刺青　龍墨　ポートフォリオ</div>
+
+    <div class="thv3-content">
+      <span class="thv3-tag">伝統的刺青 · Traditional Irezumi · Portfolio in motion</span>
+      <h1 class="thv3-h1">龍墨<em class="thv3-h1-en">Ryūboku Tattoo</em></h1>
+      <span class="thv3-stroke" aria-hidden="true"></span>
+      <p class="thv3-desc">{studio.tagline} · Each frame below is a finished piece from our active book.</p>
+      <div class="thv3-ctas">
+        <a href="#booking" class="thv3-btn-red">Write to the Studio</a>
+        <a href="#portfolio" class="thv3-btn-gold">See the full archive</a>
+      </div>
+    </div>
+
+    <div class="thv3-controls" aria-label="Carousel controls">
+      <button class="thv3-btn-nav" type="button" data-dir="-1" aria-label="Previous slide">‹</button>
+      <div class="thv3-dots" role="tablist">
+        {slides.map((_, i) => (
+          <button class={`thv3-dot ${i === 0 ? 'is-active' : ''}`} type="button" role="tab" aria-selected={i === 0 ? 'true' : 'false'} aria-label={`Slide ${i + 1}`} data-idx={i}></button>
+        ))}
+      </div>
+      <button class="thv3-btn-nav" type="button" data-dir="1" aria-label="Next slide">›</button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .thv3{background:#060606;position:relative;}
+  .thv3-stage{position:relative;min-height:100vh;overflow:hidden;}
+  .thv3-track{position:absolute;inset:0;}
+  .thv3-slide{margin:0;position:absolute;inset:0;opacity:0;transition:opacity 0.9s ease;}
+  .thv3-slide.is-active{opacity:1;}
+  .thv3-img{width:100%;height:100%;object-fit:cover;filter:contrast(1.05) brightness(0.6);}
+  .thv3-cap{position:absolute;bottom:5.5rem;right:1.5rem;background:rgba(6,6,6,0.7);border-left:3px solid #9B1324;color:#EAD8B4;padding:0.55rem 0.95rem;font-family:Georgia,serif;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;display:flex;flex-direction:column;gap:0.15rem;}
+  .thv3-style{color:#D4AE68;}
+  .thv3-artist{color:#EAD8B4;font-style:italic;text-transform:none;letter-spacing:0.05em;}
+  .thv3-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,6,6,0.85) 0%,rgba(6,6,6,0.35) 55%,rgba(6,6,6,0.7) 100%);}
+  .thv3-vertical{position:absolute;top:2rem;right:1.2rem;writing-mode:vertical-rl;text-orientation:upright;color:rgba(184,151,74,0.4);font-size:0.95rem;letter-spacing:0.5em;}
+  .thv3-content{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:8rem 1.5rem 6rem;}
+  .thv3-tag{display:inline-block;border:1px solid #B8974A;color:#D4AE68;padding:0.35rem 0.85rem;font-size:0.75rem;letter-spacing:0.25em;text-transform:uppercase;margin-bottom:1.75rem;background:rgba(6,6,6,0.45);}
+  .thv3-h1{font-family:Georgia,'EB Garamond',serif;font-size:clamp(4rem,10vw,8rem);color:#EAD8B4;line-height:1;margin:0;}
+  .thv3-h1-en{display:block;font-style:italic;font-size:0.28em;color:#B8974A;letter-spacing:0.3em;text-transform:uppercase;margin-top:0.75rem;font-weight:400;}
+  .thv3-stroke{display:block;width:90px;height:3px;background:#9B1324;margin:1.5rem 0;}
+  .thv3-desc{font-family:Georgia,serif;color:#EAD8B4;max-width:520px;line-height:1.7;font-size:1rem;margin-bottom:2.25rem;}
+  .thv3-ctas{display:flex;gap:1rem;flex-wrap:wrap;}
+  .thv3-btn-red,.thv3-btn-gold{font-family:Georgia,serif;font-size:0.85rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.85rem 2rem;text-decoration:none;border:1px solid transparent;transition:all 0.2s;}
+  .thv3-btn-red{background:#9B1324;color:#EAD8B4;border-color:#9B1324;}
+  .thv3-btn-red:hover,.thv3-btn-red:focus-visible{background:#7a0f1c;}
+  .thv3-btn-gold{background:transparent;color:#D4AE68;border-color:#B8974A;}
+  .thv3-btn-gold:hover,.thv3-btn-gold:focus-visible{background:#B8974A;color:#060606;}
+  .thv3-controls{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:3;display:flex;align-items:center;gap:1rem;background:rgba(6,6,6,0.65);padding:0.4rem 0.75rem;border:1px solid rgba(184,151,74,0.4);}
+  .thv3-btn-nav{background:transparent;border:none;color:#D4AE68;font-size:1.6rem;line-height:1;cursor:pointer;padding:0.15rem 0.55rem;font-family:Georgia,serif;}
+  .thv3-btn-nav:hover,.thv3-btn-nav:focus-visible{color:#EAD8B4;outline:none;}
+  .thv3-dots{display:flex;gap:0.4rem;}
+  .thv3-dot{width:9px;height:9px;border-radius:50%;border:1px solid #B8974A;background:transparent;padding:0;cursor:pointer;transition:background 0.2s;}
+  .thv3-dot.is-active{background:#D4AE68;}
+  .thv3-dot:focus-visible{outline:2px solid #EAD8B4;outline-offset:2px;}
+  @media(max-width:760px){.thv3-content{padding:5rem 1.25rem 7rem;}.thv3-cap{display:none;}}
+</style>
+
+<script is:inline>
+(() => {
+  const stage = document.currentScript && document.currentScript.previousElementSibling;
+  // Initialize on DOMContentLoaded to be safe.
+  const init = () => {
+    const root = document.querySelector('.thv3');
+    if (!root) return;
+    const slides = Array.from(root.querySelectorAll('.thv3-slide'));
+    const dots = Array.from(root.querySelectorAll('.thv3-dot'));
+    if (!slides.length) return;
+    let idx = 0;
+    let timer;
+    const go = (n) => {
+      idx = (n + slides.length) % slides.length;
+      slides.forEach((s, i) => {
+        s.classList.toggle('is-active', i === idx);
+        s.setAttribute('aria-hidden', i === idx ? 'false' : 'true');
+      });
+      dots.forEach((d, i) => {
+        d.classList.toggle('is-active', i === idx);
+        d.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+      });
+    };
+    const restart = () => {
+      clearInterval(timer);
+      timer = setInterval(() => go(idx + 1), 5500);
+    };
+    root.querySelectorAll('.thv3-btn-nav').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const dir = parseInt(btn.getAttribute('data-dir') || '1', 10);
+        go(idx + dir);
+        restart();
+      });
+    });
+    dots.forEach((d, i) => d.addEventListener('click', () => { go(i); restart(); }));
+    restart();
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>

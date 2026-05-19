@@ -1,0 +1,70 @@
+---
+// TraditionalHero — v1: American traditional flash, bold lines, vintage signage aesthetic.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import type { StudioData } from '../../data/types';
+
+interface Props {
+  studio: StudioData;
+  heroImg: ImageMetadata;
+}
+const { studio, heroImg } = Astro.props;
+---
+<section id="hero" class="thv1" aria-label="Hero">
+  <div class="thv1-frame">
+    <Picture formats={['avif','webp']} class="thv1-img" src={heroImg} alt={studio.heroAlt} loading="eager" fetchpriority="high" widths={[768, 1280, 1920]} sizes="100vw" width={1920} height={1280} />
+    <div class="thv1-grid" aria-hidden="true"></div>
+    <div class="thv1-banner-top" aria-hidden="true">
+      <span>★ EST. 2004 ★ AMERICAN TRADITIONAL ★ FLASH &amp; CUSTOM ★ WALK-INS WELCOME ★ EST. 2004 ★</span>
+    </div>
+    <div class="thv1-content">
+      <p class="thv1-est" aria-label="Established">Est. 2004 · American Traditional · San Diego</p>
+      <h1 class="thv1-h1"><span class="thv1-iron">Iron</span><br/><span class="thv1-amp">&amp;</span><br/><span class="thv1-rose">Rose</span></h1>
+      <div class="thv1-rule" aria-hidden="true"></div>
+      <p class="thv1-tagline">Since before your grandfather got his first tattoo. Bold outlines, saturated primaries, flash that outlasts a lifetime.</p>
+      <div class="thv1-ctas">
+        <a href="#booking" class="thv1-btn-red">Book a Session</a>
+        <a href="#walkin" class="thv1-btn-cream">Walk-in Hours</a>
+      </div>
+      <ul class="thv1-stamps" aria-label="Studio credentials">
+        <li><span aria-hidden="true">✦</span> Sterilized · Single-use</li>
+        <li><span aria-hidden="true">✦</span> Licensed since '04</li>
+        <li><span aria-hidden="true">✦</span> Free touch-ups · 90 days</li>
+      </ul>
+    </div>
+    <div class="thv1-banner-bottom" aria-hidden="true">
+      <span>★ SAILOR JERRY APPROVED ★ NORMAN COLLINS DISCIPLES ★ NO REGRETS ★ SAILOR JERRY APPROVED ★</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .thv1{position:relative;background:#160500;}
+  .thv1-frame{position:relative;min-height:94vh;display:flex;align-items:center;overflow:hidden;}
+  .thv1-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:sepia(40%) contrast(1.1) brightness(0.5);}
+  .thv1-grid{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(200,134,10,0.08) 60px),repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(200,134,10,0.08) 60px);}
+  .thv1-banner-top,.thv1-banner-bottom{position:absolute;left:0;right:0;background:#7A0000;border-top:3px double #C8860A;border-bottom:3px double #C8860A;overflow:hidden;font-family:'Teko',sans-serif;font-size:0.95rem;letter-spacing:0.25em;color:#FFF5DC;padding:0.55rem 0;white-space:nowrap;}
+  .thv1-banner-top{top:0;}
+  .thv1-banner-bottom{bottom:0;}
+  .thv1-banner-top span,.thv1-banner-bottom span{display:inline-block;padding-left:100%;animation:thv1-marquee 32s linear infinite;}
+  @keyframes thv1-marquee{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
+  .thv1-content{position:relative;width:100%;max-width:1080px;margin:0 auto;padding:6rem 1.5rem;text-align:center;}
+  .thv1-est{font-family:'EB Garamond',serif;font-size:0.78rem;letter-spacing:0.4em;text-transform:uppercase;color:#C8860A;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;gap:0.75rem;}
+  .thv1-est::before,.thv1-est::after{content:'';width:40px;height:1px;background:#C8860A;}
+  .thv1-h1{font-family:'Teko',sans-serif;font-size:clamp(4.5rem,11vw,9rem);font-weight:700;color:#FFF5DC;line-height:0.92;letter-spacing:0.02em;text-transform:uppercase;}
+  .thv1-iron,.thv1-rose{display:inline-block;text-shadow:4px 4px 0 #7A0000, 8px 8px 0 rgba(200,134,10,0.4);}
+  .thv1-amp{color:#E8A020;font-size:0.7em;text-shadow:3px 3px 0 #7A0000;display:inline-block;}
+  .thv1-rule{width:120px;height:3px;background:#C8860A;margin:1.75rem auto;position:relative;}
+  .thv1-rule::before,.thv1-rule::after{content:'';position:absolute;top:50%;width:10px;height:10px;background:#C8860A;border-radius:50%;transform:translateY(-50%);}
+  .thv1-rule::before{left:-22px;}
+  .thv1-rule::after{right:-22px;}
+  .thv1-tagline{font-family:'EB Garamond',serif;font-style:italic;font-size:clamp(1.05rem,2vw,1.35rem);color:#F5E6C0;max-width:580px;margin:0 auto 2.25rem;line-height:1.65;}
+  .thv1-ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem;}
+  .thv1-btn-red{background:#7A0000;color:#FFF5DC;font-family:'Teko',sans-serif;font-size:1.1rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;padding:0.85rem 2.4rem;border:2px solid #7A0000;transition:all 0.2s;}
+  .thv1-btn-red:hover,.thv1-btn-red:focus-visible{background:#A00000;border-color:#A00000;}
+  .thv1-btn-cream{background:transparent;color:#FFF5DC;font-family:'Teko',sans-serif;font-size:1.1rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;padding:0.85rem 2.4rem;border:2px solid rgba(255,245,220,0.55);transition:all 0.2s;}
+  .thv1-btn-cream:hover,.thv1-btn-cream:focus-visible{border-color:#FFF5DC;}
+  .thv1-stamps{list-style:none;padding:0;margin:0;display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;font-family:'EB Garamond',serif;font-style:italic;font-size:0.85rem;color:#C8860A;letter-spacing:0.05em;}
+  .thv1-stamps li{display:inline-flex;align-items:center;gap:0.4rem;}
+  @media(max-width:700px){.thv1-content{padding:4rem 1.25rem;}.thv1-banner-top,.thv1-banner-bottom{font-size:0.78rem;}}
+</style>

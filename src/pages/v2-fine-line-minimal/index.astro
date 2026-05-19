@@ -2,6 +2,7 @@
 import { Picture, getImage } from 'astro:assets';
 import { studio } from '../../data/v2';
 import { resolveImage } from '../../data/imageMap';
+import ArtistGalleryHero from '../../components/tattoo/ArtistGalleryHero.astro';
 import '../../styles/global.css';
 const toRoman = (n: number) => ['I','II','III','IV','V','VI','VII','VIII'][n-1] ?? n;
 const heroImg = resolveImage(studio.gallery[0].image);
@@ -225,18 +226,12 @@ const heroPreload = await getImage({ src: heroImg, width: 1080, format: 'webp' }
   </div>
 </nav>
 
-<!-- HERO — typographic, no photo -->
-<section id="hero" aria-label="Hero">
-  <div class="hero">
-    <div class="hero-rule-top" aria-hidden="true"></div>
-    <p class="hero-label">Fine-line · Single-needle · By appointment · Gaslamp Quarter, San Diego</p>
-    <h1 class="hero-h1">Where precision<br/>meets the permanent.</h1>
-    <div class="hero-rule-mid" aria-hidden="true"></div>
-    <p class="hero-tagline">{studio.description}</p>
-    <div class="hero-ctas">
-      <a href="#booking" class="btn-bk">Inquire to book</a>
-      <a href="#portfolio" class="btn-lt">View collected works</a>
-    </div>
+<!-- HERO — artist-gallery as hero -->
+<ArtistGalleryHero studio={studio} />
+
+<!-- LEDGER — practice ledger (formerly inside hero) -->
+<aside class="section" aria-label="Studio practice ledger" style="padding-top:2rem;padding-bottom:2rem;">
+  <div class="section-inner" style="max-width:780px;">
     <dl class="hero-ledger" aria-label="Studio practice — current ledger">
       <div class="hl-row"><dt>Average waitlist</dt><dd><em>nine</em> weeks</dd></div>
       <div class="hl-row"><dt>Sessions logged, 2024</dt><dd><em>412</em> &amp; counting</dd></div>
@@ -244,7 +239,7 @@ const heroPreload = await getImage({ src: heroImg, width: 1080, format: 'webp' }
       <div class="hl-row"><dt>Needles used</dt><dd>single &amp; 0.18mm round</dd></div>
     </dl>
   </div>
-</section>
+</aside>
 
 <!-- ARTISTS — horizontal list -->
 <section id="artists" class="section artist-bg" aria-labelledby="artists-h">
