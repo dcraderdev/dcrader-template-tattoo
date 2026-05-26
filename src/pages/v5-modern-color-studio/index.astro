@@ -568,6 +568,11 @@ const heroPreload = await getImage({ src: heroImg, width: 1600, format: 'webp' }
     }
   </style>
   <script src="/template-topheader.js" defer></script>
+  <style>
+    html { scroll-padding-top: 40px !important; }
+    body { padding-top: 36px !important; }
+    body > #dcrader-topheader, body > [data-dcrader-topheader] { padding-top: 0 !important; margin-top: -36px !important; }
+  </style>
 </head>
 <body>
   <a href="#main" class="sr-only">Skip to main content</a>
