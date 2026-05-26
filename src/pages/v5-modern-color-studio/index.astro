@@ -416,7 +416,7 @@ const heroPreload = await getImage({ src: heroImg, width: 1600, format: 'webp' }
     .aftercare-card:nth-child(6)::before { background: var(--blue); }
     .aftercare-num {
       font-family: var(--display); font-size: 3rem; font-weight: 700;
-      line-height: 1; color: var(--light); margin-bottom: 1rem;
+      line-height: 1; color: var(--mid); margin-bottom: 1rem;
     }
     .aftercare-title {
       font-family: var(--display); font-size: 1rem; font-weight: 700;
@@ -471,7 +471,7 @@ const heroPreload = await getImage({ src: heroImg, width: 1600, format: 'webp' }
       transition: border-color 0.2s;
     }
     .form-input:focus { border-color: var(--ink); }
-    .form-input::placeholder { color: var(--light); }
+    .form-input::placeholder { color: var(--mid); }
     select.form-input { appearance: none; cursor: pointer; }
     textarea.form-input { resize: none; min-height: 100px; }
     .form-submit {
@@ -527,7 +527,7 @@ const heroPreload = await getImage({ src: heroImg, width: 1600, format: 'webp' }
     }
     .hours-day { font-family: var(--body); font-size: 0.85rem; font-weight: 600; color: var(--ink); }
     .hours-time { font-family: var(--body); font-size: 0.85rem; font-weight: 400; color: var(--ink-soft); }
-    .hours-time.closed { color: var(--light); }
+    .hours-time.closed { color: var(--mid); font-style: italic; }
     .contact-list { display: flex; flex-direction: column; gap: 1.5rem; }
     .contact-item {}
     .contact-label { font-family: var(--body); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--mid); margin-bottom: 0.25rem; }
@@ -553,7 +553,7 @@ const heroPreload = await getImage({ src: heroImg, width: 1600, format: 'webp' }
       font-weight: 400;
     }
     .footer-copy {
-      font-family: var(--body); font-size: 0.7rem; color: var(--mid);
+      font-family: var(--body); font-size: 0.7rem; color: var(--light);
     }
 
     @media (max-width: 768px) {
