@@ -1,0 +1,261 @@
+---
+import { studio } from '../../data/v5';
+const base = import.meta.env.BASE_URL;
+
+const timeline = [
+  { day: 'Days 0–2', name: 'The wrap phase', icon: '⚡', color: 'var(--purple)', body: "Your color tattoo leaves the studio under a second-skin medical wrap. Color is at maximum vibrancy at this stage — it will look slightly oversaturated, slightly dark. That is intentional. Leave the wrap on for 24–48 hours. Do not peel. Do not lift the corner to look. Plasma fluid will pool under the wrap; that is normal and protective." },
+  { day: 'Days 2–4', name: 'The wash phase', icon: '🚿', color: 'var(--teal)', body: "Remove the wrap in a warm shower (the steam softens the adhesive). Wash with fragrance-free soap, lukewarm water only, fingertips only — never a washcloth. The tattoo will look DULL and almost milky after the first wash. This is the most common color panic moment. The color is still under there; the topical milkiness is plasma residue. Pat dry with a clean paper towel, never rub." },
+  { day: 'Days 4–10', name: 'The peel phase', icon: '🍂', color: 'var(--orange)', body: "Skin will begin to flake and peel in colored strips that look alarmingly like the pigment is coming off. THIS IS DEAD SKIN, NOT INK. Let it fall off naturally. Picking at peeling skin is the single most common cause of patchy color healing. Apply a thin layer of fragrance-free moisturizer (we recommend Aquaphor sparingly, Hustle Butter generously) twice a day. Itch is normal. Slapping the area (not scratching) helps." },
+  { day: 'Days 10–21', name: 'The settle phase', icon: '🌿', color: 'var(--blue)', body: "The peeling stops. The color, now beneath a layer of new skin, will look SLIGHTLY MUTED compared to day 0. This too is normal. Color tattoos go through a settling period where they appear about 70% as vibrant as they will ultimately be. Continue moisturizing 2x daily. The skin is still healing beneath the surface; it is not yet ready for direct sun, chlorine, or salt water." },
+  { day: 'Days 21–60', name: 'The bloom phase', icon: '✨', color: 'var(--pink)', body: "The final layer of healing skin completes around day 21 and the color BLOOMS. This is when the tattoo comes back to its true vibrancy — sometimes more saturated than the day you walked out of the studio, because the redness around the lines has fully resolved. Apply SPF 50+ to the tattoo every single day from this point forward. Sun is the only meaningful long-term threat to color." },
+  { day: 'Year 1+', name: 'The forever phase', icon: '🛡️', color: 'var(--purple)', body: "Color tattoos can stay vibrant for thirty-plus years if maintained. The two enemies are UV and friction. SPF 50+ daily, indefinitely. Moisturize whenever the skin feels dry. Touch-ups for color drop are normal at the 7–10 year mark and are typically priced at our hourly rate. We offer one free touch-up at 90 days for clients whose color healed unevenly through no fault of their own." },
+];
+
+const colorRisks = [
+  { tier: 'Tier 1', color: 'var(--purple)', label: 'Most durable', list: 'Black, Deep Reds, Royal Blues, Forest Greens', note: 'Hold saturation for 20+ years with proper sun care. The traditional palette earned its longevity reputation honestly.' },
+  { tier: 'Tier 2', color: 'var(--teal)', label: 'Reliable with care', list: 'Teals, Magentas, Oranges, Mustards, Burgundies', note: 'Hold well with daily SPF. Fade noticeably faster on chronic sun-exposed placements (forearms, calves) without sun protection.' },
+  { tier: 'Tier 3', color: 'var(--orange)', label: 'Demands daily SPF', list: 'Pastels, Lavenders, Soft Pinks, Mint Greens, Pale Yellows', note: 'The pastels and lights require SPF 50+ EVERY DAY to retain vibrancy. We will tell you this at booking; we are telling you again here.' },
+  { tier: 'Tier 4', color: 'var(--pink)', label: 'High-maintenance', list: 'Neon Pink, Electric Yellow, Lime, White Highlights', note: "Fluorescents and pure whites will visibly drop within 5 years even with perfect care. We use them sparingly and tell you up front. They are not 'forever' colors and we will not pretend otherwise." },
+];
+
+const dontDo = [
+  { x: 'No swimming', why: "Pools, oceans, lakes, hot tubs — for 21 days minimum. Chlorine and salt water bleach color before it has fully set. Showers are fine; submersion is not." },
+  { x: 'No direct sun', why: "For 30 days minimum. UV breaks down pigment in unhealed skin much faster than in healed skin. After 30 days: SPF 50+ daily, forever." },
+  { x: 'No gym workouts', why: "Sweat irritates healing skin and reintroduces bacteria from gym equipment. Wait 7 days minimum, longer for larger color pieces." },
+  { x: 'No picking or scratching', why: "Slapping when itchy is fine. Picking peels and scabs causes the only thing we cannot fix in a touch-up: patchy color where pigment was lifted before it set." },
+  { x: 'No bath soaks, saunas, steam rooms', why: "21 days. Heat and prolonged moisture compromise color retention. Quick showers are fine; soaking is not." },
+  { x: 'No fragranced products', why: "Lotions with fragrance, alcohol-based moisturizers, scented body washes — all irritate healing color. Stick to the products we sent you home with for 14 days." },
+];
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Color Aftercare · {studio.name} — Keep Your Color Vibrant for Decades</title>
+  <meta name="description" content="A complete color-tattoo aftercare guide from Spectrum Tattoo: six healing phases, color durability tiers, what to avoid, when to call us. Real talk on keeping color vibrant." />
+  <link rel="canonical" href={Astro.url.href} />
+  <meta property="og:title" content={`Color Aftercare — ${studio.name}`} />
+  <meta property="og:description" content="Six healing phases, color durability tiers, what to avoid. Real talk on keeping color vibrant for 30 years." />
+  <meta property="og:image" content="/og-image.png" />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href={`${base}styles/global.css`} />
+  <style>
+    :root {
+      --cream: #FDFAF4; --cream-dark: #F4F0E6; --ink: #1A1208; --ink-soft: #3D3322;
+      --mid: #7A6E5E; --light: #B8AFA0;
+      --purple: #7C3AED; --pink: #EC4899; --teal: #0D9488; --orange: #F59E0B; --yellow: #EAB308; --red: #EF4444; --blue: #3B82F6;
+      --display: 'Space Grotesk', sans-serif; --body: 'Manrope', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; background: var(--cream); color: var(--ink); }
+    body { font-family: var(--body); background: var(--cream); color: var(--ink); }
+    .rainbow { background: linear-gradient(90deg, var(--purple), var(--pink), var(--orange), var(--teal)); }
+    .rainbow-text { background: linear-gradient(90deg, var(--purple), var(--pink), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    .nav { position: fixed; top: 34px; left: 0; right: 0; z-index: 100; background: var(--cream); border-bottom: 2px solid var(--ink); display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; height: 64px; }
+    .nav-logo { font-family: var(--display); font-size: 1.1rem; font-weight: 700; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 0.4rem; }
+    .nav-logo .dot { display:inline-block; width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(90deg, var(--purple), var(--pink), var(--orange)); }
+    .nav-links { display: flex; gap: 0.25rem; list-style: none; align-items: center; }
+    .nav-links a { font-family: var(--display); font-size: 0.8rem; font-weight: 600; color: var(--ink-soft); text-decoration: none; padding: 0.5rem 0.85rem; border-radius: 999px; transition: background 0.2s; }
+    .nav-links a:hover, .nav-links a[aria-current="page"] { background: var(--cream-dark); color: var(--ink); }
+    .nav-book { font-family: var(--display); font-size: 0.8rem; font-weight: 700; color: var(--cream); padding: 0.6rem 1.25rem; border-radius: 999px; text-decoration: none; background: linear-gradient(90deg, var(--purple), var(--pink), var(--orange)); }
+
+    .page-hero { padding: 8rem 2.5rem 4rem; background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dark) 100%); position: relative; overflow: hidden; }
+    .page-hero::before { content: ''; position: absolute; top: -120px; right: -120px; width: 380px; height: 380px; border-radius: 50%; background: radial-gradient(circle, rgba(124, 58, 237, 0.18) 0%, transparent 70%); }
+    .page-hero::after { content: ''; position: absolute; bottom: -100px; left: 30%; width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(236, 72, 153, 0.18) 0%, transparent 70%); }
+    .ph-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+    .ph-tag { display: inline-block; font-family: var(--display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; background: var(--ink); color: var(--cream); padding: 0.45rem 1rem; border-radius: 999px; margin-bottom: 1.75rem; }
+    .ph-h1 { font-family: var(--display); font-size: clamp(2.75rem, 7vw, 6rem); font-weight: 700; line-height: 1; letter-spacing: -0.025em; color: var(--ink); margin-bottom: 1.5rem; }
+    .ph-h1 .gradient { background: linear-gradient(90deg, var(--purple), var(--pink), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .ph-dek { font-family: var(--body); font-size: 1.15rem; font-weight: 400; line-height: 1.7; color: var(--ink-soft); max-width: 680px; }
+
+    .section { padding: 5rem 2.5rem; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-inner.narrow { max-width: 880px; }
+    .eyebrow { display: inline-block; font-family: var(--display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; background: var(--cream-dark); color: var(--ink); padding: 0.4rem 0.9rem; border-radius: 999px; margin-bottom: 1rem; }
+    .section-h { font-family: var(--display); font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 0.75rem; }
+    .section-sub { font-family: var(--body); font-size: 1rem; color: var(--ink-soft); max-width: 580px; line-height: 1.7; }
+
+    /* Timeline cards */
+    .timeline { display: grid; gap: 1rem; margin-top: 2.5rem; }
+    .tl-card { display: grid; grid-template-columns: 64px 200px 1fr; gap: 1.75rem; align-items: start; background: var(--cream); border: 2px solid var(--cream-dark); border-radius: 24px; padding: 1.75rem 2rem; transition: transform 0.2s, border-color 0.2s; }
+    .tl-card:hover { transform: translateY(-2px); border-color: var(--ink); }
+    @media(max-width: 720px) { .tl-card { grid-template-columns: 56px 1fr; } .tl-card .tl-time { grid-column: 2; } }
+    .tl-icon { font-size: 2rem; width: 56px; height: 56px; border-radius: 18px; display: flex; align-items: center; justify-content: center; color: var(--cream); }
+    .tl-time { font-family: var(--display); font-size: 1.1rem; font-weight: 700; color: var(--ink); }
+    .tl-name { font-family: var(--display); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-soft); margin-top: 0.25rem; }
+    .tl-body { font-family: var(--body); font-size: 0.95rem; line-height: 1.8; color: var(--ink-soft); }
+    .tl-body strong { color: var(--ink); font-weight: 700; }
+
+    /* Color tiers */
+    .tiers-bg { background: var(--ink); color: var(--cream); }
+    .tiers-bg .eyebrow { background: rgba(253, 250, 244, 0.1); color: var(--cream); }
+    .tiers-bg .section-h { color: var(--cream); }
+    .tiers-bg .section-sub { color: rgba(253, 250, 244, 0.7); }
+    .tier-list { display: grid; gap: 0.75rem; margin-top: 2.5rem; }
+    .tier-row { display: grid; grid-template-columns: 130px 1fr 2fr; gap: 1.5rem; padding: 1.5rem 1.75rem; background: rgba(253, 250, 244, 0.05); border-radius: 20px; border: 2px solid rgba(253, 250, 244, 0.08); align-items: start; }
+    @media(max-width: 800px) { .tier-row { grid-template-columns: 1fr; gap: 0.4rem; } }
+    .tier-badge { display: inline-block; font-family: var(--display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream); padding: 0.45rem 0.85rem; border-radius: 999px; align-self: start; }
+    .tier-label { font-family: var(--display); font-size: 1.05rem; font-weight: 700; color: var(--cream); margin-bottom: 0.45rem; }
+    .tier-list-detail { font-family: var(--body); font-size: 0.88rem; color: rgba(253, 250, 244, 0.6); line-height: 1.7; }
+    .tier-note { font-family: var(--body); font-size: 0.95rem; line-height: 1.75; color: rgba(253, 250, 244, 0.85); }
+
+    /* Don't do list */
+    .dont-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 2rem; }
+    @media(max-width: 740px) { .dont-grid { grid-template-columns: 1fr; } }
+    .dont-card { background: var(--cream); border: 2px solid var(--cream-dark); border-left: 6px solid var(--red); border-radius: 18px; padding: 1.5rem 1.75rem; }
+    .dont-x { font-family: var(--display); font-size: 1.15rem; font-weight: 700; color: var(--red); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+    .dont-x::before { content: '✕'; font-size: 1.1rem; }
+    .dont-why { font-family: var(--body); font-size: 0.93rem; line-height: 1.75; color: var(--ink-soft); }
+
+    /* Call CTA */
+    .call-bg { background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 50%, var(--orange) 100%); color: var(--cream); padding: 5rem 2.5rem; }
+    .call-inner { max-width: 980px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    @media(max-width: 800px) { .call-inner { grid-template-columns: 1fr; } }
+    .call-inner h2 { font-family: var(--display); font-size: clamp(2rem, 4vw, 2.85rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.015em; color: var(--cream); margin-bottom: 1rem; }
+    .call-inner p { font-family: var(--body); font-size: 1rem; line-height: 1.75; color: rgba(253, 250, 244, 0.9); margin-bottom: 1.5rem; }
+    .call-list { display: grid; gap: 0.75rem; background: rgba(0, 0, 0, 0.15); padding: 1.5rem; border-radius: 20px; }
+    .call-row { display: grid; grid-template-columns: 28px 1fr; gap: 0.85rem; font-family: var(--body); font-size: 0.92rem; line-height: 1.6; color: rgba(253, 250, 244, 0.95); }
+    .call-row::before { content: '!'; font-family: var(--display); font-weight: 700; background: var(--cream); color: var(--ink); width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.78rem; }
+
+    .cta-bg { padding: 4.5rem 2.5rem; text-align: center; background: var(--cream); }
+    .cta-bg h2 { font-family: var(--display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; letter-spacing: -0.015em; color: var(--ink); margin-bottom: 0.85rem; }
+    .cta-bg p { font-family: var(--body); font-size: 1rem; color: var(--ink-soft); max-width: 540px; margin: 0 auto 2rem; line-height: 1.7; }
+    .cta-btns { display: flex; justify-content: center; gap: 0.85rem; flex-wrap: wrap; }
+    .btn-fill { font-family: var(--display); font-size: 0.85rem; font-weight: 700; color: var(--cream); background: var(--ink); padding: 0.95rem 2rem; border-radius: 999px; text-decoration: none; transition: transform 0.2s; }
+    .btn-fill:hover { transform: scale(1.03); }
+    .btn-out { font-family: var(--display); font-size: 0.85rem; font-weight: 700; color: var(--ink); border: 2px solid var(--ink); padding: 0.85rem 2rem; border-radius: 999px; text-decoration: none; transition: background 0.2s; }
+    .btn-out:hover { background: var(--ink); color: var(--cream); }
+
+    footer { background: var(--ink); padding: 2.75rem 2.5rem; text-align: center; }
+    .foot-logo { font-family: var(--display); font-size: 1.05rem; font-weight: 700; color: var(--cream); }
+    .foot-copy { font-family: var(--body); font-size: 0.78rem; color: rgba(253, 250, 244, 0.5); margin-top: 0.75rem; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    html { scroll-padding-top: 40px !important; }
+    body { padding-top: 36px !important; }
+    body > #dcrader-topheader, body > [data-dcrader-topheader] { padding-top: 0 !important; margin-top: -36px !important; }
+  </style>
+  <script src="/template-topheader.js" defer></script>
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href={`${base}`} class="nav-logo">← all<span style="font-weight:300;"> variants</span></a>
+  <a href="/" class="nav-logo">{studio.name}<span class="dot" aria-hidden="true"></span></a>
+  <div style="display:flex;align-items:center;gap:0.5rem;">
+    <ul class="nav-links" role="list">
+      <li><a href="/#gallery">Gallery</a></li>
+      <li><a href="/#artists">Artists</a></li>
+      <li><a href="/v5-modern-color-studio/color-aftercare" aria-current="page">Color Aftercare</a></li>
+      <li><a href="/#booking">Book Now</a></li>
+    </ul>
+    <a href="/#booking" class="nav-book">Book Now</a>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="ph-inner">
+    <span class="ph-tag">★ Aftercare Guide · Updated 2026</span>
+    <h1 class="ph-h1">Keep your color <span class="gradient">vibrant for decades.</span></h1>
+    <p class="ph-dek">Color tattoos are not the same as black-and-grey when it comes to healing and long-term durability. This is everything you need to know — the six healing phases, color tier durability, what NOT to do, and when to call us. Save this page.</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="section-inner">
+    <span class="eyebrow">The Healing Timeline</span>
+    <h2 class="section-h">Six phases. Roughly 60 days.</h2>
+    <p class="section-sub">Color tattoos take about twice as long as black-and-grey to fully heal and bloom. Here is exactly what to expect and exactly what to do at each stage.</p>
+    <ol class="timeline" role="list">
+      {timeline.map(t => (
+        <li class="tl-card">
+          <div class="tl-icon" style={`background:${t.color};`} aria-hidden="true">{t.icon}</div>
+          <div>
+            <p class="tl-time">{t.day}</p>
+            <p class="tl-name">{t.name}</p>
+          </div>
+          <p class="tl-body">{t.body}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<section class="section tiers-bg">
+  <div class="section-inner">
+    <span class="eyebrow">Color Durability Tiers</span>
+    <h2 class="section-h">Not all colors hold the same.</h2>
+    <p class="section-sub">We are honest with you about color longevity at the booking stage. Here is the same conversation written down. Your choice of color affects how often you will want a touch-up over the next 30 years.</p>
+    <div class="tier-list">
+      {colorRisks.map(c => (
+        <div class="tier-row">
+          <div>
+            <span class="tier-badge" style={`background:${c.color};`}>{c.tier}</span>
+          </div>
+          <div>
+            <p class="tier-label">{c.label}</p>
+            <p class="tier-list-detail">{c.list}</p>
+          </div>
+          <p class="tier-note">{c.note}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner narrow">
+    <span class="eyebrow">Six Things Not To Do</span>
+    <h2 class="section-h">Don't undo our work.</h2>
+    <p class="section-sub">Color tattoos are more vulnerable than black-and-grey to early-healing mistakes. These are the six most common ways clients accidentally damage their color before it sets.</p>
+    <ul class="dont-grid" role="list">
+      {dontDo.map(d => (
+        <li class="dont-card">
+          <p class="dont-x">{d.x}</p>
+          <p class="dont-why">{d.why}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<section class="call-bg">
+  <div class="call-inner">
+    <div>
+      <h2>When to call us. Don't wait.</h2>
+      <p>We would rather hear from you on day 4 over something that turns out to be normal than hear from you on day 14 about something that needed attention on day 4. Text the studio anytime.</p>
+      <a href={`tel:${studio.phone.replace(/[^0-9]/g,'')}`} class="btn-fill" style="background:var(--cream);color:var(--ink);">Text {studio.phone}</a>
+    </div>
+    <div class="call-list" role="list">
+      <p class="call-row">Spreading redness beyond the tattoo border at day 5+</p>
+      <p class="call-row">Yellow or green discharge — not normal plasma</p>
+      <p class="call-row">Fever above 100°F in the 7 days after a session</p>
+      <p class="call-row">Color appears to be sliding or smearing under healing skin</p>
+      <p class="call-row">An entire area healed lighter than the rest of the piece</p>
+      <p class="call-row">Anything painful, hot, or alarming beyond day 4</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-bg">
+  <span class="eyebrow">Ready to start something new?</span>
+  <h2>Book your next piece.</h2>
+  <p>Custom color commissions book 4–6 weeks out. Flash availability changes weekly. ${studio.depositAmount} deposit secures your slot and is applied to your session cost.</p>
+  <div class="cta-btns">
+    <a class="btn-fill" href="/#booking">Book a Session</a>
+    <a class="btn-out" href={`tel:${studio.phone.replace(/[^0-9]/g,'')}`}>Call {studio.phone}</a>
+  </div>
+</section>
+
+<footer>
+  <p class="foot-logo">{studio.name}</p>
+  <p class="foot-copy">{studio.address} · {studio.city} · {studio.phone}</p>
+  <p class="foot-copy">Built by <a href="https://dcrader.dev" style="color:var(--cream);text-decoration:none;">Donovan Crader · dcrader.dev</a></p>
+</footer>
+</body>
+</html>

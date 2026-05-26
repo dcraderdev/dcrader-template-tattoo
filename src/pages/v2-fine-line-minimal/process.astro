@@ -1,0 +1,229 @@
+---
+import { studio } from '../../data/v2';
+import '../../styles/global.css';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>The Process · {studio.name} — Custom Fine-Line Design</title>
+  <meta name="description" content="A four-stage custom design process at Linework Studio — from intake conversation to final stencil. Precision, restraint, permanence."/>
+  <link rel="canonical" href={Astro.url.href}/>
+  <meta property="og:title" content={`The Process — ${studio.name}`}/>
+  <meta property="og:description" content="A four-stage custom design process at Linework Studio: intake, drafting, refinement, application."/>
+  <meta property="og:image" content="/og-image.png"/>
+  <meta property="og:type" content="article"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100;0,200;0,300;0,400;0,500;1,200;1,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--w:#FAFAFA;--off:#F5F5F2;--b:#0D0D0D;--mid:#595959;--lt:#767676;--xlt:#E8E8E5;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--w);color:var(--b);font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;}
+
+    nav{background:var(--w);border-bottom:1px solid var(--xlt);position:sticky;top:34px;z-index:100;}
+    .nav-row{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 2rem;height:54px;}
+    .nav-left,.nav-right{display:flex;gap:0;list-style:none;align-items:center;}
+    .nav-right{justify-content:flex-end;}
+    nav a{font-family:'Inter Tight',sans-serif;font-weight:300;font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--mid);text-decoration:none;padding:0.4rem 0.8rem;display:block;transition:color 0.2s;}
+    nav a:hover,nav a:focus-visible{color:var(--b);}
+    nav a[aria-current="page"]{color:var(--b);border-bottom:1px solid var(--b);padding-bottom:1px;}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--b);text-decoration:none;white-space:nowrap;}
+    .nav-book{font-family:'Inter Tight',sans-serif;font-weight:400;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--b)!important;border-bottom:1px solid var(--b);padding-bottom:1px!important;}
+
+    .ph{padding:8rem 2rem 4rem;text-align:center;}
+    .ph-rule-top{width:1px;height:60px;background:var(--xlt);margin:0 auto 2.5rem;}
+    .ph-label{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.6rem;letter-spacing:0.5em;text-transform:uppercase;color:var(--mid);margin-bottom:2rem;}
+    .ph-h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(2.5rem,7vw,5.5rem);color:var(--b);line-height:1;margin-bottom:1.75rem;letter-spacing:-0.01em;}
+    .ph-rule-mid{width:40px;height:1px;background:var(--b);margin:0 auto 1.75rem;}
+    .ph-dek{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.82rem;letter-spacing:0.12em;color:var(--mid);max-width:520px;margin:0 auto;line-height:2;}
+
+    .section{padding:5rem 2rem;}
+    .section-inner{max-width:1000px;margin:0 auto;}
+    .section-inner.narrow{max-width:760px;}
+    .section-num{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.55rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--lt);margin-bottom:0.75rem;display:block;}
+    .section-h{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(1.85rem,4vw,3.25rem);color:var(--b);line-height:1.1;}
+    .thin-rule{width:60px;height:1px;background:var(--b);margin:1.25rem 0 2.25rem;}
+
+    .intro p{font-family:'Cormorant Garamond',serif;font-size:1.1rem;line-height:1.95;color:#333;margin-bottom:1.4rem;}
+    .intro em{font-style:italic;}
+
+    /* Stages: roman numeral down the side, content right */
+    .stages{display:grid;gap:0;border-top:1px solid var(--xlt);}
+    .stage{display:grid;grid-template-columns:140px 1fr;gap:3rem;padding:3.5rem 0;border-bottom:1px solid var(--xlt);align-items:start;}
+    @media(max-width:760px){.stage{grid-template-columns:1fr;gap:1.25rem;}}
+    .st-marker{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:2.4rem;color:var(--lt);line-height:1;padding-top:0.4rem;}
+    .st-marker-sub{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--lt);margin-top:0.65rem;}
+    .st-head{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:1.9rem;color:var(--b);line-height:1.15;margin-bottom:0.65rem;}
+    .st-meta{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--mid);margin-bottom:1.5rem;}
+    .st-body{font-family:'Cormorant Garamond',serif;font-size:1.025rem;line-height:1.9;color:#444;margin-bottom:1rem;}
+    .st-list{margin-top:1.25rem;display:grid;gap:0.6rem;padding-left:1.25rem;font-family:'Cormorant Garamond',serif;font-size:0.98rem;line-height:1.7;color:#555;list-style:'·  ';}
+    .st-list li{padding-left:0.2rem;}
+
+    /* Pull-out aside */
+    .aside-block{background:var(--off);padding:3rem 2.5rem;margin:0;border-left:2px solid var(--b);}
+    .aside-block .ab-eyebrow{font-family:'Inter Tight',sans-serif;font-weight:300;font-size:0.55rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--mid);margin-bottom:1rem;}
+    .aside-block .ab-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:1.5rem;color:var(--b);line-height:1.45;margin-bottom:1rem;}
+    .aside-block .ab-cite{font-family:'Inter Tight',sans-serif;font-weight:300;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--mid);}
+
+    /* Closing CTA */
+    .cta-bg{background:var(--b);color:var(--w);padding:5rem 2rem;text-align:center;}
+    .cta-bg .ph-label{color:rgba(255,255,255,0.4);}
+    .cta-bg .section-h{color:var(--w);font-size:clamp(2rem,4vw,3.25rem);}
+    .cta-bg .thin-rule{background:rgba(255,255,255,0.5);margin-left:auto;margin-right:auto;}
+    .cta-bg p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;line-height:1.9;color:rgba(255,255,255,0.7);max-width:540px;margin:0 auto 2.5rem;}
+    .btn-w{display:inline-block;background:var(--w);color:var(--b);font-family:'Inter Tight',sans-serif;font-weight:400;font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;padding:0.85rem 2.5rem;text-decoration:none;margin-right:0.75rem;transition:opacity 0.2s;}
+    .btn-w:hover{opacity:0.85;}
+    .btn-lt{display:inline-block;color:rgba(255,255,255,0.7);font-family:'Inter Tight',sans-serif;font-weight:300;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;padding:0.85rem 0;border-bottom:1px solid rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s,border-color 0.2s;margin-left:1.5rem;}
+    .btn-lt:hover{color:var(--w);border-color:var(--w);}
+
+    footer{background:var(--off);border-top:1px solid var(--xlt);padding:3rem 2rem;text-align:center;}
+    .foot-logo{font-family:'Cormorant Garamond',serif;font-weight:300;letter-spacing:0.45em;text-transform:uppercase;font-size:1.05rem;color:var(--b);}
+    .foot-sub{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--mid);margin:0.5rem 0 1.5rem;}
+    .foot-copy{font-family:'Inter Tight',sans-serif;font-weight:200;font-size:0.6rem;color:var(--mid);}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    html { scroll-padding-top: 40px !important; }
+    body { padding-top: 36px !important; }
+    body > #dcrader-topheader, body > [data-dcrader-topheader] { padding-top: 0 !important; margin-top: -36px !important; }
+  </style>
+  <script src="/template-topheader.js" defer></script>
+</head>
+<body>
+
+<nav aria-label="Main navigation">
+  <div class="nav-row">
+    <ul class="nav-left" role="list">
+      <li><a href="/#artists">Artists</a></li>
+      <li><a href="/#portfolio">Portfolio</a></li>
+      <li><a href="/v2-fine-line-minimal/process" aria-current="page">Process</a></li>
+    </ul>
+    <a class="nav-logo" href="/">Linework Studio</a>
+    <ul class="nav-right" role="list">
+      <li><a href="/#faq">FAQ</a></li>
+      <li><a href="/#location">Visit</a></li>
+      <li><a href="/#booking" class="nav-book">Inquire</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="ph">
+  <div class="ph-rule-top" aria-hidden="true"></div>
+  <p class="ph-label">The Custom Process · Vol. II</p>
+  <h1 class="ph-h1">A quiet conversation, <br/>then a single line.</h1>
+  <div class="ph-rule-mid" aria-hidden="true"></div>
+  <p class="ph-dek">Every piece that leaves Linework Studio passes through the same four stages. We do not rush any of them. We do not skip any of them. We have refused custom inquiries the morning of the appointment when an idea was not yet ready.</p>
+</header>
+
+<section class="section">
+  <div class="section-inner narrow intro">
+    <span class="section-num">— Preface</span>
+    <p>Fine-line tattooing is, more than any other style, a discipline of restraint. The line must be precise on the first pass. There is no opportunity to bury an inaccuracy under additional shading. A drawing that translates beautifully onto skin is rarely the drawing that looked best on paper. We have learned this the only way it can be learned: by drawing the same motif fifty times before we draw it once, on you.</p>
+    <p>What follows is a description of the way custom commissions move through our studio. We share it here because clients deserve to understand <em>what they are buying</em> when they retain a custom design — not merely a tattoo, but a process that has been refined for thirteen years and remains, by intention, slow.</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:1rem;">
+  <div class="section-inner narrow">
+    <ol class="stages" role="list">
+      <li class="stage">
+        <div>
+          <div class="st-marker">I</div>
+          <div class="st-marker-sub">Intake</div>
+        </div>
+        <div>
+          <h2 class="st-head">A thirty-minute conversation. Free.</h2>
+          <p class="st-meta">By appointment · in studio or video · no deposit</p>
+          <p class="st-body">The first conversation is not about line weight or placement. It is about what you are trying to commit to. We ask about the meaning, the moment, the reference images you have considered and discarded. We ask whether this is your first tattoo or your twentieth, and we listen for the things you don't articulate clearly — those are often the most important.</p>
+          <p class="st-body">At the end of the intake, one of two things happens. Either we proceed to the draft stage with a clearer brief than you arrived with, or we tell you, honestly, that we do not think we are the right studio for what you want. We have a referral list of fifteen artists in the city whose work we respect; we make introductions without fee when our restraint isn't the right fit for your vision.</p>
+          <ul class="st-list" role="list">
+            <li>Concept conversation, reference review, placement discussion</li>
+            <li>Sizing and proportion preview using washable skin marker</li>
+            <li>Honest assessment of whether the idea suits our studio</li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="stage">
+        <div>
+          <div class="st-marker">II</div>
+          <div class="st-marker-sub">Draft</div>
+        </div>
+        <div>
+          <h2 class="st-head">A first drawing, on paper.</h2>
+          <p class="st-meta">7–14 days after intake · $${studio.depositAmount} deposit</p>
+          <p class="st-body">After intake, we draft the piece on paper — first in pencil, then refined in ink — over the course of one to two weeks. We work in a private studio with no distractions and no other commissions open simultaneously. The first draft is rarely the one you receive. It is, more often, the draft we throw away and use to discover what the actual piece wants to be.</p>
+          <p class="st-body">When the draft is ready, we share it as a high-resolution PDF, sized to your specifications, with notes on placement options and line weight. We do not share works-in-progress; we share only the draft we are willing to defend.</p>
+          <ul class="st-list" role="list">
+            <li>Two to three reference iterations on paper before digitization</li>
+            <li>PDF delivery with full-size print option for placement testing</li>
+            <li>Up to two rounds of refinement included; further rounds billed hourly</li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="stage">
+        <div>
+          <div class="st-marker">III</div>
+          <div class="st-marker-sub">Refinement</div>
+        </div>
+        <div>
+          <h2 class="st-head">The conversation we want to have.</h2>
+          <p class="st-meta">5–10 days · refinement is included</p>
+          <p class="st-body">Refinement is, in many ways, the most important stage. It is where the drawing meets your specific anatomy, your specific aesthetic preferences, and the practical considerations of how line will hold against your particular skin. We invite a small set of considered notes — typically four or five — rather than a long list of small changes. Long lists of small changes produce designs that look like compromises. A small set of considered changes produces designs that look intentional.</p>
+          <p class="st-body">If the design requires more than two rounds of refinement, we treat that as a signal — not a problem, but information. Often it means the original brief was incomplete, and we revisit intake before continuing. We would rather restart the conversation than apply a tattoo we are not certain about.</p>
+        </div>
+      </li>
+
+      <li class="stage">
+        <div>
+          <div class="st-marker">IV</div>
+          <div class="st-marker-sub">Application</div>
+        </div>
+        <div>
+          <h2 class="st-head">The day. Quiet. Focused.</h2>
+          <p class="st-meta">2–6 hours · ${studio.hourlyRate}/hr · balance due in full</p>
+          <p class="st-body">The session itself is the shortest part of the process. By the time we begin the line, the design has been considered for weeks, the placement has been tested in three positions, and you have had the opportunity to reconsider every line decision. We work in silence by default and welcome conversation only if you initiate it. The studio plays no music during fine-line work; concentration is what you are paying for.</p>
+          <p class="st-body">Most commissions finish in a single session. Larger pieces — full forearms, back panels, ribcage work — may be split across two sittings, typically 4–6 weeks apart to allow proper healing between phases. We will tell you at the intake whether a single sitting is realistic for your piece. We have never split a session for billing convenience.</p>
+          <ul class="st-list" role="list">
+            <li>Single-use needles, medical-grade pigments, draped sterilization</li>
+            <li>Aftercare consult and product set provided at no additional cost</li>
+            <li>One complimentary touch-up within 90 days, if needed</li>
+          </ul>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner narrow">
+    <aside class="aside-block">
+      <p class="ab-eyebrow">A Note On Pace</p>
+      <p class="ab-quote">"There is no version of this work that is improved by hurrying. We have never regretted slowing down a commission. We have, on rare occasion, regretted the opposite."</p>
+      <p class="ab-cite">— The Studio</p>
+    </aside>
+  </div>
+</section>
+
+<section class="section cta-bg" aria-labelledby="cta-h">
+  <p class="ph-label">Begin a commission</p>
+  <h2 class="section-h" id="cta-h">When you are ready, write to us.</h2>
+  <div class="thin-rule" aria-hidden="true"></div>
+  <p>The intake form is brief. We respond within 48 hours. We accept a limited number of custom commissions each month; flash availability is broader and walk-in by Saturday appointment.</p>
+  <div>
+    <a class="btn-w" href="/#booking">Submit Intake</a>
+    <a class="btn-lt" href={`tel:${studio.phone.replace(/[^0-9]/g,'')}`}>or call {studio.phone}</a>
+  </div>
+</section>
+
+<footer>
+  <p class="foot-logo">Linework Studio</p>
+  <p class="foot-sub">{studio.address} · {studio.city}</p>
+  <p class="foot-copy">© 2026 · Built by <a href="https://dcrader.dev" style="color:var(--b);text-decoration:none;">Donovan Crader</a></p>
+</footer>
+</body>
+</html>

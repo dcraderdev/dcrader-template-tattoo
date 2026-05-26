@@ -1,0 +1,265 @@
+---
+import { studio } from '../../data/v3';
+import '../../styles/global.css';
+
+const motifs = [
+  { kanji: '龍', romaji: 'Ryū', en: 'Dragon', body: "The dragon (ryū) in Japanese tattoo tradition is not the Western fire-breather. Ryū are water creatures — they bring rain, govern rivers and seas, and represent wisdom held in restraint. Three-clawed dragons are Japanese (distinct from four-clawed Korean and five-clawed Chinese variants), and the position of the dragon on the body matters: a downward-facing dragon (descending) signals power moving from the heavens to the earth, while an ascending dragon signals the practitioner's own rising. The most common motif in our studio for full-back work, and the most demanding to execute correctly." },
+  { kanji: '鯉', romaji: 'Koi', en: 'Carp', body: "The koi is the symbol of perseverance — the fish that swims upstream against the Yellow River and is transformed at the Dragon Gate into a dragon. Direction matters: koi swimming upward represents struggle against present circumstances; koi swimming downward represents the strength of one who has overcome. Color matters more: a black koi is the patriarch; red, the matriarch; blue or yellow, the son; pink, the daughter. We will ask you which one is being honored." },
+  { kanji: '虎', romaji: 'Tora', en: 'Tiger', body: "The tiger is the protector against the four winds — disease, evil, and ill fortune. Traditional tigers in Japanese tattooing are rendered with broader stripes and more stylized faces than realistic depictions, and almost always set against bamboo (the unbreakable plant). The pairing is intentional: the tiger's strength is held in check by something it cannot break. We do not tattoo tigers without bamboo unless the client understands the deliberate omission." },
+  { kanji: '鳳凰', romaji: 'Hō-ō', en: 'Phoenix', body: "The Japanese phoenix (hō-ō) is a creature of fire and rebirth, distinct from the Western phoenix and the Chinese fenghuang in both anatomy and meaning. It is often paired in a sleeve or back panel with a dragon — fire and water, sky and sea — to represent harmonious opposites. Hō-ō are rarely tattooed alone in our tradition; their power emerges in the pairing." },
+  { kanji: '般若', romaji: 'Hannya', en: 'Hannya Mask', body: "The hannya is the female demon born of betrayal and rage in Noh theater — a soul transformed by jealousy into something that cannot return to its prior form. The mask's expression contains both grief and fury, and its meaning is never purely negative: hannya represent the consequence of love unreturned and the dignity of grief carried openly. We tattoo hannya with great care, and we ask clients to consider whether the figure represents a transformation they wish to memorialize or one they wish to leave behind." },
+  { kanji: '桜', romaji: 'Sakura', en: 'Cherry Blossom', body: "The sakura is the symbol of mono no aware — the gentle sadness of things that do not last. The blossom blooms for less than two weeks each spring and then falls. In Japanese tattoo composition, sakura are rarely the central subject; they appear as background motif, scattered between dragons and koi, marking the passage of time across an otherwise eternal image. To tattoo only sakura is to tattoo the philosophy without the structure. We will discuss whether that is what you intend." },
+];
+
+const principles = [
+  { jp: '間', romaji: 'Ma', en: 'Negative Space', body: "Ma is the space between forms — the silence between notes in a piece of music, the gap between rocks in a Japanese garden. In tattoo composition, ma is what allows the dragon to breathe, the koi to swim. Western tattooing tends to fill the canvas; Japanese tradition honors the canvas by leaving portions of it untouched. The space around your tattoo is part of the tattoo." },
+  { jp: '流れ', romaji: 'Nagare', en: 'Flow', body: "Nagare is the principle that every element in a Japanese tattoo must move in continuous, organic motion with the body it sits on. Water flows. Wind flows. The body flows when it moves. A traditional sleeve that ignores nagare will look stiff in any pose. We design tattoos to work with the motion of the limb they live on — not against it." },
+  { jp: '完璧主義', romaji: 'Kanpeki shugi', en: 'Discipline of Perfection', body: "The traditional irezumi master apprenticed for ten to fifteen years before being permitted to ink a paying client. The discipline is not theatrical — it reflects the impossibility of correcting a flawed line on skin. We do not promise perfection. We promise that we have done the work required to attempt it with seriousness, and that we will tell you, candidly, when we are not the right hand for a piece." },
+];
+
+const lineage = [
+  { era: '17th c.', what: 'Edo Period emergence', body: "Irezumi as a developed art form emerges in Edo (Tokyo) during the early Tokugawa shogunate, initially as punishment marks applied to criminals, then transformed by the working class — laborers, firefighters, courtesans — into elaborate body suits as symbols of subcultural identity." },
+  { era: '1827', what: 'Suikoden illustrations', body: "Utagawa Kuniyoshi publishes a series of woodblock prints depicting the 108 outlaw heroes of the Suikoden, each illustrated with full-body tattoos. The images become reference material for tattooists for the next two centuries." },
+  { era: '1872 – 1948', what: 'The prohibition years', body: "The Meiji government bans irezumi as part of its modernization campaign. The art form continues underground, passed through closed master-apprentice lineages and increasingly associated with the yakuza. Many of the techniques we use today were preserved only through this period of forced privacy." },
+  { era: '1948', what: 'Decriminalization', body: "Postwar legalization allows public irezumi studios to operate openly again. Master tattooists like Horiyoshi III begin teaching apprentices in the traditional way — tebori (hand-poked) techniques, mineral pigments, and full-body composition principles." },
+  { era: 'Present', what: 'The diaspora', body: "Traditional Japanese tattoo has spread to studios across the world, often diluted, often rendered without the underlying principles. We are part of a small international cohort of studios committed to the tradition itself — not the aesthetic surface." },
+];
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Tradition · {studio.name} — Meanings, Motifs, Lineage</title>
+  <meta name="description" content="A working guide to Japanese tattoo tradition at Ryūboku Tattoo — motifs and their meanings, composition principles, and the lineage that brought irezumi to our studio."/>
+  <link rel="canonical" href={Astro.url.href}/>
+  <meta property="og:title" content={`Tradition — ${studio.name}`}/>
+  <meta property="og:description" content="A working guide to Japanese irezumi tradition: motifs and meanings, composition principles, lineage."/>
+  <meta property="og:image" content="/og-image.png"/>
+  <meta property="og:type" content="article"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--bg:#060606;--surf:#0E0E0E;--surf2:#161616;--gold:#B8974A;--gold2:#D4AE68;--red:#9B1324;--cream:#EAD8B4;--gray:#9E8E76;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--cream);font-family:'Cormorant',Georgia,serif;}
+
+    nav{background:rgba(6,6,6,0.95);border-bottom:1px solid rgba(184,151,74,0.15);position:sticky;top:34px;z-index:100;backdrop-filter:blur(8px);}
+    .nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;min-height:70px;}
+    .nav-logo{text-decoration:none;display:flex;align-items:baseline;gap:0.75rem;}
+    .nav-jp{font-family:'Noto Serif JP',serif;font-size:1.3rem;font-weight:400;color:var(--gold);}
+    .nav-en{font-family:'Cormorant',serif;font-size:0.75rem;font-weight:300;letter-spacing:0.3em;text-transform:uppercase;color:rgba(234,216,180,0.75);}
+    .nav-links{display:flex;list-style:none;gap:0;align-items:center;}
+    nav a{font-family:'Cormorant',serif;font-size:0.85rem;letter-spacing:0.1em;color:var(--gray);text-decoration:none;padding:0.4rem 0.85rem;display:block;transition:color 0.2s;}
+    nav a:hover,nav a[aria-current="page"]{color:var(--gold);}
+    .nav-book-btn{background:var(--red)!important;color:var(--cream)!important;font-family:'Noto Serif JP',serif!important;font-size:0.75rem!important;letter-spacing:0.08em!important;}
+
+    .page-hero{position:relative;padding:7rem 2rem 5rem;overflow:hidden;border-bottom:1px solid rgba(184,151,74,0.15);background:radial-gradient(ellipse at top,rgba(155,19,36,0.18) 0%,transparent 65%),var(--bg);}
+    .ph-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:end;}
+    @media(max-width:760px){.ph-inner{grid-template-columns:1fr;}}
+    .ph-tag{font-family:'Noto Serif JP',serif;font-size:0.7rem;letter-spacing:0.25em;color:var(--gold);margin-bottom:1.25rem;display:block;}
+    .ph-jp{font-family:'Noto Serif JP',serif;font-size:clamp(4rem,8vw,7rem);font-weight:700;color:var(--cream);line-height:1;margin-bottom:0.5rem;}
+    .ph-en{font-family:'Cormorant',serif;font-style:italic;font-size:clamp(1.5rem,3vw,2.5rem);font-weight:300;color:var(--gold);display:block;letter-spacing:0.04em;}
+    .ph-stroke{display:block;width:80px;height:3px;background:linear-gradient(to right,var(--red),var(--gold));margin:2rem 0;}
+    .ph-dek{font-family:'Cormorant',serif;font-style:italic;font-size:1.15rem;color:rgba(234,216,180,0.85);max-width:560px;line-height:1.8;}
+    .ph-vertical{writing-mode:vertical-rl;font-family:'Noto Serif JP',serif;font-size:0.85rem;letter-spacing:0.35em;color:rgba(184,151,74,0.55);padding-left:1.5rem;border-left:1px solid rgba(184,151,74,0.25);}
+
+    .section{padding:5.5rem 2rem;}
+    .section-inner{max-width:1100px;margin:0 auto;}
+    .section-inner.narrow{max-width:780px;}
+    .eyebrow{font-family:'Noto Serif JP',serif;font-size:0.7rem;letter-spacing:0.25em;color:var(--gold);margin-bottom:0.6rem;display:block;}
+    .section-h-jp{font-family:'Noto Serif JP',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--cream);line-height:1.15;}
+    .section-h-en{font-family:'Cormorant',serif;font-style:italic;font-size:1.2rem;color:var(--gold);margin-top:0.3rem;}
+    .gold-stroke{display:block;width:60px;height:2px;background:linear-gradient(to right,var(--red),var(--gold));margin:1.25rem 0 2.25rem;}
+
+    .intro p{font-family:'Cormorant',serif;font-size:1.05rem;line-height:1.95;color:rgba(234,216,180,0.85);margin-bottom:1.4rem;}
+    .intro em{color:var(--gold);font-style:italic;}
+
+    /* Motifs */
+    .motif-bg{background:var(--surf);border-top:1px solid rgba(184,151,74,0.1);border-bottom:1px solid rgba(184,151,74,0.1);}
+    .motifs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(184,151,74,0.12);margin-top:2.5rem;border:1px solid rgba(184,151,74,0.15);}
+    @media(max-width:760px){.motifs-grid{grid-template-columns:1fr;}}
+    .motif-card{background:var(--bg);padding:2.5rem 2rem 2.25rem;position:relative;}
+    .motif-kanji{font-family:'Noto Serif JP',serif;font-size:4rem;font-weight:700;color:var(--gold);line-height:1;float:left;margin:0.5rem 1.25rem 0.5rem 0;}
+    .motif-romaji{font-family:'Noto Serif JP',serif;font-size:0.7rem;letter-spacing:0.22em;color:var(--gold);display:block;margin-bottom:0.2rem;text-transform:uppercase;}
+    .motif-en{font-family:'Cormorant',serif;font-size:1.55rem;font-weight:600;color:var(--cream);line-height:1.1;}
+    .motif-body{clear:both;padding-top:1.25rem;font-family:'Cormorant',serif;font-size:0.98rem;line-height:1.85;color:rgba(234,216,180,0.78);}
+    .motif-body em{color:var(--gold);font-style:italic;}
+
+    /* Principles */
+    .princ-list{display:grid;gap:0;margin-top:2.5rem;border-left:2px solid var(--red);}
+    .princ{padding:2rem 2rem 2rem 2rem;border-bottom:1px solid rgba(184,151,74,0.1);}
+    .princ:last-child{border-bottom:none;}
+    .princ-head{display:flex;align-items:baseline;gap:1.25rem;margin-bottom:1rem;flex-wrap:wrap;}
+    .princ-jp{font-family:'Noto Serif JP',serif;font-size:2.4rem;font-weight:700;color:var(--cream);line-height:1;}
+    .princ-romaji{font-family:'Noto Serif JP',serif;font-size:0.7rem;letter-spacing:0.22em;color:var(--gold);}
+    .princ-en{font-family:'Cormorant',serif;font-style:italic;font-size:1.45rem;color:var(--gold);}
+    .princ-body{font-family:'Cormorant',serif;font-size:1.02rem;line-height:1.85;color:rgba(234,216,180,0.82);}
+
+    /* Lineage timeline */
+    .line-bg{background:linear-gradient(135deg,var(--surf2) 0%,var(--bg) 100%);border-top:1px solid rgba(184,151,74,0.1);}
+    .lin-list{margin-top:2.5rem;display:grid;gap:0;}
+    .lin-row{display:grid;grid-template-columns:160px 1fr;gap:2rem;padding:2rem 0;border-bottom:1px solid rgba(184,151,74,0.1);align-items:start;}
+    .lin-row:last-child{border-bottom:none;}
+    @media(max-width:640px){.lin-row{grid-template-columns:1fr;gap:0.5rem;}}
+    .lin-era{font-family:'Noto Serif JP',serif;font-size:1.2rem;font-weight:500;color:var(--red);letter-spacing:0.04em;}
+    .lin-what{font-family:'Cormorant',serif;font-size:1.35rem;font-weight:600;color:var(--cream);margin-bottom:0.45rem;}
+    .lin-body{font-family:'Cormorant',serif;font-style:italic;font-size:1rem;color:var(--gray);line-height:1.8;}
+
+    /* Pullquote */
+    .quote-bg{background:var(--red);padding:4rem 2rem;text-align:center;}
+    .quote-bg blockquote{font-family:'Cormorant',serif;font-style:italic;font-size:clamp(1.3rem,2.4vw,1.95rem);color:var(--cream);max-width:760px;margin:0 auto;line-height:1.55;}
+    .quote-bg cite{display:block;margin-top:1.25rem;font-family:'Noto Serif JP',serif;font-size:0.7rem;letter-spacing:0.25em;color:var(--cream);font-style:normal;}
+
+    /* CTA */
+    .cta-bg{padding:5rem 2rem;text-align:center;}
+    .cta-bg .section-h-jp{color:var(--cream);}
+    .cta-bg .section-h-en{color:var(--gold);}
+    .cta-bg p{font-family:'Cormorant',serif;font-style:italic;font-size:1.05rem;line-height:1.85;color:rgba(234,216,180,0.78);max-width:580px;margin:0.5rem auto 2.5rem;}
+    .cta-btns{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;}
+    .btn-red{background:var(--red);color:var(--cream);font-family:'Noto Serif JP',serif;font-size:0.85rem;letter-spacing:0.1em;text-decoration:none;padding:1rem 2.5rem;border:1px solid var(--red);transition:background 0.2s;}
+    .btn-red:hover{background:#7A0F1C;}
+    .btn-gold{background:transparent;color:var(--gold);font-family:'Cormorant',serif;font-style:italic;font-size:1.05rem;text-decoration:none;padding:1rem 2.5rem;border:1px solid rgba(184,151,74,0.4);transition:all 0.2s;}
+    .btn-gold:hover{border-color:var(--gold);background:rgba(184,151,74,0.08);}
+
+    footer{background:#020202;border-top:1px solid rgba(184,151,74,0.15);padding:3rem 2rem;text-align:center;}
+    .foot-jp{font-family:'Noto Serif JP',serif;font-size:1.5rem;color:var(--gold);}
+    .foot-en{font-family:'Cormorant',serif;font-size:0.85rem;letter-spacing:0.25em;color:rgba(234,216,180,0.6);margin-top:0.4rem;}
+    .foot-copy{font-family:'Cormorant',serif;font-size:0.8rem;color:var(--gray);margin-top:1.5rem;}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    html { scroll-padding-top: 40px !important; }
+    body { padding-top: 36px !important; }
+    body > #dcrader-topheader, body > [data-dcrader-topheader] { padding-top: 0 !important; margin-top: -36px !important; }
+  </style>
+  <script src="/template-topheader.js" defer></script>
+</head>
+<body>
+
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">
+      <span class="nav-jp">龍墨</span>
+      <span class="nav-en">Ryūboku Tattoo</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="/#artists">Artists</a></li>
+      <li><a href="/#portfolio">Portfolio</a></li>
+      <li><a href="/v3-japanese-irezumi/tradition" aria-current="page">Tradition</a></li>
+      <li><a href="/#aftercare">Aftercare</a></li>
+      <li><a href="/#faq">FAQ</a></li>
+      <li><a href="/#booking" class="nav-book-btn">予約</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="ph-inner">
+    <div>
+      <span class="ph-tag">傳統 · The Tradition · Vol. I</span>
+      <h1 class="ph-jp">傳統<span class="ph-en">The motifs, the principles, the lineage.</span></h1>
+      <div class="ph-stroke" aria-hidden="true"></div>
+      <p class="ph-dek">Irezumi is not a style. It is a four-hundred-year transmission of meaning that has survived prohibition, exile, and dilution. Every piece we apply at Ryūboku draws from this transmission. This page is a working guide to its grammar.</p>
+    </div>
+    <div class="ph-vertical" aria-hidden="true">古き道を歩む</div>
+  </div>
+</header>
+
+<section class="section">
+  <div class="section-inner narrow intro">
+    <span class="eyebrow">— 序文 · Preface</span>
+    <p>What follows is not a comprehensive history of irezumi. Volumes have been written by scholars more qualified than we are; we will recommend three at the end of this page. This is, more modestly, the brief we share with clients who come to Ryūboku considering a traditional Japanese tattoo and want to understand <em>what they are committing to</em>.</p>
+    <p>Japanese tattoo tradition is, before anything else, a tradition of <em>meaning</em>. Motifs are not chosen aesthetically. Composition is not chosen freely. Every element on a traditional Japanese sleeve, back, or body suit carries a story, and the stories interact — sometimes reinforcing one another, sometimes deliberately holding one another in tension. Our role as tattooists is not to produce designs you like; it is to help you compose a piece whose meaning is whole.</p>
+  </div>
+</section>
+
+<section class="section motif-bg" aria-labelledby="motifs-h">
+  <div class="section-inner">
+    <span class="eyebrow">六つの主題 · Six Principal Motifs</span>
+    <h2 class="section-h-jp" id="motifs-h">図像と意味</h2>
+    <p class="section-h-en">Figures and what they carry.</p>
+    <div class="gold-stroke" aria-hidden="true"></div>
+    <div class="motifs-grid" role="list" aria-label="Traditional Japanese tattoo motifs">
+      {motifs.map(m => (
+        <article class="motif-card" role="listitem">
+          <div class="motif-kanji" aria-hidden="true">{m.kanji}</div>
+          <span class="motif-romaji">{m.romaji}</span>
+          <h3 class="motif-en">{m.en}</h3>
+          <p class="motif-body">{m.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="princ-h">
+  <div class="section-inner narrow">
+    <span class="eyebrow">三つの原理 · Three Composition Principles</span>
+    <h2 class="section-h-jp" id="princ-h">構図の原理</h2>
+    <p class="section-h-en">The grammar of the canvas.</p>
+    <div class="gold-stroke" aria-hidden="true"></div>
+    <ol class="princ-list" role="list">
+      {principles.map(p => (
+        <li class="princ">
+          <div class="princ-head">
+            <span class="princ-jp">{p.jp}</span>
+            <div>
+              <p class="princ-romaji">{p.romaji}</p>
+              <p class="princ-en">{p.en}</p>
+            </div>
+          </div>
+          <p class="princ-body">{p.body}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<section class="quote-bg">
+  <blockquote>
+    "The image must carry weight that the carrier is willing to wear. The tattoo is not above the person it sits on; it is in service to them."
+    <cite>— Master Kazuhiro, Studio Lineage Notes</cite>
+  </blockquote>
+</section>
+
+<section class="section line-bg" aria-labelledby="line-h">
+  <div class="section-inner narrow">
+    <span class="eyebrow">系譜 · The Lineage</span>
+    <h2 class="section-h-jp" id="line-h">四百年</h2>
+    <p class="section-h-en">Four hundred years, from Edo to El Cajon Blvd.</p>
+    <div class="gold-stroke" aria-hidden="true"></div>
+    <div class="lin-list">
+      {lineage.map(l => (
+        <div class="lin-row">
+          <span class="lin-era">{l.era}</span>
+          <div>
+            <h3 class="lin-what">{l.what}</h3>
+            <p class="lin-body">{l.body}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="cta-bg">
+  <span class="eyebrow">準備ができたら · When you are ready</span>
+  <h2 class="section-h-jp">予約をする</h2>
+  <p class="section-h-en">Begin the conversation.</p>
+  <p>A traditional Japanese piece begins with an in-person consultation. We typically book consultations 4–8 weeks in advance for sleeves and back panels. ${studio.depositAmount} deposit secures the appointment and is applied to the first session.</p>
+  <div class="cta-btns">
+    <a class="btn-red" href="/#booking">予約 · Book Consultation</a>
+    <a class="btn-gold" href={`tel:${studio.phone.replace(/[^0-9]/g,'')}`}>or call {studio.phone}</a>
+  </div>
+</section>
+
+<footer>
+  <p class="foot-jp">龍墨</p>
+  <p class="foot-en">Ryūboku Tattoo · {studio.address} · {studio.city}</p>
+  <p class="foot-copy">Built by <a href="https://dcrader.dev" style="color:var(--gold);text-decoration:none;">Donovan Crader · dcrader.dev</a></p>
+</footer>
+</body>
+</html>

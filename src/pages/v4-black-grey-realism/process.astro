@@ -1,0 +1,265 @@
+---
+import { studio } from '../../data/v4';
+const base = import.meta.env.BASE_URL;
+
+const phases = [
+  { code: 'P-01', name: 'Reference Curation', dur: '7–10 days', body: "We do not work from a single reference image. We work from a set — typically eight to fifteen photographs that, together, give us the lighting, the angle, the depth-of-field, and the emotional read we are after. Clients bring what they have; we curate from there. A bad reference set produces a bad tattoo. We have walked away from commissions when reference quality could not be brought to standard. The reference set becomes a tagged folder you receive and approve before drafting begins." },
+  { code: 'P-02', name: 'Tonal Map', dur: '5–7 days', body: "Black-and-grey realism is not the absence of color — it is the deliberate translation of color information into a 9-step tonal scale, from pure black (Wash 9) through to bare skin (Wash 0). Before we draft the line, we draft the tonal map: a grayscale composition that decides exactly which areas hold the deepest blacks, which hold mid-grays, and which areas remain skin. The tonal map is what separates a portrait that reads at 6 feet from a portrait that doesn't read at all." },
+  { code: 'P-03', name: 'Stencil + Placement', dur: 'Day of session', body: "We do not transfer a stencil to skin on the day of the session and proceed immediately. The stencil is placed, photographed, removed, and reviewed in a mirror by the client for at least 20 minutes before we touch ink. Placement is the single most consequential decision we make; it cannot be made under time pressure. If the placement requires adjustment, we adjust. We will not start a session until the client and both artists are aligned on placement." },
+  { code: 'P-04', name: 'Line Pass', dur: '90–180 min', body: "The line pass establishes the structural anatomy of the piece — every form boundary, every architectural plane, every edge that the eye will use to read the image. We work with single-needle and 3-round liners only for realism work. Mid-session, we step back and photograph the line work in three lighting conditions to confirm structural integrity before we proceed to shading. If the line pass requires a second session to complete, we book it. We do not rush this stage." },
+  { code: 'P-05', name: 'Shading + Wash Buildup', dur: 'Multi-session', body: "Shading is built in layers — six to nine washes from lightest to darkest, with healing time between sessions where the piece is large enough to require it. Each wash refines the tonal information established in the tonal map. We use machine speeds and needle configurations specific to each wash; we change configurations between every wash without exception. This is what produces depth that does not flatten over time." },
+  { code: 'P-06', name: 'Detail + Refinement', dur: 'Final session', body: "The final session is the highest-stakes session and the shortest. We work in micro-detail — eyelashes, catchlights, hair fly-aways, skin texture, the small marks that elevate a realistic portrait to a believable one. By this point the piece is largely whole; what we are doing is adding the last 5% of detail that separates a tattoo from a portrait. This stage is non-negotiable on time. Some clients want to cut it short. We do not." },
+];
+
+const standards = [
+  { metric: 'Reference image count', spec: '8–15 curated photographs minimum' },
+  { metric: 'Tonal scale used', spec: '9-step Zone System adapted for skin' },
+  { metric: 'Needle configurations per piece', spec: '12–18 distinct setups across stages' },
+  { metric: 'Healing time between sessions', spec: 'Minimum 4 weeks, target 6 weeks' },
+  { metric: 'Maximum session length', spec: '4 hours · longer reduces ink retention' },
+  { metric: 'Pigment used', spec: 'Fusion Ink Black-and-Grey series, single brand only' },
+  { metric: 'Machine type', spec: 'Cheyenne Sol rotary, exclusively' },
+];
+
+const noGo = [
+  "Single low-resolution phone screenshot as the only reference. Even for memorial portraits, we require multiple original-resolution images. The risk of producing a piece that looks like the source rather than the subject is too high.",
+  "Names in script integrated into the realism portrait. Lettering and realism use opposite design languages; mixing them flattens both. We will tattoo the name in a separate piece if requested.",
+  "Color requests added late in the process. The tonal map is committed at Stage P-02 and is incompatible with color introduction beyond that point. Color realism is a different discipline; we refer those commissions to two studios we trust.",
+  "Day-of placement changes without re-stencil. If the placement is moving more than 2cm from the approved stencil position, we re-stencil and re-review. No exceptions, even when the client is in the chair.",
+];
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Process · {studio.name} — Black-and-Grey Realism Methodology</title>
+  <meta name="description" content="The six-phase realism methodology at Shadow Collective: reference curation, tonal mapping, stencil, line pass, shading buildup, refinement. Documented for the client."/>
+  <link rel="canonical" href={Astro.url.href} />
+  <meta property="og:title" content={`Process — ${studio.name}`} />
+  <meta property="og:description" content="The six-phase realism methodology at Shadow Collective: reference, tonal map, line, shading, refinement." />
+  <meta property="og:image" content="/og-image.png" />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href={`${base}styles/global.css`} />
+  <style>
+    :root {
+      --black: #000000; --near-black: #0A0A0A; --dark: #111111; --mid-dark: #1C1C1C;
+      --gray-80: #333333; --gray-60: #8A8A8A; --gray-40: #B0B0B0; --gray-20: #CCCCCC; --gray-10: #E8E8E8;
+      --white: #FFFFFF; --mono: 'IBM Plex Mono', monospace; --sans: 'Inter', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; background: var(--black); color: var(--white); }
+    body { font-family: var(--sans); background: var(--black); color: var(--white); }
+
+    .nav { position: fixed; top: 34px; left: 0; right: 0; z-index: 100; background: var(--black); border-bottom: 1px solid var(--gray-80); display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 56px; }
+    .nav-logo { font-family: var(--mono); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white); text-decoration: none; }
+    .nav-logo span { color: var(--gray-40); font-weight: 300; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; align-items:center; }
+    .nav-links a { font-family: var(--mono); font-size: 0.65rem; color: var(--gray-40); text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--white); }
+    .nav-book { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--black); background: var(--white); padding: 0.5rem 1.25rem; text-decoration: none; transition: background 0.2s; }
+    .nav-book:hover { background: var(--gray-20); }
+
+    .page-hero { padding: 8rem 2rem 4rem; border-bottom: 1px solid var(--gray-80); background: linear-gradient(180deg, var(--black) 0%, var(--near-black) 100%); }
+    .ph-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 60px 1fr 1fr; gap: 3rem; align-items: end; }
+    @media(max-width: 800px) { .ph-inner { grid-template-columns: 1fr; gap: 1.5rem; } }
+    .ph-index { font-family: var(--mono); font-size: 0.65rem; color: var(--gray-60); letter-spacing: 0.2em; }
+    .ph-spec { font-family: var(--mono); font-size: 0.65rem; color: var(--gray-60); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.25rem; }
+    .ph-h1 { font-family: var(--sans); font-size: clamp(2.5rem, 6vw, 5.25rem); font-weight: 300; line-height: 0.98; letter-spacing: -0.02em; color: var(--white); }
+    .ph-h1 strong { font-weight: 600; }
+    .ph-meta { font-family: var(--mono); font-size: 0.78rem; color: var(--gray-40); line-height: 1.85; }
+    .ph-meta .kv { display: grid; grid-template-columns: 130px 1fr; gap: 0.5rem; padding: 0.4rem 0; border-bottom: 1px dashed var(--gray-80); }
+    .ph-meta .kv:last-child { border-bottom: none; }
+    .ph-meta .k { color: var(--gray-60); letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.62rem; padding-top: 0.1rem; }
+    .ph-meta .v { color: var(--white); }
+
+    .section { padding: 5rem 2rem; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-header { display: grid; grid-template-columns: 60px 1fr auto; gap: 2rem; align-items: end; margin-bottom: 3rem; border-bottom: 1px solid var(--gray-80); padding-bottom: 1.5rem; }
+    @media(max-width: 700px) { .section-header { grid-template-columns: 1fr; gap: 0.75rem; } }
+    .section-index { font-family: var(--mono); font-size: 0.65rem; color: var(--gray-60); letter-spacing: 0.2em; }
+    .section-title { font-family: var(--sans); font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 600; letter-spacing: -0.015em; color: var(--white); text-transform: uppercase; }
+    .section-subtitle { font-family: var(--mono); font-size: 0.65rem; color: var(--gray-60); letter-spacing: 0.15em; text-transform: uppercase; }
+
+    /* Intro */
+    .intro p { font-family: var(--sans); font-size: 1.02rem; line-height: 1.85; color: var(--gray-20); margin-bottom: 1.2rem; }
+    .intro em { color: var(--gray-40); font-style: italic; }
+    .intro strong { color: var(--white); font-weight: 500; }
+
+    /* Phases */
+    .phases { display: grid; gap: 1px; background: var(--gray-80); border: 1px solid var(--gray-80); }
+    .phase { background: var(--near-black); display: grid; grid-template-columns: 80px 1fr 2fr 120px; gap: 1.5rem; padding: 2rem 1.75rem; align-items: start; }
+    @media(max-width: 900px) { .phase { grid-template-columns: 1fr; gap: 0.6rem; } }
+    .phase-code { font-family: var(--mono); font-size: 0.7rem; color: var(--gray-60); letter-spacing: 0.15em; padding-top: 0.5rem; }
+    .phase-name { font-family: var(--sans); font-size: 1.25rem; font-weight: 500; color: var(--white); }
+    .phase-dur { font-family: var(--mono); font-size: 0.62rem; color: var(--gray-60); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.45rem; }
+    .phase-body { font-family: var(--sans); font-size: 0.92rem; line-height: 1.8; color: var(--gray-20); }
+    .phase-tag { font-family: var(--mono); font-size: 0.6rem; color: var(--gray-60); letter-spacing: 0.1em; text-transform: uppercase; text-align: right; padding-top: 0.5rem; }
+    @media(max-width: 900px) { .phase-tag { text-align: left; } }
+
+    /* Standards */
+    .std-bg { background: var(--mid-dark); border-top: 1px solid var(--gray-80); border-bottom: 1px solid var(--gray-80); }
+    .std-list { display: grid; gap: 0; border: 1px solid var(--gray-80); }
+    .std-row { display: grid; grid-template-columns: 1fr 1.5fr; padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--gray-80); }
+    .std-row:last-child { border-bottom: none; }
+    .std-row:nth-child(odd) { background: var(--near-black); }
+    .std-row:nth-child(even) { background: var(--dark); }
+    @media(max-width: 600px) { .std-row { grid-template-columns: 1fr; gap: 0.3rem; } }
+    .std-metric { font-family: var(--mono); font-size: 0.7rem; color: var(--gray-40); letter-spacing: 0.12em; text-transform: uppercase; }
+    .std-spec { font-family: var(--sans); font-size: 0.92rem; color: var(--white); }
+
+    /* No-go */
+    .nogo-list { display: grid; gap: 1px; background: var(--gray-80); border: 1px solid var(--gray-80); margin-top: 2rem; }
+    .nogo-item { background: var(--near-black); padding: 1.5rem 1.75rem; display: grid; grid-template-columns: 32px 1fr; gap: 1.25rem; align-items: start; }
+    .nogo-mark { font-family: var(--mono); font-weight: 600; color: var(--white); background: var(--gray-80); width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; margin-top: 0.15rem; }
+    .nogo-body { font-family: var(--sans); font-size: 0.95rem; line-height: 1.85; color: var(--gray-20); }
+
+    /* Quote */
+    .q-bg { background: var(--black); padding: 5rem 2rem; border-top: 1px solid var(--gray-80); border-bottom: 1px solid var(--gray-80); text-align: center; }
+    .q-bg blockquote { font-family: var(--sans); font-size: clamp(1.2rem, 2.4vw, 1.85rem); font-weight: 300; line-height: 1.45; color: var(--white); max-width: 760px; margin: 0 auto; }
+    .q-bg blockquote::before { content: '"'; font-family: var(--mono); color: var(--gray-60); font-size: 2.5rem; line-height: 0; margin-right: 0.25rem; vertical-align: -0.4em; }
+    .q-bg cite { display: block; margin-top: 1.5rem; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.2em; color: var(--gray-60); text-transform: uppercase; font-style: normal; }
+
+    /* CTA */
+    .cta-bg { padding: 5rem 2rem; text-align: center; background: linear-gradient(0deg, var(--black) 0%, var(--near-black) 100%); }
+    .cta-bg h2 { font-family: var(--sans); font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; letter-spacing: -0.015em; color: var(--white); margin-bottom: 1rem; }
+    .cta-bg p { font-family: var(--sans); font-size: 0.95rem; line-height: 1.8; color: var(--gray-40); max-width: 580px; margin: 0 auto 2.5rem; }
+    .cta-btns { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .btn-w { font-family: var(--mono); font-size: 0.7rem; color: var(--black); background: var(--white); padding: 1rem 2.25rem; text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase; transition: background 0.2s; }
+    .btn-w:hover { background: var(--gray-20); }
+    .btn-out { font-family: var(--mono); font-size: 0.7rem; color: var(--white); border: 1px solid var(--gray-80); padding: 1rem 2.25rem; text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase; transition: border-color 0.2s; }
+    .btn-out:hover { border-color: var(--white); }
+
+    footer { background: var(--black); border-top: 1px solid var(--gray-80); padding: 3rem 2rem; text-align: center; }
+    .foot-logo { font-family: var(--mono); font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white); }
+    .foot-copy { font-family: var(--mono); font-size: 0.62rem; color: var(--gray-60); margin-top: 0.75rem; letter-spacing: 0.1em; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    html { scroll-padding-top: 40px !important; }
+    body { padding-top: 36px !important; }
+    body > #dcrader-topheader, body > [data-dcrader-topheader] { padding-top: 0 !important; margin-top: -36px !important; }
+  </style>
+  <script src="/template-topheader.js" defer></script>
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href={`${base}`} class="nav-logo">← all<span>variants</span></a>
+  <a href="/" class="nav-logo">{studio.name}<span>.ink</span></a>
+  <div style="display:flex;align-items:center;gap:2rem;">
+    <ul class="nav-links" role="list">
+      <li><a href="/#gallery">Gallery</a></li>
+      <li><a href="/#artists">Artists</a></li>
+      <li><a href="/v4-black-grey-realism/process" aria-current="page">Process</a></li>
+      <li><a href="/#booking">Book</a></li>
+    </ul>
+    <a href="/#booking" class="nav-book">Consult</a>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="ph-inner">
+    <span class="ph-index">DOC.PROC.01</span>
+    <div>
+      <p class="ph-spec">Process Documentation · v.2026.1</p>
+      <h1 class="ph-h1">The realism <strong>methodology</strong>.</h1>
+    </div>
+    <dl class="ph-meta">
+      <div class="kv"><dt class="k">Studio</dt><dd class="v">{studio.name}</dd></div>
+      <div class="kv"><dt class="k">Discipline</dt><dd class="v">B&G Hyperrealism</dd></div>
+      <div class="kv"><dt class="k">Phases</dt><dd class="v">6 documented stages</dd></div>
+      <div class="kv"><dt class="k">Typical Cycle</dt><dd class="v">8–14 weeks, end-to-end</dd></div>
+    </dl>
+  </div>
+</header>
+
+<section class="section">
+  <div class="section-inner intro" style="max-width:880px;">
+    <p>Black-and-grey realism is a forensic discipline. The variance between a portrait that reads at six feet and a portrait that does not — between a tattoo people stop you on the street about and a tattoo you stop showing — is, almost without exception, the variance in <strong>process discipline</strong>. The work itself is downstream of the methodology.</p>
+    <p>What follows is the documented six-phase process used on every realism commission at Shadow Collective. We share it externally for two reasons. <em>One:</em> we want our clients to know what they are paying for. <em>Two:</em> we want artists earlier in their realism careers to see that the work behind the work is what produces the work.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-index">01</span>
+      <h2 class="section-title">The Six Phases</h2>
+      <span class="section-subtitle">Methodology · Phases P-01 → P-06</span>
+    </div>
+    <ol class="phases" role="list">
+      {phases.map((p, i) => (
+        <li class="phase">
+          <span class="phase-code">{p.code}</span>
+          <div>
+            <p class="phase-name">{p.name}</p>
+            <p class="phase-dur">{p.dur}</p>
+          </div>
+          <p class="phase-body">{p.body}</p>
+          <span class="phase-tag">Stage {String(i+1).padStart(2,'0')}/06</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<section class="section std-bg">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-index">02</span>
+      <h2 class="section-title">Internal Standards</h2>
+      <span class="section-subtitle">Technical specifications · Non-negotiable</span>
+    </div>
+    <div class="std-list">
+      {standards.map(s => (
+        <div class="std-row">
+          <span class="std-metric">{s.metric}</span>
+          <span class="std-spec">{s.spec}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner" style="max-width:1000px;">
+    <div class="section-header">
+      <span class="section-index">03</span>
+      <h2 class="section-title">Four Things We Refuse</h2>
+      <span class="section-subtitle">No-go log · Active</span>
+    </div>
+    <ul class="nogo-list" role="list">
+      {noGo.map((n, i) => (
+        <li class="nogo-item">
+          <span class="nogo-mark" aria-hidden="true">{String(i+1).padStart(2,'0')}</span>
+          <p class="nogo-body">{n}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<section class="q-bg">
+  <blockquote>The work behind the work is what produces the work. A studio that skips the first three phases will tattoo something. It will not tattoo what you came for.</blockquote>
+  <cite>— Studio Lead, Shadow Collective</cite>
+</section>
+
+<section class="cta-bg">
+  <h2>Begin a consultation.</h2>
+  <p>Consultations are 45 minutes, in person, and free. We review your reference set together, walk through tonal scale options on a sample sheet, and tell you honestly whether your idea is the right fit for our studio. ${studio.depositAmount} deposit secures your session after consultation.</p>
+  <div class="cta-btns">
+    <a class="btn-w" href="/#booking">Book Consultation</a>
+    <a class="btn-out" href={`tel:${studio.phone.replace(/[^0-9]/g,'')}`}>Call {studio.phone}</a>
+  </div>
+</section>
+
+<footer>
+  <p class="foot-logo">{studio.name}</p>
+  <p class="foot-copy">{studio.address} · {studio.city} · {studio.phone}</p>
+  <p class="foot-copy" style="margin-top:0.5rem;">Built by <a href="https://dcrader.dev" style="color:var(--white);text-decoration:none;">Donovan Crader · dcrader.dev</a></p>
+</footer>
+</body>
+</html>

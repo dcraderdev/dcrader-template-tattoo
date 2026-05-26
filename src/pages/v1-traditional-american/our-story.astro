@@ -1,0 +1,260 @@
+---
+import { studio } from '../../data/v1';
+import '../../styles/global.css';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Our Story · {studio.name} — Traditional American Tattoo Since 2004</title>
+  <meta name="description" content="Twenty years behind the counter at Iron & Rose. The lineage, the apprenticeships, the wins, and the conviction that traditional American tattooing is the only style worth protecting."/>
+  <link rel="canonical" href={Astro.url.href}/>
+  <meta property="og:title" content={`Our Story — ${studio.name}`}/>
+  <meta property="og:description" content="Twenty years of bold lines, saturated reds, and the discipline of working the same five styles until you get them right."/>
+  <meta property="og:image" content="/og-image.png"/>
+  <meta property="og:type" content="article"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--red:#7A0000;--red2:#A00000;--cream:#FFF5DC;--cream2:#F5E6C0;--gold:#C8860A;--gold2:#E8A020;--dark:#160500;--ink:#2A1200;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--cream);color:var(--ink);font-family:'EB Garamond',Georgia,serif;}
+
+    nav{background:var(--dark);border-bottom:4px solid var(--gold);position:sticky;top:34px;z-index:100;}
+    .nav-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 1.5rem;min-height:64px;}
+    .nav-links-left,.nav-links-right{display:flex;gap:0;list-style:none;}
+    .nav-links-right{justify-content:flex-end;}
+    nav a{color:rgba(255,245,220,0.7);text-decoration:none;font-family:'Teko',sans-serif;font-size:1rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;display:block;transition:color 0.2s;}
+    nav a:hover,nav a:focus-visible{color:var(--gold);}
+    nav a[aria-current="page"]{color:var(--gold);}
+    .nav-logo-block{text-align:center;text-decoration:none;display:block;}
+    .nav-logo-main{font-family:'Teko',sans-serif;font-size:1.6rem;font-weight:700;letter-spacing:0.08em;color:var(--cream);line-height:1;text-transform:uppercase;}
+    .nav-logo-sub{font-family:'EB Garamond',serif;font-size:0.65rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;}
+    .nav-book{background:var(--red)!important;color:var(--cream)!important;font-weight:600;}
+    .nav-book:hover{background:var(--red2)!important;}
+
+    .page-hero{background:linear-gradient(180deg,var(--dark) 0%,#1F0700 100%);padding:6rem 1.5rem 5rem;text-align:center;border-bottom:4px solid var(--gold);position:relative;overflow:hidden;}
+    .page-hero::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 80px,rgba(200,134,10,0.05) 81px),repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(200,134,10,0.05) 81px);pointer-events:none;}
+    .page-hero-inner{max-width:900px;margin:0 auto;position:relative;}
+    .est-line{font-family:'EB Garamond',serif;font-size:0.78rem;letter-spacing:0.42em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;gap:1rem;}
+    .est-line::before,.est-line::after{content:'';flex:0 0 50px;height:1px;background:var(--gold);}
+    .page-h1{font-family:'Teko',sans-serif;font-size:clamp(3.5rem,9vw,7rem);font-weight:700;color:var(--cream);line-height:0.95;letter-spacing:0.02em;text-transform:uppercase;text-shadow:4px 4px 0 var(--red);margin-bottom:1.25rem;}
+    .page-h1 em{color:var(--gold);font-style:normal;}
+    .page-dek{font-family:'EB Garamond',serif;font-style:italic;font-size:clamp(1.05rem,1.8vw,1.35rem);color:var(--cream2);max-width:640px;margin:0 auto;line-height:1.7;}
+
+    .section{padding:5rem 1.5rem;}
+    .section-inner{max-width:900px;margin:0 auto;}
+    .eyebrow{font-family:'EB Garamond',serif;font-size:0.72rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--red);margin-bottom:0.5rem;display:block;}
+    .section-h{font-family:'Teko',sans-serif;font-size:clamp(2.25rem,4.5vw,3.75rem);font-weight:700;color:var(--dark);line-height:0.98;text-transform:uppercase;}
+    .gold-bar{width:60px;height:4px;background:var(--gold);margin:1rem 0 2.5rem;}
+
+    .narrative p{font-family:'EB Garamond',serif;font-size:1.08rem;line-height:1.85;color:#3A1900;margin-bottom:1.4rem;}
+    .narrative p:first-of-type::first-letter{font-family:'Teko',sans-serif;font-size:4.5rem;float:left;line-height:1;padding:0.2rem 0.6rem 0 0;color:var(--red);font-weight:700;}
+    .narrative em{font-style:italic;color:var(--red);}
+    .narrative strong{color:var(--dark);font-weight:600;}
+    .pullquote{font-family:'EB Garamond',serif;font-style:italic;font-size:1.45rem;line-height:1.55;color:var(--dark);border-top:2px solid var(--gold);border-bottom:2px solid var(--gold);padding:1.75rem 0;margin:2.5rem 0;text-align:center;}
+    .pullquote cite{display:block;margin-top:0.85rem;font-style:normal;font-family:'Teko',sans-serif;font-size:0.85rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);}
+
+    /* Timeline */
+    .timeline-bg{background:var(--dark);color:var(--cream);border-top:4px solid var(--gold);border-bottom:4px solid var(--gold);position:relative;}
+    .timeline-bg::before,.timeline-bg::after{content:'';position:absolute;left:0;right:0;height:6px;background:repeating-linear-gradient(45deg,var(--red) 0 8px,var(--dark) 8px 16px);}
+    .timeline-bg::before{top:4px;}.timeline-bg::after{bottom:4px;}
+    .timeline-bg .section-h{color:var(--cream);}
+    .timeline-bg .eyebrow{color:var(--gold2);}
+    .timeline-bg .gold-bar{background:var(--cream);}
+    .timeline{list-style:none;border-left:2px solid var(--gold);padding-left:2rem;display:grid;gap:2rem;}
+    .t-item{position:relative;}
+    .t-item::before{content:'';position:absolute;left:-2.62rem;top:0.4rem;width:14px;height:14px;background:var(--gold);border:3px solid var(--dark);border-radius:50%;}
+    .t-year{font-family:'Teko',sans-serif;font-size:1.85rem;font-weight:700;color:var(--gold2);letter-spacing:0.03em;line-height:1;margin-bottom:0.3rem;}
+    .t-head{font-family:'Teko',sans-serif;font-size:1.3rem;font-weight:600;color:var(--cream);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.45rem;}
+    .t-body{font-family:'EB Garamond',serif;font-style:italic;font-size:1rem;color:#d4b090;line-height:1.7;}
+
+    /* Lineage cards */
+    .lineage-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:2px solid var(--gold);}
+    @media(max-width:760px){.lineage-grid{grid-template-columns:1fr;}}
+    .ln-card{padding:2rem 1.75rem;border-right:1px solid rgba(200,134,10,0.3);}
+    .ln-card:last-child{border-right:none;}
+    @media(max-width:760px){.ln-card{border-right:none;border-bottom:1px solid rgba(200,134,10,0.3);}.ln-card:last-child{border-bottom:none;}}
+    .ln-name{font-family:'Teko',sans-serif;font-size:1.45rem;font-weight:700;color:var(--dark);letter-spacing:0.05em;text-transform:uppercase;line-height:1;}
+    .ln-dates{font-family:'EB Garamond',serif;font-style:italic;font-size:0.85rem;color:var(--red);margin:0.3rem 0 0.9rem;}
+    .ln-body{font-size:0.95rem;line-height:1.7;color:#5A2C0A;}
+
+    /* CTA */
+    .cta-bg{background:var(--red);text-align:center;}
+    .cta-bg .section-h{color:var(--cream);}
+    .cta-bg .eyebrow{color:var(--gold2);}
+    .cta-bg .gold-bar{background:var(--cream);margin-left:auto;margin-right:auto;}
+    .cta-bg p{color:var(--cream2);font-size:1.05rem;line-height:1.7;max-width:560px;margin:0 auto 2rem;}
+    .cta-btns{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;}
+    .btn-gold{background:var(--gold);color:var(--dark);font-family:'Teko',sans-serif;font-size:1.05rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;padding:0.85rem 2.25rem;border:2px solid var(--gold);transition:all 0.2s;}
+    .btn-gold:hover{background:var(--gold2);border-color:var(--gold2);}
+    .btn-cream-outline{background:transparent;color:var(--cream);font-family:'Teko',sans-serif;font-size:1.05rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;padding:0.85rem 2.25rem;border:2px solid var(--cream);transition:all 0.2s;}
+    .btn-cream-outline:hover{background:var(--cream);color:var(--red);}
+
+    footer{background:#0D0300;border-top:4px solid var(--gold);padding:3rem 1.5rem;text-align:center;}
+    .footer-logo{font-family:'Teko',sans-serif;font-size:2.25rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--cream);}
+    .footer-logo span{color:var(--gold);}
+    .footer-copy{font-size:0.78rem;color:rgba(255,245,220,0.65);font-family:'EB Garamond',serif;margin-top:0.75rem;}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    html { scroll-padding-top: 40px !important; }
+    body { padding-top: 36px !important; }
+    body > #dcrader-topheader, body > [data-dcrader-topheader] { padding-top: 0 !important; margin-top: -36px !important; }
+  </style>
+  <script src="/template-topheader.js" defer></script>
+</head>
+<body>
+
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <ul class="nav-links-left" role="list">
+      <li><a href="/#portfolio">Portfolio</a></li>
+      <li><a href="/#artists">Artists</a></li>
+      <li><a href="/v1-traditional-american/our-story" aria-current="page">Our Story</a></li>
+    </ul>
+    <a href="/" class="nav-logo-block" aria-label={`${studio.name} home`}>
+      <div class="nav-logo-main">Iron <span style="color:var(--gold);">&</span> Rose</div>
+      <div class="nav-logo-sub">San Diego · Est. 2004</div>
+    </a>
+    <ul class="nav-links-right" role="list">
+      <li><a href="/#faq">FAQ</a></li>
+      <li><a href="/#location">Location</a></li>
+      <li><a href="/#booking" class="nav-book">Book Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-hero" aria-labelledby="story-h">
+  <div class="page-hero-inner">
+    <p class="est-line">Established 2004 · Twenty Years on El Cajon Blvd</p>
+    <h1 id="story-h" class="page-h1">The <em>Story</em><br/>Behind the Counter</h1>
+    <p class="page-dek">Two decades of bold lines, saturated red, and the conviction that the work passed down from Sailor Jerry, Norman Collins, and Bert Grimm is the only work worth protecting.</p>
+  </div>
+</header>
+
+<section class="section" aria-labelledby="origin-h">
+  <div class="section-inner">
+    <span class="eyebrow">Where it Started</span>
+    <h2 class="section-h" id="origin-h">A Storefront on El Cajon Boulevard, 2004</h2>
+    <div class="gold-bar" aria-hidden="true"></div>
+    <div class="narrative">
+      <p>Rex "Ironhand" Valdez opened the doors of Iron &amp; Rose Tattoo on the second Tuesday of June, 2004. The previous tenant had run a barber shop for forty-one years and left a single Sailor Jerry print on the back wall — a yellow rose wrapped in barbed wire, signed in red. Rex pulled the print down, framed it, and hung it behind the new counter. It is still there.</p>
+      <p>The first eighteen months were lean. Rex had spent ten years apprenticing in New Orleans under a third-generation tattooist named Calvin "Cal" Mariot, who taught him exactly two things and refused to teach him a third: <em>how to draw a bold outline that would hold for fifty years</em>, and <em>how to mix red ink with a stable iron-oxide base that wouldn't gray under California sun</em>. The third thing — how to run a shop — Rex had to learn the slow way.</p>
+      <p>By 2006, the chair was full. By 2008, there were three chairs. Dee Marsh joined in 2009 from a flash-heavy shop in Long Beach. Marcus "Sailor M" Okafor came aboard in 2014 after fifteen years as a merchant marine, where he had tattooed crewmates with a homemade rig and a bottle of India ink while crossing the Pacific. The shop hasn't lost an artist since.</p>
+      <p>What has stayed constant for twenty years is the work itself. <strong>Bold lines. Saturated primary color. Limited palette.</strong> No micro-realism, no script lettering across collarbones, no watercolor experiments. Five styles, done with discipline, until they're done right. Iron &amp; Rose has never advertised in any magazine, and the shop has never had a social media manager. The only marketing has ever been the work that walks out the door.</p>
+    </div>
+
+    <blockquote class="pullquote">
+      "We don't chase trends. We trust that the work Sailor Jerry was doing in 1940 is the same work that will look good on you in 2040 — because it already looked good on your grandfather."
+      <cite>— Rex Valdez, founder</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section class="section timeline-bg" aria-labelledby="timeline-h">
+  <div class="section-inner">
+    <span class="eyebrow">Twenty Years, Walked</span>
+    <h2 class="section-h" id="timeline-h">The Long Line</h2>
+    <div class="gold-bar" aria-hidden="true"></div>
+    <ol class="timeline" role="list">
+      <li class="t-item">
+        <p class="t-year">2004</p>
+        <h3 class="t-head">Doors Open · El Cajon Blvd</h3>
+        <p class="t-body">Rex tattoos his first San Diego client — a panther on a longshoreman's forearm — on the second Tuesday in June. The shop's sign is hand-painted by Rex's brother-in-law for $40.</p>
+      </li>
+      <li class="t-item">
+        <p class="t-year">2007</p>
+        <h3 class="t-head">First Convention · Star of Texas</h3>
+        <p class="t-body">Rex enters his first competition and places third in Traditional. The trophy lives on the shop wall to this day, between two prints by Norman Collins.</p>
+      </li>
+      <li class="t-item">
+        <p class="t-year">2009</p>
+        <h3 class="t-head">Dee Marsh Joins</h3>
+        <p class="t-body">After two years of weekend visits to learn red mixing from Rex, Dee leaves a Long Beach flash shop to come on full-time. Her pinup portfolio becomes the shop's identity within eighteen months.</p>
+      </li>
+      <li class="t-item">
+        <p class="t-year">2012</p>
+        <h3 class="t-head">First Apprentice Trained</h3>
+        <p class="t-body">A nineteen-year-old named Carmen finishes the shop's first formal apprenticeship and opens her own studio in Tijuana. She remains a friend of the shop and visits twice a year.</p>
+      </li>
+      <li class="t-item">
+        <p class="t-year">2014</p>
+        <h3 class="t-head">Sailor M Steps Off the Ship</h3>
+        <p class="t-body">Marcus Okafor leaves the merchant marines after fifteen years and joins the shop. His nautical work — anchors, mermaids, full-back ships — adds a third pillar to the shop's identity.</p>
+      </li>
+      <li class="t-item">
+        <p class="t-year">2017</p>
+        <h3 class="t-head">Tattoodo Top 100 American Traditional</h3>
+        <p class="t-body">Editor-voted shop-wide listing — the only San Diego studio on the list that year. Iron &amp; Rose still has not printed the article in its window.</p>
+      </li>
+      <li class="t-item">
+        <p class="t-year">2021</p>
+        <h3 class="t-head">Inked Magazine Feature</h3>
+        <p class="t-body">Six-page spread on the Sailor Jerry revival in Southern California. The shop declines a follow-up profile request the next year.</p>
+      </li>
+      <li class="t-item">
+        <p class="t-year">2023</p>
+        <h3 class="t-head">Best Traditional · Star of Texas</h3>
+        <p class="t-body">Rex returns to the same convention where he placed third sixteen years earlier and wins Best Traditional on day three with a large color panther. He frames the ribbon on the back of the chalkboard behind the counter.</p>
+      </li>
+      <li class="t-item">
+        <p class="t-year">2024</p>
+        <h3 class="t-head">Twenty Years · Still On El Cajon Blvd</h3>
+        <p class="t-body">Same storefront. Same Sailor Jerry rose behind the counter. Same conviction. 2,840 pieces inked, 312 cover-ups walked out clean, seven apprentices trained and turned loose.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="lineage-h">
+  <div class="section-inner">
+    <span class="eyebrow">The Lineage</span>
+    <h2 class="section-h" id="lineage-h">Who We Learned From</h2>
+    <div class="gold-bar" aria-hidden="true"></div>
+    <div class="narrative">
+      <p>Traditional American tattooing isn't an aesthetic. It's a transmission — a chain of teaching that runs back to early-twentieth-century shops in Honolulu, San Francisco, and Long Beach, and continues only because people like Cal Mariot insisted on doing it the right way and refusing to teach shortcuts. The work we do here exists because of three names in particular.</p>
+    </div>
+    <div class="lineage-grid" role="list" aria-label="The lineage Iron & Rose draws from">
+      <article class="ln-card" role="listitem">
+        <h3 class="ln-name">Sailor Jerry Collins</h3>
+        <p class="ln-dates">1911 – 1973 · Honolulu</p>
+        <p class="ln-body">The man who codified the modern American traditional palette and brought Japanese line discipline into Western flash. Every red in our shop traces back to a Sailor Jerry mix Cal Mariot taught Rex in 1996.</p>
+      </article>
+      <article class="ln-card" role="listitem">
+        <h3 class="ln-name">Norman "Bowery" Collins</h3>
+        <p class="ln-dates">1944 – Present · San Francisco</p>
+        <p class="ln-body">Sailor Jerry's apprentice and the steward of the traditional revival. His insistence on bold outlines that hold for fifty years is the standard we use to judge our own work, daily.</p>
+      </article>
+      <article class="ln-card" role="listitem">
+        <h3 class="ln-name">Calvin "Cal" Mariot</h3>
+        <p class="ln-dates">1939 – 2021 · New Orleans</p>
+        <p class="ln-body">Rex's mentor and the third-generation tattooist who taught him red ink mixing and outline discipline. He never advertised, never gave an interview, and trained six tattooists in his lifetime. We carry his work forward.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section cta-bg" aria-labelledby="cta-h">
+  <div class="section-inner">
+    <span class="eyebrow">Come Sit in the Chair</span>
+    <h2 class="section-h" id="cta-h">Twenty Years In. Walk-Ins Welcome.</h2>
+    <div class="gold-bar" aria-hidden="true"></div>
+    <p>Walk-ins Tuesday through Sunday, noon to seven. Phone ahead to check availability or take a seat and pick from the flash on the wall. Custom designs by appointment only — a ${studio.depositAmount} deposit secures your slot.</p>
+    <div class="cta-btns">
+      <a class="btn-gold" href="/#booking">Book a Session</a>
+      <a class="btn-cream-outline" href={`tel:${studio.phone.replace(/[^0-9]/g,'')}`}>Call {studio.phone}</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-logo">Iron <span>&amp;</span> Rose</p>
+  <p class="footer-copy">© 2026 · {studio.address}, {studio.city} · {studio.phone}</p>
+  <p class="footer-copy" style="margin-top:0.5rem;">Built by <a href="https://dcrader.dev" style="color:var(--gold);text-decoration:none;">Donovan Crader · dcrader.dev</a></p>
+</footer>
+</body>
+</html>
