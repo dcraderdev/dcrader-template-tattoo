@@ -49,14 +49,22 @@ const lineage = [
     body{background:var(--bg);color:var(--cream);font-family:'Cormorant',Georgia,serif;}
 
     nav{background:rgba(6,6,6,0.95);border-bottom:1px solid rgba(184,151,74,0.15);position:sticky;top:34px;z-index:100;backdrop-filter:blur(8px);}
-    .nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;min-height:70px;}
-    .nav-logo{text-decoration:none;display:flex;align-items:baseline;gap:0.75rem;}
+    .nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;min-height:70px;gap:1rem;}
+    .nav-logo{text-decoration:none;display:flex;align-items:baseline;gap:0.75rem;white-space:nowrap;}
     .nav-jp{font-family:'Noto Serif JP',serif;font-size:1.3rem;font-weight:400;color:var(--gold);}
-    .nav-en{font-family:'Cormorant',serif;font-size:0.75rem;font-weight:300;letter-spacing:0.3em;text-transform:uppercase;color:rgba(234,216,180,0.75);}
+    .nav-en{font-family:'Cormorant',serif;font-size:0.75rem;font-weight:300;letter-spacing:0.3em;text-transform:uppercase;color:rgba(234,216,180,0.85);}
     .nav-links{display:flex;list-style:none;gap:0;align-items:center;}
     nav a{font-family:'Cormorant',serif;font-size:0.85rem;letter-spacing:0.1em;color:var(--gray);text-decoration:none;padding:0.4rem 0.85rem;display:block;transition:color 0.2s;}
-    nav a:hover,nav a[aria-current="page"]{color:var(--gold);}
+    nav a:hover,nav a:focus-visible,nav a[aria-current="page"]{color:var(--gold);outline:none;}
+    nav a:focus-visible{box-shadow:inset 0 -2px 0 var(--gold);}
     .nav-book-btn{background:var(--red)!important;color:var(--cream)!important;font-family:'Noto Serif JP',serif!important;font-size:0.75rem!important;letter-spacing:0.08em!important;}
+    .nav-book-btn:hover,.nav-book-btn:focus-visible{background:#7A0F1C!important;}
+    @media(max-width:880px){
+      .nav-inner{padding:0 1rem;min-height:58px;gap:0.5rem;}
+      .nav-en{display:none;}
+      .nav-links li:not(:last-child){display:none;}
+      .nav-jp{font-size:1.2rem;}
+    }
 
     .page-hero{position:relative;padding:7rem 2rem 5rem;overflow:hidden;border-bottom:1px solid rgba(184,151,74,0.15);background:radial-gradient(ellipse at top,rgba(155,19,36,0.18) 0%,transparent 65%),var(--bg);}
     .ph-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:end;}
@@ -141,17 +149,17 @@ const lineage = [
 
 <nav aria-label="Main navigation">
   <div class="nav-inner">
-    <a class="nav-logo" href="/">
+    <a class="nav-logo" href="/v3-japanese-irezumi">
       <span class="nav-jp">龍墨</span>
       <span class="nav-en">Ryūboku Tattoo</span>
     </a>
     <ul class="nav-links" role="list">
-      <li><a href="/#artists">Artists</a></li>
-      <li><a href="/#portfolio">Portfolio</a></li>
+      <li><a href="/v3-japanese-irezumi#artists">Artists</a></li>
+      <li><a href="/v3-japanese-irezumi#portfolio">Portfolio</a></li>
       <li><a href="/v3-japanese-irezumi/tradition" aria-current="page">Tradition</a></li>
-      <li><a href="/#aftercare">Aftercare</a></li>
-      <li><a href="/#faq">FAQ</a></li>
-      <li><a href="/#booking" class="nav-book-btn">予約</a></li>
+      <li><a href="/v3-japanese-irezumi#aftercare">Aftercare</a></li>
+      <li><a href="/v3-japanese-irezumi#faq">FAQ</a></li>
+      <li><a href="/v3-japanese-irezumi#booking" class="nav-book-btn">予約</a></li>
     </ul>
   </div>
 </nav>
@@ -251,7 +259,7 @@ const lineage = [
   <p class="section-h-en">Begin the conversation.</p>
   <p>A traditional Japanese piece begins with an in-person consultation. We typically book consultations 4–8 weeks in advance for sleeves and back panels. ${studio.depositAmount} deposit secures the appointment and is applied to the first session.</p>
   <div class="cta-btns">
-    <a class="btn-red" href="/#booking">予約 · Book Consultation</a>
+    <a class="btn-red" href="/v3-japanese-irezumi#booking">予約 · Book Consultation</a>
     <a class="btn-gold" href={`tel:${studio.phone.replace(/[^0-9]/g,'')}`}>or call {studio.phone}</a>
   </div>
 </section>

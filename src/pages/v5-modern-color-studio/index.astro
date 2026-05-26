@@ -74,11 +74,13 @@ const heroPreload = await getImage({ src: heroImg, width: 1600, format: 'webp' }
       position: fixed; top: 34px; left: 0; right: 0; z-index: 100;
       background: var(--cream); border-bottom: 2px solid var(--ink);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2.5rem; height: 64px;
+      padding: 0 2.5rem; height: 64px; gap: 1rem;
     }
+    .nav-right { display: flex; align-items: center; gap: 0.5rem; }
     .nav-logo {
       font-family: var(--display); font-size: 1.1rem; font-weight: 700;
       color: var(--ink); text-decoration: none; letter-spacing: -0.02em;
+      white-space: nowrap;
     }
     .nav-logo .dot {
       display: inline-block; width: 8px; height: 8px; border-radius: 50%;
@@ -91,7 +93,8 @@ const heroPreload = await getImage({ src: heroImg, width: 1600, format: 'webp' }
       color: var(--ink); text-decoration: none; padding: 0.4rem 0.9rem;
       border-radius: 999px; transition: background 0.2s, color 0.2s;
     }
-    .nav-links a:hover { background: var(--cream-dark); }
+    .nav-links a:hover, .nav-links a:focus-visible { background: var(--cream-dark); outline: none; }
+    .nav-links a:focus-visible { box-shadow: 0 0 0 2px var(--ink); }
     .nav-book {
       font-family: var(--display); font-size: 0.85rem; font-weight: 700;
       color: var(--cream); background: var(--ink);
@@ -99,7 +102,13 @@ const heroPreload = await getImage({ src: heroImg, width: 1600, format: 'webp' }
       cursor: pointer; text-decoration: none; display: inline-block;
       transition: transform 0.2s;
     }
-    .nav-book:hover { transform: scale(1.04); }
+    .nav-book:hover, .nav-book:focus-visible { transform: scale(1.04); outline: 2px solid var(--purple); outline-offset: 2px; }
+    @media (max-width: 760px) {
+      .nav { padding: 0 1rem; height: 56px; gap: 0.5rem; }
+      .nav-links { display: none; }
+      .nav-logo { font-size: 0.95rem; }
+      .nav-book { font-size: 0.78rem; padding: 0.5rem 1.1rem; }
+    }
 
     /* HERO */
     .hero {
@@ -579,16 +588,14 @@ const heroPreload = await getImage({ src: heroImg, width: 1600, format: 'webp' }
 
   <!-- NAV -->
   <nav class="nav" role="navigation" aria-label="Main navigation">
-    <a href={`${base}`} class="nav-logo">← all<span style="font-weight:300;"> variants</span></a>
     <a href={`${base}v5-modern-color-studio`} class="nav-logo">
       {studio.name}<span class="dot" aria-hidden="true"></span>
     </a>
-    <div style="display:flex;align-items:center;gap:0.5rem;">
+    <div class="nav-right">
       <ul class="nav-links" role="list">
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#artists">Artists</a></li>
         <li><a href="/v5-modern-color-studio/color-aftercare">Color Aftercare</a></li>
-        <li><a href="#booking">Book Now</a></li>
       </ul>
       <a href="#booking" class="nav-book">Book Now</a>
     </div>

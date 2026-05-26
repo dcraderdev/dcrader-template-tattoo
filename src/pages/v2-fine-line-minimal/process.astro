@@ -26,14 +26,24 @@ import '../../styles/global.css';
     body{background:var(--w);color:var(--b);font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;}
 
     nav{background:var(--w);border-bottom:1px solid var(--xlt);position:sticky;top:34px;z-index:100;}
-    .nav-row{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 2rem;height:54px;}
+    .nav-row{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 2rem;height:54px;gap:1rem;}
     .nav-left,.nav-right{display:flex;gap:0;list-style:none;align-items:center;}
     .nav-right{justify-content:flex-end;}
     nav a{font-family:'Inter Tight',sans-serif;font-weight:300;font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--mid);text-decoration:none;padding:0.4rem 0.8rem;display:block;transition:color 0.2s;}
-    nav a:hover,nav a:focus-visible{color:var(--b);}
+    nav a:hover,nav a:focus-visible{color:var(--b);outline:none;}
+    nav a:focus-visible{box-shadow:inset 0 -1px 0 var(--b);}
     nav a[aria-current="page"]{color:var(--b);border-bottom:1px solid var(--b);padding-bottom:1px;}
     .nav-logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--b);text-decoration:none;white-space:nowrap;}
     .nav-book{font-family:'Inter Tight',sans-serif;font-weight:400;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--b)!important;border-bottom:1px solid var(--b);padding-bottom:1px!important;}
+    @media(max-width:860px){
+      .nav-row{grid-template-columns:auto 1fr auto;padding:0 1rem;height:50px;gap:0.5rem;}
+      .nav-left{display:none;}
+      .nav-right li:not(:last-child){display:none;}
+      .nav-logo{font-size:0.85rem;letter-spacing:0.28em;}
+    }
+    @media(max-width:380px){
+      .nav-logo{font-size:0.78rem;letter-spacing:0.2em;}
+    }
 
     .ph{padding:8rem 2rem 4rem;text-align:center;}
     .ph-rule-top{width:1px;height:60px;background:var(--xlt);margin:0 auto 2.5rem;}
@@ -97,15 +107,15 @@ import '../../styles/global.css';
 <nav aria-label="Main navigation">
   <div class="nav-row">
     <ul class="nav-left" role="list">
-      <li><a href="/#artists">Artists</a></li>
-      <li><a href="/#portfolio">Portfolio</a></li>
+      <li><a href="/v2-fine-line-minimal#artists">Artists</a></li>
+      <li><a href="/v2-fine-line-minimal#portfolio">Portfolio</a></li>
       <li><a href="/v2-fine-line-minimal/process" aria-current="page">Process</a></li>
     </ul>
-    <a class="nav-logo" href="/">Linework Studio</a>
+    <a class="nav-logo" href="/v2-fine-line-minimal">Linework Studio</a>
     <ul class="nav-right" role="list">
-      <li><a href="/#faq">FAQ</a></li>
-      <li><a href="/#location">Visit</a></li>
-      <li><a href="/#booking" class="nav-book">Inquire</a></li>
+      <li><a href="/v2-fine-line-minimal#faq">FAQ</a></li>
+      <li><a href="/v2-fine-line-minimal#location">Visit</a></li>
+      <li><a href="/v2-fine-line-minimal#booking" class="nav-book">Inquire</a></li>
     </ul>
   </div>
 </nav>
@@ -215,7 +225,7 @@ import '../../styles/global.css';
   <div class="thin-rule" aria-hidden="true"></div>
   <p>The intake form is brief. We respond within 48 hours. We accept a limited number of custom commissions each month; flash availability is broader and walk-in by Saturday appointment.</p>
   <div>
-    <a class="btn-w" href="/#booking">Submit Intake</a>
+    <a class="btn-w" href="/v2-fine-line-minimal#booking">Submit Intake</a>
     <a class="btn-lt" href={`tel:${studio.phone.replace(/[^0-9]/g,'')}`}>or call {studio.phone}</a>
   </div>
 </section>

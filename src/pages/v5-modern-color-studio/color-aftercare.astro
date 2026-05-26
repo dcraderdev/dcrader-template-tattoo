@@ -57,13 +57,22 @@ const dontDo = [
     .rainbow { background: linear-gradient(90deg, var(--purple), var(--pink), var(--orange), var(--teal)); }
     .rainbow-text { background: linear-gradient(90deg, var(--purple), var(--pink), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-    .nav { position: fixed; top: 34px; left: 0; right: 0; z-index: 100; background: var(--cream); border-bottom: 2px solid var(--ink); display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; height: 64px; }
-    .nav-logo { font-family: var(--display); font-size: 1.1rem; font-weight: 700; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 0.4rem; }
+    .nav { position: fixed; top: 34px; left: 0; right: 0; z-index: 100; background: var(--cream); border-bottom: 2px solid var(--ink); display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; height: 64px; gap: 1rem; }
+    .nav-right { display: flex; align-items: center; gap: 0.5rem; }
+    .nav-logo { font-family: var(--display); font-size: 1.1rem; font-weight: 700; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 0.4rem; white-space: nowrap; }
     .nav-logo .dot { display:inline-block; width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(90deg, var(--purple), var(--pink), var(--orange)); }
     .nav-links { display: flex; gap: 0.25rem; list-style: none; align-items: center; }
     .nav-links a { font-family: var(--display); font-size: 0.8rem; font-weight: 600; color: var(--ink-soft); text-decoration: none; padding: 0.5rem 0.85rem; border-radius: 999px; transition: background 0.2s; }
-    .nav-links a:hover, .nav-links a[aria-current="page"] { background: var(--cream-dark); color: var(--ink); }
-    .nav-book { font-family: var(--display); font-size: 0.8rem; font-weight: 700; color: var(--cream); padding: 0.6rem 1.25rem; border-radius: 999px; text-decoration: none; background: linear-gradient(90deg, var(--purple), var(--pink), var(--orange)); }
+    .nav-links a:hover, .nav-links a:focus-visible, .nav-links a[aria-current="page"] { background: var(--cream-dark); color: var(--ink); outline: none; }
+    .nav-links a:focus-visible { box-shadow: 0 0 0 2px var(--ink); }
+    .nav-book { font-family: var(--display); font-size: 0.8rem; font-weight: 700; color: var(--cream); padding: 0.6rem 1.25rem; border-radius: 999px; text-decoration: none; background: linear-gradient(90deg, var(--purple), var(--pink), var(--orange)); transition: transform 0.2s; }
+    .nav-book:hover, .nav-book:focus-visible { transform: scale(1.04); outline: 2px solid var(--purple); outline-offset: 2px; }
+    @media (max-width: 760px) {
+      .nav { padding: 0 1rem; height: 56px; gap: 0.5rem; }
+      .nav-links { display: none; }
+      .nav-logo { font-size: 0.95rem; }
+      .nav-book { font-size: 0.74rem; padding: 0.5rem 1rem; }
+    }
 
     .page-hero { padding: 8rem 2.5rem 4rem; background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dark) 100%); position: relative; overflow: hidden; }
     .page-hero::before { content: ''; position: absolute; top: -120px; right: -120px; width: 380px; height: 380px; border-radius: 50%; background: radial-gradient(circle, rgba(124, 58, 237, 0.18) 0%, transparent 70%); }
@@ -145,16 +154,14 @@ const dontDo = [
 <body>
 
 <nav class="nav" role="navigation" aria-label="Main navigation">
-  <a href={`${base}`} class="nav-logo">← all<span style="font-weight:300;"> variants</span></a>
-  <a href="/" class="nav-logo">{studio.name}<span class="dot" aria-hidden="true"></span></a>
-  <div style="display:flex;align-items:center;gap:0.5rem;">
+  <a href="/v5-modern-color-studio" class="nav-logo">{studio.name}<span class="dot" aria-hidden="true"></span></a>
+  <div class="nav-right">
     <ul class="nav-links" role="list">
-      <li><a href="/#gallery">Gallery</a></li>
-      <li><a href="/#artists">Artists</a></li>
+      <li><a href="/v5-modern-color-studio#gallery">Gallery</a></li>
+      <li><a href="/v5-modern-color-studio#artists">Artists</a></li>
       <li><a href="/v5-modern-color-studio/color-aftercare" aria-current="page">Color Aftercare</a></li>
-      <li><a href="/#booking">Book Now</a></li>
     </ul>
-    <a href="/#booking" class="nav-book">Book Now</a>
+    <a href="/v5-modern-color-studio#booking" class="nav-book">Book Now</a>
   </div>
 </nav>
 
@@ -247,7 +254,7 @@ const dontDo = [
   <h2>Book your next piece.</h2>
   <p>Custom color commissions book 4–6 weeks out. Flash availability changes weekly. ${studio.depositAmount} deposit secures your slot and is applied to your session cost.</p>
   <div class="cta-btns">
-    <a class="btn-fill" href="/#booking">Book a Session</a>
+    <a class="btn-fill" href="/v5-modern-color-studio#booking">Book a Session</a>
     <a class="btn-out" href={`tel:${studio.phone.replace(/[^0-9]/g,'')}`}>Call {studio.phone}</a>
   </div>
 </section>
